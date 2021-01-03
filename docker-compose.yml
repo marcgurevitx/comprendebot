@@ -1,3 +1,5 @@
+version: "3"
+
 services:
 
   pg:
@@ -23,21 +25,3 @@ services:
       - MINIO_ACCESS_KEY
       - MINIO_SECRET_KEY
     command: server /data
-
-#   adminsite:
-#     build:
-#       context: .
-#       dockerfile: dockerfiles/adminsite.Dockerfile
-#     restart: always
-#     env_file: $DOTENV_FILE
-#     links:
-#       - pg:$POSTGRES_HOST
-#       # - s3:...
-#     ports:
-#       - $ADMINSITE_PORT:8000
-
-  #bot
-
-  #chooser
-
-  #crons
