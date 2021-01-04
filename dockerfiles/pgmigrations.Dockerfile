@@ -2,10 +2,12 @@ FROM ubuntu
 
 RUN apt update && apt install -y postgresql-client
 
-COPY extlibs/vishnubob-wait-for-it/wait-for-it.sh /bot/code/
+WORKDIR /cmpdbot
 
-COPY pgmigrations/migrate.sh /bot/code/
+COPY extlibs/vishnubob-wait-for-it/wait-for-it.sh code/
 
-COPY pgmigrations/sql /bot/sql/
+COPY pgmigrations/migrate.sh code/
 
-CMD ["bash", "/bot/code/migrate.sh"]
+COPY pgmigrations/sql sql/
+
+CMD ["bash", "code/migrate.sh"]
