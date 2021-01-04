@@ -13,6 +13,8 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/pgmigrations.Dockerfile
+      args:
+        - CMPDBOT_DIR
     restart: on-failure
     env_file: botvars/$DOTENV_FILE
     links:
