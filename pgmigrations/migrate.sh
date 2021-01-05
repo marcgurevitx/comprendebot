@@ -11,3 +11,7 @@ do
 done
 
 echo Migrations maybe applied.
+
+if [[ 1 -eq $PGMIGRATIONS_SYNC ]] ; then
+    nc -lk $PGMIGRATIONS_PORT
+fi

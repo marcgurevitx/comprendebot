@@ -1,6 +1,8 @@
 FROM ubuntu
 
-RUN apt update && apt install -y postgresql-client
+RUN apt update && apt install -y \
+    netcat-openbsd \
+    postgresql-client
 
 ARG CMPDBOT_DIR
 

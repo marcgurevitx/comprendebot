@@ -10,6 +10,7 @@ RUN pip install --upgrade pip && \
     pip install -r requirements/requirements-adminsite.txt
 
 COPY code/adminsite code/adminsite
+COPY extlibs/vishnubob-wait-for-it extlibs/vishnubob-wait-for-it
 
 ENV PYTHONPATH $CMPDBOT_DIR/code
 

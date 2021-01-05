@@ -38,5 +38,6 @@ services:
     env_file: botvars/$DOTENV_FILE
     links:
       - pg:$POSTGRES_HOST
+      - pgmigrations:$PGMIGRATIONS_HOST
     ports:
       - $ADMINSITE_PORT:$ADMINSITE_PORT
