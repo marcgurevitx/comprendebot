@@ -28,16 +28,16 @@ services:
       - MINIO_SECRET_KEY
     command: server /data
 
-  adminsite:
-    build:
-      context: .
-      dockerfile: dockerfiles/adminsite.Dockerfile
-      args:
-        - CMPDBOT_DIR
-    restart: always
-    env_file: botvars/$DOTENV_FILE
-    links:
-      - pg:$POSTGRES_HOST
-      - pgmigrations:$PGMIGRATIONS_HOST
-    ports:
-      - $ADMINSITE_PORT:$ADMINSITE_PORT
+#   adminsite:
+#     build:
+#       context: .
+#       dockerfile: dockerfiles/adminsite.Dockerfile
+#       args:
+#         - CMPDBOT_DIR
+#     restart: always
+#     env_file: botvars/$DOTENV_FILE
+#     links:
+#       - pg:$POSTGRES_HOST
+#       - pgmigrations:$PGMIGRATIONS_HOST
+#     ports:
+#       - $ADMINSITE_PORT:$ADMINSITE_PORT
