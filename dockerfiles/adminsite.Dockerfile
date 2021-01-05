@@ -11,6 +11,7 @@ RUN pip install --upgrade pip && \
 
 COPY code/adminsite code/adminsite
 COPY extlibs/vishnubob-wait-for-it extlibs/vishnubob-wait-for-it
+COPY templates/adminsite templates/adminsite
 
 ENV PYTHONPATH $CMPDBOT_DIR/code
 
