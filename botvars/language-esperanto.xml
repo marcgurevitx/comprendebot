@@ -1,0 +1,47 @@
+<language>
+    <alphabet>
+        <a>A</a>
+        <a>B</a>
+        <a>C</a>
+        <a>Ĉ</a>
+        <a>D</a>
+        <a>E</a>
+        <a>F</a>
+        <a>G</a>
+        <a>Ĝ</a>
+        <a>H</a>
+        <a>Ĥ</a>
+        <a>I</a>
+        <a>J</a>
+        <a>Ĵ</a>
+        <a>K</a>
+        <a>L</a>
+        <a>M</a>
+        <a>N</a>
+        <a>O</a>
+        <a>P</a>
+        <a>Q</a><!-- for loanwords, names etc -->
+        <a>R</a>
+        <a>S</a>
+        <a>Ŝ</a>
+        <a>T</a>
+        <a>U</a>
+        <a>Ŭ</a>
+        <a>V</a>
+        <a>W</a><!-- for loanwords, names etc -->
+        <a>X</a><!-- for loanwords, names etc -->
+        <a>Y</a><!-- for loanwords, names etc -->
+        <a>Z</a>
+    </alphabet>
+    <transform>
+
+        <!-- x-convention -->
+        <t> <from>CX</from> <to>Ĉ</to> </t>
+        <t> <from>GX</from> <to>Ĝ</to> </t>
+        <t> <from>HX</from> <to>Ĥ</to> </t>
+        <t> <from>JX</from> <to>Ĵ</to> </t>
+        <t> <from>SX</from> <to>Ŝ</to> </t>
+        <t> <from>UX</from> <to>Ŭ</to> </t>
+
+    </transform>
+</language>

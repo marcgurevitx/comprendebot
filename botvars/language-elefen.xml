@@ -1,0 +1,57 @@
+<language>
+    <alphabet>
+        <a>A</a>
+        <a>B</a>
+        <a>C</a>
+        <a>D</a>
+        <a>E</a>
+        <a>F</a>
+        <a>G</a>
+        <a>H</a>
+        <a>I</a>
+        <a>J</a>
+        <a>K</a><!-- for loanwords, names etc -->
+        <a>L</a>
+        <a>M</a>
+        <a>N</a>
+        <a>O</a>
+        <a>P</a>
+        <a>Q</a><!-- for loanwords, names etc -->
+        <a>R</a>
+        <a>S</a>
+        <a>T</a>
+        <a>U</a>
+        <a>V</a>
+        <a>W</a><!-- for loanwords, names etc -->
+        <a>X</a>
+        <a>Y</a><!-- for loanwords, names etc -->
+        <a>Z</a>
+    </alphabet>
+    <transform>
+
+        <!-- cyrillic -->
+        <t> <from>А</from> <to>A</to> </t>
+        <t> <from>Б</from> <to>B</to> </t>
+        <t> <from>К</from> <to>C</to> </t>
+        <t> <from>Д</from> <to>D</to> </t>
+        <t> <from>Е</from> <to>E</to> </t>
+        <t> <from>Ф</from> <to>F</to> </t>
+        <t> <from>Г</from> <to>G</to> </t>
+        <t> <from>Х</from> <to>H</to> </t>
+        <t> <from>И</from> <to>I</to> </t>
+        <t> <from>Ж</from> <to>J</to> </t>
+        <t> <from>Л</from> <to>L</to> </t>
+        <t> <from>М</from> <to>M</to> </t>
+        <t> <from>Н</from> <to>N</to> </t>
+        <t> <from>О</from> <to>O</to> </t>
+        <t> <from>П</from> <to>P</to> </t>
+        <t> <from>Р</from> <to>R</to> </t>
+        <t> <from>С</from> <to>S</to> </t>
+        <t> <from>Т</from> <to>T</to> </t>
+        <t> <from>У</from> <to>U</to> </t>
+        <t> <from>В</from> <to>V</to> </t>
+        <t> <from>Ш</from> <to>X</to> </t>
+        <t> <from>З</from> <to>Z</to> </t>
+
+    </transform>
+</language>

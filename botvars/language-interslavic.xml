@@ -1,0 +1,145 @@
+<language>
+    <alphabet>
+        <a>A</a>
+        <a>B</a>
+        <a>C</a>
+        <a>Č</a>
+        <a>D</a>
+        <a>E</a>
+        <a>Ě</a>
+        <a>F</a>
+        <a>G</a>
+        <a>H</a>
+        <a>I</a>
+        <a>J</a>
+        <a>K</a>
+        <a>L</a>
+        <a>M</a>
+        <a>N</a>
+        <a>O</a>
+        <a>P</a>
+        <a>Q</a><!-- for loanwords, names etc -->
+        <a>R</a>
+        <a>S</a>
+        <a>Š</a>
+        <a>T</a>
+        <a>U</a>
+        <a>V</a>
+        <a>W</a><!-- for loanwords, names etc -->
+        <a>X</a><!-- for loanwords, names etc -->
+        <a>Y</a>
+        <a>Z</a>
+        <a>Ž</a>
+    </alphabet>
+    <transform>
+
+        <!-- cyrillic -->
+        <t> <from>А</from> <to>A</to> </t>
+        <t> <from>Б</from> <to>B</to> </t>
+        <t> <from>В</from> <to>V</to> </t>
+        <t> <from>Г</from> <to>G</to> </t>
+        <t> <from>Д</from> <to>D</to> </t>
+        <t> <from>Е</from> <to>E</to> </t>
+        <t> <from>Є</from> <to>Ě</to> </t>
+        <t> <from>Ж</from> <to>Ž</to> </t>
+        <t> <from>З</from> <to>Z</to> </t>
+        <t> <from>И</from> <to>I</to> </t>
+        <t> <from>Ы</from> <to>Y</to> </t>
+        <t> <from>Ј</from> <to>J</to> </t><!-- for clarity, the same chararcter -->
+        <t> <from>Й</from> <to>J</to> </t><!-- also accepted? -->
+        <t> <from>К</from> <to>K</to> </t>
+        <t> <from>Л</from> <to>L</to> </t>
+        <t> <from>Љ</from> <to>LJ</to> </t>
+        <t> <from>М</from> <to>M</to> </t>
+        <t> <from>Н</from> <to>N</to> </t>
+        <t> <from>Њ</from> <to>NJ</to> </t>
+        <t> <from>О</from> <to>O</to> </t>
+        <t> <from>П</from> <to>P</to> </t>
+        <t> <from>Р</from> <to>R</to> </t>
+        <t> <from>С</from> <to>S</to> </t>
+        <t> <from>Т</from> <to>T</to> </t>
+        <t> <from>У</from> <to>U</to> </t>
+        <t> <from>Ф</from> <to>F</to> </t>
+        <t> <from>Х</from> <to>H</to> </t>
+        <t> <from>Ц</from> <to>C</to> </t>
+        <t> <from>Ч</from> <to>Č</to> </t>
+        <t> <from>Ш</from> <to>Š</to> </t>
+
+        <!-- z/x-conventions -->
+        <t> <from>CZ</from> <to>Č</to> </t>
+        <t> <from>SX</from> <to>Š</to> </t>
+        <t> <from>ZS</from> <to>Ž</to> </t>
+        <t> <from>CX</from> <to>Č</to> </t>
+        <t> <from>SZ</from> <to>Š</to> </t>
+        <t> <from>ZX</from> <to>Ž</to> </t>
+
+        <!-- etymological -->
+        <t> <from>Ć</from> <to>Č</to> </t>
+        <t> <from>Č</from> <to>Č</to> </t>
+        <t> <from>D́</from> <to>D</to> </t>
+        <t> <from>Đ</from> <to>DŽ</to> </t>
+        <t> <from>Ė</from> <to>E</to> </t>
+        <t> <from>È</from> <to>E</to> </t>
+        <t> <from>Ę</from> <to>E</to> </t>
+        <t> <from>Ĺ</from> <to>L</to> </t>
+        <t> <from>Ľ</from> <to>L</to> </t>
+        <t> <from>Ń</from> <to>N</to> </t>
+        <t> <from>Ȯ</from> <to>O</to> </t>
+        <t> <from>Ò</from> <to>O</to> </t>
+        <t> <from>Ŕ</from> <to>R</to> </t>
+        <t> <from>Ś</from> <to>S</to> </t>
+        <t> <from>T́</from> <to>T</to> </t>
+        <t> <from>Ť</from> <to>T</to> </t>
+        <t> <from>Ų</from> <to>U</to> </t>
+        <t> <from>Ź</from> <to>Z</to> </t>
+        <t> <from>Ż</from> <to>Ž</to> </t>
+
+        <!-- glagolitic --><!-- probably got it very wrong :\ -->
+        <t> <from>Ⰰ</from> <to>A</to> </t>
+        <t> <from>Ⰱ</from> <to>B</to> </t>
+        <t> <from>Ⰲ</from> <to>V</to> </t>
+        <t> <from>Ⰳ</from> <to>G</to> </t>
+        <t> <from>Ⰳ</from> <to>G</to> </t>
+        <t> <from>Ⰴ</from> <to>D</to> </t>
+        <t> <from>Ⰵ</from> <to>E</to> </t>
+        <t> <from>ⰬⰅ</from> <to>JE</to> </t>
+        <t> <from>Ⰶ</from> <to>Ž</to> </t>
+        <t> <from>Ⰷ</from> <to>DZ</to> </t>
+        <t> <from>Ⰸ</from> <to>Z</to> </t>
+        <t> <from>Ⰹ</from> <to>I</to> </t>
+        <t> <from>Ⰺ</from> <to>J</to> </t>
+        <t> <from>Ⰻ</from> <to>I</to> </t>
+        <t> <from>ⰬⰋ</from> <to>JI</to> </t>
+        <t> <from>Ⰼ</from> <to>DŽ</to> </t>
+        <t> <from>Ⰽ</from> <to>K</to> </t>
+        <t> <from>Ⰾ</from> <to>L</to> </t>
+        <t> <from>Ⰿ</from> <to>M</to> </t>
+        <t> <from>Ⱀ</from> <to>N</to> </t>
+        <t> <from>Ⱁ</from> <to>O</to> </t>
+        <t> <from>Ⱂ</from> <to>P</to> </t>
+        <t> <from>Ⱃ</from> <to>R</to> </t>
+        <t> <from>Ⱄ</from> <to>S</to> </t>
+        <t> <from>Ⱅ</from> <to>T</to> </t>
+        <t> <from>Ⱆ</from> <to>U</to> </t>
+        <t> <from>Ⱇ</from> <to>F</to> </t>
+        <t> <from>Ⱈ</from> <to>H</to> </t>
+        <t> <from>Ⱋ</from> <to>ŠČ</to> </t>
+        <t> <from>Ⱌ</from> <to>C</to> </t>
+        <t> <from>Ⱍ</from> <to>Č</to> </t>
+        <t> <from>Ⱎ</from> <to>Š</to> </t>
+        <t> <from>Ⱉ</from> <to>O</to> </t>
+        <t> <from>Ⱏ</from> <to>O</to> </t>
+        <t> <from>ⰟⰊ</from> <to>Y</to> </t>
+        <t> <from>Ⱐ</from> <to>J</to> </t>
+        <t> <from>Ⱑ</from> <to>JA</to> </t>
+        <t> <from>Ⱖ</from> <to>JO</to> </t>
+        <t> <from>Ⱓ</from> <to>JU</to> </t>
+        <t> <from>Ⱔ</from> <to>E</to> </t>
+        <t> <from>Ⱗ</from> <to>JE</to> </t>
+        <t> <from>Ⱘ</from> <to>U</to> </t>
+        <t> <from>Ⱙ</from> <to>JU</to> </t>
+        <t> <from>Ⱚ</from> <to>TH</to> </t>
+        <t> <from>Ⱛ</from> <to>I</to> </t>
+
+    </transform>
+</language>
