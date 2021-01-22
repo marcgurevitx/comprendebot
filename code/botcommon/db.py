@@ -24,4 +24,3 @@ async def get_pg_pool():
             )
 
     return _pool
-

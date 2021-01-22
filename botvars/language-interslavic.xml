@@ -45,8 +45,8 @@
         <t> <from>З</from> <to>Z</to> </t>
         <t> <from>И</from> <to>I</to> </t>
         <t> <from>Ы</from> <to>Y</to> </t>
-        <t> <from>Ј</from> <to>J</to> </t><!-- for clarity, the same chararcter -->
-        <t> <from>Й</from> <to>J</to> </t><!-- also accepted? -->
+        <t> <from>Ј</from> <to>J</to> </t><!-- Cyrillic Je -->
+        <t> <from>Й</from> <to>J</to> </t>
         <t> <from>К</from> <to>K</to> </t>
         <t> <from>Л</from> <to>L</to> </t>
         <t> <from>Љ</from> <to>LJ</to> </t>
@@ -65,12 +65,14 @@
         <t> <from>Ч</from> <to>Č</to> </t>
         <t> <from>Ш</from> <to>Š</to> </t>
 
-        <!-- z/x-conventions -->
+        <!-- z-conventions -->
         <t> <from>CZ</from> <to>Č</to> </t>
-        <t> <from>SX</from> <to>Š</to> </t>
-        <t> <from>ZS</from> <to>Ž</to> </t>
-        <t> <from>CX</from> <to>Č</to> </t>
         <t> <from>SZ</from> <to>Š</to> </t>
+        <t> <from>ZS</from> <to>Ž</to> </t>
+
+        <!-- x-conventions -->
+        <t> <from>CX</from> <to>Č</to> </t>
+        <t> <from>SX</from> <to>Š</to> </t>
         <t> <from>ZX</from> <to>Ž</to> </t>
 
         <!-- etymological -->
