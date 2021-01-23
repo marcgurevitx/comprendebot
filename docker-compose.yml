@@ -37,3 +37,14 @@ services:
     env_file: botvars/$DOTENV_FILE
     links:
       - pg:$POSTGRES_HOST
+
+  bot:
+    build:
+      context: .
+      dockerfile: dockerfiles/bot.Dockerfile
+      args:
+        - CMPDBOT_DIR
+    restart: always
+    env_file: botvars/$DOTENV_FILE
+    links:
+      - pg:$POSTGRES_HOST
