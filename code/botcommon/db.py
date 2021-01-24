@@ -1,3 +1,4 @@
+import contextlib
 import threading  # for lock
 
 from aiopg import create_pool
@@ -24,3 +25,11 @@ async def get_pg_pool():
             )
 
     return _pool
+
+
+@contextlib.asynccontextmanager
+async def get_pg_cursor():
+    pool = await get_pg_pool()
+    async with pool.acquire() as conn:
+        async with conn.cursor() as cur:
+            yield cur
