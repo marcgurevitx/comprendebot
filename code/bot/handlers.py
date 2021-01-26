@@ -1,12 +1,10 @@
 import datetime
 
-from aiogram import types
-
 from botcommon.person import Person
 
 
 async def on_start(message):
-    person = await Person.find(message.from_user.id)
+    person = await Person.select_one(telegram_uid=message.from_user.id)
     if person is None:
         person = await Person.insert(
             is_active=True,
@@ -14,7 +12,8 @@ async def on_start(message):
             telegram_info=message.from_user.as_json(),
             started_ts=datetime.datetime.now(),
         )
-    await message.reply("[TTT] welcome (back), id=%s!" % person.row.id)
+    challenge = await person.get_new_challenge()
+    await message.reply("[TTT] welcome (back), id=%s! A new challenge for you: %s" % (person.row.id, challenge))
 
 
 async def on_text(message):
