@@ -9,10 +9,10 @@ services:
     restart: always
     env_file: botvars/$DOTENV_FILE
 
-  pgmigrations:
+  migrations:
     build:
       context: .
-      dockerfile: dockerfiles/pgmigrations.Dockerfile
+      dockerfile: dockerfiles/migrations.Dockerfile
       args:
         - CMPDBOT_DIR
     restart: on-failure

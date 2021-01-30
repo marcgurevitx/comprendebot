@@ -9,6 +9,6 @@ ARG CMPDBOT_DIR
 WORKDIR $CMPDBOT_DIR
 
 COPY extlibs/vishnubob-wait-for-it extlibs/vishnubob-wait-for-it
-COPY pgmigrations pgmigrations
+COPY migrations migrations
 
-CMD ["bash", "pgmigrations/migrate.sh"]
+CMD ["bash", "migrations/migrate.sh"]

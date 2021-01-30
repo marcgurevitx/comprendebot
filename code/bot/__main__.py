@@ -23,7 +23,7 @@ async def on_startup(dp):
     ])
 
 
-if config.PGMIGRATIONS_SYNC:
-    os.system("$CMPDBOT_DIR/extlibs/vishnubob-wait-for-it/wait-for-it.sh -s $PGMIGRATIONS_HOST:$PGMIGRATIONS_PORT")
+if config.MIGRATIONS_SYNC:
+    os.system("$CMPDBOT_DIR/extlibs/vishnubob-wait-for-it/wait-for-it.sh -s $MIGRATIONS_HOST:$MIGRATIONS_PORT")
 
 executor.start_polling(dp, on_startup=on_startup)
