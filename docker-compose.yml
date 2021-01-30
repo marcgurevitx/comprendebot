@@ -24,8 +24,8 @@ services:
     image: minio/minio
     restart: always
     environment:
-      - MINIO_ACCESS_KEY
-      - MINIO_SECRET_KEY
+      MINIO_ACCESS_KEY: $S3_ACCESS_KEY
+      MINIO_SECRET_KEY: $S3_SECRET_KEY
     command: server /data
 
   manage:
@@ -37,6 +37,7 @@ services:
     env_file: botvars/$DOTENV_FILE
     links:
       - pg:$POSTGRES_HOST
+      - s3:$S3_HOST
 
   bot:
     build:
@@ -48,3 +49,16 @@ services:
     env_file: botvars/$DOTENV_FILE
     links:
       - pg:$POSTGRES_HOST
+      - s3:$S3_HOST
+
+  chooser:
+    build:
+      context: .
+      dockerfile: dockerfiles/chooser.Dockerfile
+      args:
+        - CMPDBOT_DIR
+    restart: always
+    env_file: botvars/$DOTENV_FILE
+    links:
+      - pg:$POSTGRES_HOST
+      - s3:$S3_HOST
