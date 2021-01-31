@@ -50,16 +50,3 @@ services:
     links:
       - pg:$POSTGRES_HOST
       - s3:$S3_HOST
-      - chooser:$CHOOSER_HOST
-
-  chooser:
-    build:
-      context: .
-      dockerfile: dockerfiles/chooser.Dockerfile
-      args:
-        - CMPDBOT_DIR
-    restart: always
-    env_file: botvars/$DOTENV_FILE
-    links:
-      - pg:$POSTGRES_HOST
-      - s3:$S3_HOST

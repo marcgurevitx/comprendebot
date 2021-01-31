@@ -1,3 +1,4 @@
 aiopg
+goodenough
 lxml
 python-Levenshtein

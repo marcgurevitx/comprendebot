@@ -1,9 +1,10 @@
 from Levenshtein import ratio
 
 from botcommon.config import config
+from botcommon.model import ModelBase
 
 
-class Phrase:
+class Phrase( USE_ModelBase________ ):  # !
 
     @classmethod
     async def find_similar(cls, conn, normalized_text):

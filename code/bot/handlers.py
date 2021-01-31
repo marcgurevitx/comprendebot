@@ -1,6 +1,6 @@
 import datetime
 
-from botcommon.person import Person
+from botcommon.models.person import Person
 
 
 async def on_start(message):

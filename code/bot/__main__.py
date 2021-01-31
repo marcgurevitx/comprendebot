@@ -3,8 +3,10 @@ import os
 
 from aiogram import Bot, Dispatcher, executor, types
 
-from bot.handlers import (on_start,
-                          on_text)
+from bot.handlers import (
+    on_start,
+    on_text,
+)
 from botcommon.config import config
 
 logging.basicConfig(level=config.LOG_LEVEL)
@@ -20,6 +22,7 @@ async def on_startup(dp):
     await bot.set_my_commands([
         types.BotCommand(command="/start", description="[TTT] Start/restart"),
         types.BotCommand(command="/xxx", description="[TTT] Xxx"),
+        types.BotCommand(command="/aaa", description="[TTT] Aaa"),
     ])
 
 
