@@ -7,7 +7,8 @@ CREATE TABLE person (
     is_active boolean NOT NULL,
     telegram_uid integer NOT NULL,
     telegram_info jsonb,
-    started_ts timestamptz
+    first_started_ts timestamptz,
+    xp integer DEFAULT 0
 );
 
 COMMIT;

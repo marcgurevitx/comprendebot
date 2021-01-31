@@ -7,8 +7,10 @@ class Person(ModelBase):
     async def get_new_challenge(self):
 
 
-        xxx = await challenge_type_chooser.async_pick(   None   )
-        return xxx
+        challenge_type = await challenge_type_chooser.async_pick({
+            "person_xp": self.row.xp,
+        })
+        return challenge_type
 
 
         pass  # ?
