@@ -50,6 +50,7 @@ services:
     links:
       - pg:$POSTGRES_HOST
       - s3:$S3_HOST
+      - chooser:$CHOOSER_HOST
 
   chooser:
     build:
