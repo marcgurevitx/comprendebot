@@ -1,6 +1,6 @@
 BEGIN;
 
-SELECT _v.register_patch('003-create-challenge', NULL, NULL);
+SELECT _v.register_patch('005-create-challenge', NULL, NULL);
 
 CREATE TYPE challenge_type_code AS ENUM (
     'CHL_PHR',  -- submit a phrase
@@ -11,9 +11,9 @@ CREATE TYPE challenge_type_code AS ENUM (
 CREATE TABLE challenge (
     id serial PRIMARY KEY,
     is_active boolean NOT NULL,
-    type_code challenge_type_code NOT NULL,
+    created_ts timestamptz NOT NULL,
     person_id integer REFERENCES person(id) NOT NULL,
-    created_ts timestamptz
+    type_code challenge_type_code NOT NULL
 );
 
 COMMIT;
