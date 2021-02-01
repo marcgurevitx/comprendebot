@@ -1,5 +1,7 @@
 import datetime
 
+from nonelib import nonelist
+
 from botcommon.choosers.challengetype import challenge_type_chooser
 from botcommon.modelbase import ModelBase
 from botcommon.models.challenge import Challenge
@@ -20,38 +22,46 @@ class Person(ModelBase):
 
         if challenge_type == ChallengeTypeCode.CHL_PHR:
 
-            challenge = Challenge.insert(
+            challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
                 person_id=self.row.id,
                 type_code="CHL_PHR",
             )
 
-            self.update(n_phrases=self.row.n_phrases + 1)
+            await self.update(n_phrases=self.row.n_phrases + 1)
 
         elif challenge_type == ChallengeTypeCode.CHL_VOC:
 
-            phrase_1 = await Phrase.choose_fair([], self.row.n_prev_success)
-            phrase_2 = await Phrase.choose_easy([phrase_1.row.id])
-            phrase_3 = await Phrase.choose_random([phrase_1.row.id, phrase_2.row.id])
+            phrases = []
+            phrases += nonelist([
+                await Phrase.choose_fair(self.row.n_prev_success, exclude_phrases=phrases)
+            ])
+            phrases += nonelist([
+                await Phrase.choose_easy(exclude_phrases=phrases)
+            ])
+            phrases += nonelist([
+                await Phrase.choose_random(exclude_phrases=phrases)
+            ])
+            assert phrases
+
             
             #
             #
             import logging
-            logging.debug("  >>>>>>>>>>   phrase_1 = %r", phrase_1)
-            logging.debug("  >>>>>>>>>>   phrase_2 = %r", phrase_2)
-            logging.debug("  >>>>>>>>>>   phrase_3 = %r", phrase_3)
+            logging.debug("  >>>>>>>>>>   phrases = %r", phrases)
             #
             #
             
-            challenge = Challenge.insert(
+            challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
                 person_id=self.row.id,
                 type_code="CHL_VOC",
+                phrases=[p.row.id for p in phrases],
             )
 
-            self.update(n_voices=self.row.n_voices + 1)
+            await self.update(n_voices=self.row.n_voices + 1)
 
         elif challenge_type == ChallengeTypeCode.CHL_TRS:
 
@@ -64,7 +74,7 @@ class Person(ModelBase):
             
             ?
 
-            self.update(n_transcriptions=self.row.n_transcriptions + 1)
+            await self.update(n_transcriptions=self.row.n_transcriptions + 1)
 
         else:
             challenge = None

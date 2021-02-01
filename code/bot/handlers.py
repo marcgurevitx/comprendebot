@@ -15,7 +15,7 @@ async def on_start(message):
     challenge = await person.get_new_challenge()
 
     # TODO: check challenge is None
-    # TODO: select N- vatiants
+    # TODO: challenge.get_reply() -> text/markup/keyboard...
 
     await message.reply("[TTT] welcome (back), id=%s! A new challenge for you: %s" % (person.row.id, challenge))
 

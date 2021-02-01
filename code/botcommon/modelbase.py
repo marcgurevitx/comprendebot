@@ -83,10 +83,32 @@ class ModelBase:
                     )
                     RETURNING *;
                 """,
-                kwargs
+                kwargs,
             )
             row = await cur.fetchone()
         return cls(row)
 
     def __init__(self, row):
         self.row = row
+
+    async def update(self, **kwargs):
+        assert kwargs
+        assert "id" not in kwargs
+        sql_set = ", ".join(
+            f"{k} = %({k})s"
+            for k
+            in kwargs
+        )
+        async with get_pg_cursor() as cur:
+            await cur.execute(
+                f"""
+                    UPDATE {self.get_table_name()}
+                    SET
+                        {sql_set}
+                    WHERE
+                        id = %(id)s
+                    RETURNING *;
+                """,
+                {**kwargs, id=self.row.id},
+            )
+            self.row = await cur.fetchone()

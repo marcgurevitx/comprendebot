@@ -12,22 +12,22 @@ from botcommon.modelbase import ModelBase
 class Phrase(ModelBase):
 
     @classmethod
-    async def choose_fair(cls, exclude_list, person_n_prev_success):
+    async def choose_fair(cls, person_n_prev_success, exclude_phrases):
         return await fair_phrase_chooser.async_pick({
-            "exclude_list": exclude_list,
             "person_n_prev_success": person_n_prev_success,
+            "exclude_phrases": [p.row.id for p in exclude_phrases],
         })
 
     @classmethod
-    async def choose_easy(cls, exclude_list):
+    async def choose_easy(cls, exclude_phrases):
         return await easy_phrase_chooser.async_pick({
-            "exclude_list": exclude_list,
+            "exclude_phrases": [p.row.id for p in exclude_phrases],
         })
 
     @classmethod
     async def choose_random(cls):
         return await random_phrase_chooser.async_pick({
-            "exclude_list": exclude_list,
+            "exclude_phrases": [p.row.id for p in exclude_phrases],
         })
 
 

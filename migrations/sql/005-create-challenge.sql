@@ -13,7 +13,9 @@ CREATE TABLE challenge (
     is_active boolean NOT NULL,
     created_ts timestamptz NOT NULL,
     person_id integer REFERENCES person(id) NOT NULL,
-    type_code challenge_type_code NOT NULL
+    type_code challenge_type_code NOT NULL,
+    phrases integer ARRAY,
+    voices integer ARRAY
 );
 
 COMMIT;
