@@ -1,13 +1,40 @@
 from Levenshtein import ratio
 
 from botcommon.config import config
-from botcommon.model import ModelBase
+from botcommon.choosers.phrase import (
+    fair_phrase_chooser,
+    easy_phrase_chooser,
+    random_phrase_chooser,
+)
+from botcommon.modelbase import ModelBase
 
 
-class Phrase( USE_ModelBase________ ):  # !
+class Phrase(ModelBase):
 
     @classmethod
-    async def find_similar(cls, conn, normalized_text):
+    async def choose_fair(cls, exclude_list, person_n_prev_success):
+        return await fair_phrase_chooser.async_pick({
+            "exclude_list": exclude_list,
+            "person_n_prev_success": person_n_prev_success,
+        })
+
+    @classmethod
+    async def choose_easy(cls, exclude_list):
+        return await easy_phrase_chooser.async_pick({
+            "exclude_list": exclude_list,
+        })
+
+    @classmethod
+    async def choose_random(cls):
+        return await random_phrase_chooser.async_pick({
+            "exclude_list": exclude_list,
+        })
+
+
+
+
+    @classmethod
+    async def xxxxx_find_similar(cls, conn, normalized_text):
         similar = []
 
         async with conn.cursor() as cur:
@@ -28,7 +55,7 @@ class Phrase( USE_ModelBase________ ):  # !
         return similar
 
     @classmethod
-    async def insert(cls, conn, *, is_active, original_text, normalized_text=None):
+    async def xxxxx_insert(cls, conn, *, is_active, original_text, normalized_text=None):
         async with conn.cursor() as cur:
             await cur.execute(
                 """

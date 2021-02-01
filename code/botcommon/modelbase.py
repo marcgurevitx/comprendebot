@@ -42,6 +42,29 @@ class ModelBase:
             return await (getattr(cur, fetch_method))()
 
     @classmethod
+    async def count(cls, **kwargs):
+        sql_where = " ".join(
+            f"AND {k} = %({k})s"
+            for k
+            in kwargs
+        )
+        async with get_pg_cursor() as cur:
+            await cur.execute(
+                f"""
+                    SELECT
+                        COUNT(*) as nrows
+                    FROM
+                        {cls.get_table_name()}
+                    WHERE
+                        1 = 1 {sql_where}
+                    ;
+                """,
+                kwargs,
+            )
+            row = await cur.fetchone()
+            return row.nrows
+
+    @classmethod
     async def insert(cls, **kwargs):
         sql_columns = ", ".join(kwargs)
         sql_values = ", ".join(

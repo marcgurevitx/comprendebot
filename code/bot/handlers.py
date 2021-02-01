@@ -8,11 +8,15 @@ async def on_start(message):
     if person is None:
         person = await Person.insert(
             is_active=True,
+            created_ts=datetime.datetime.now(),
             telegram_uid=message.from_user.id,
             telegram_info=message.from_user.as_json(),
-            first_started_ts=datetime.datetime.now(),
         )
     challenge = await person.get_new_challenge()
+
+    # TODO: check challenge is None
+    # TODO: select N- vatiants
+
     await message.reply("[TTT] welcome (back), id=%s! A new challenge for you: %s" % (person.row.id, challenge))
 
 
