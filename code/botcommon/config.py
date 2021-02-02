@@ -21,10 +21,11 @@ def to_float(cfg_name):
 
 
 def calc_ratios(chances):
-    return [c/sum(chances) for c in chances]
+    return [c/sum(chances, start=1) for c in chances]
 
 
 to_float("CMPDBOT_SIMILARITY_RATIO")
+to_int("CMPDBOT_CHALLENGE_SEVRAL_TIMEZ")
 to_int("CMPDBOT_CHALLENGE_CHANCE_PHRASE")
 to_int("CMPDBOT_CHALLENGE_CHANCE_VOICE")
 to_int("CMPDBOT_CHALLENGE_CHANCE_TRANSCRIPTION")

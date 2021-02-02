@@ -1,58 +1,100 @@
 import datetime
+import logging
 
 from nonelib import nonelist
+from psycopg2.extras import Json
 
 from botcommon.bottypes import ChallengeTypeCode
 from botcommon.choosers.challengetype import challenge_type_chooser
+from botcommon.config import config, calc_ratios
 from botcommon.modelbase import ModelBase
 from botcommon.models.challenge import Challenge
 from botcommon.models.phrase import Phrase
 from botcommon.models.voice import Voice
 
+logger = logging.getLogger(__name__)
+
 
 class Person(ModelBase):
 
     async def get_new_challenge(self):
-        challenge_type = await challenge_type_chooser.async_pick({
-            "person_id": self.row.id,
-            "person_xp": self.row.xp,
-            "n_phrases": self.row.n_phrases,
-            "n_voices": self.row.n_voices,
-            "n_transcriptions": self.row.n_transcriptions,
-            "n_challenges": (self.row.n_phrases + self.row.n_voices + self.row.n_transcriptions),
-        })
+        chltype = await self._choose_new_challenge_type()
+        if chltype == ChallengeTypeCode.CHL_PHR:
+            challenge = await self._create_challenge_phrase()
+        elif chltype == ChallengeTypeCode.CHL_VOC:
+            challenge = await self._create_challenge_voice()
+        elif chltype == ChallengeTypeCode.CHL_TRS:
+            challenge = await self._create_challenge_transcription()
+        else:
+            challenge = None
+        return challenge
 
-        if challenge_type == ChallengeTypeCode.CHL_PHR:
-            challenge = await Challenge.insert(
-                is_active=True,
-                created_ts=datetime.datetime.now(),
-                person_id=self.row.id,
-                type_code="CHL_PHR",
-            )
-            await self.update(n_phrases=self.row.n_phrases + 1)
-
-        elif challenge_type == ChallengeTypeCode.CHL_VOC:
-            phrases = []
-            phrases += nonelist([
-                await Phrase.choose_fair(self.row.n_prev_success, exclude_phrases=phrases)
+    async def _choose_new_challenge_type(self):
+        for _ in range(config.CMPDBOT_CHALLENGE_SEVRAL_TIMEZ):
+            challenges_history = self.row.challenges_history
+            (
+                ratio_phrase,
+                ratio_voice,
+                ratio_transcription,
+            ) = calc_ratios([
+                challenges_history["CHL_PHR"],
+                challenges_history["CHL_VOC"],
+                challenges_history["CHL_TRS"],
             ])
-            phrases += nonelist([
-                await Phrase.choose_easy(exclude_phrases=phrases)
-            ])
-            phrases += nonelist([
-                await Phrase.choose_random(exclude_phrases=phrases)
-            ])
+            chltype = await challenge_type_chooser.async_pick({
+                "person_id": self.row.id,
+                "ratio_phrase": ratio_phrase,
+                "ratio_voice": ratio_voice,
+                "ratio_transcription": ratio_transcription,
+            })
 
-            # assert phrases
+            logger.debug("Next chalenge type [%r]", chltype)
 
+            if chltype == ChallengeTypeCode.CHL_PHR:
+                challenges_history["CHL_PHR"] += 1
+            elif chltype == ChallengeTypeCode.CHL_VOC:
+                challenges_history["CHL_VOC"] += 1
+            elif chltype == ChallengeTypeCode.CHL_TRS:
+                challenges_history["CHL_TRS"] += 1
+            await self.update(challenges_history=Json(challenges_history))
 
-            #
-            #
-            import logging
-            logging.debug("  >>>>>>>>>>   phrases = %r", phrases)
-            #
-            #
+            if chltype == ChallengeTypeCode.CHL_PHR:
+                if self.row.xp < config.CMPDBOT_CHALLENGE_MIN_XP_PHRASE:
+                    continue
+            elif chltype == ChallengeTypeCode.CHL_VOC:
+                if self.row.xp < config.CMPDBOT_CHALLENGE_MIN_XP_VOICE:
+                    continue
 
+            break
+
+        else:
+            chltype = None
+
+        return chltype
+
+    async def _create_challenge_phrase(self):
+        return await Challenge.insert(
+            is_active=True,
+            created_ts=datetime.datetime.now(),
+            person_id=self.row.id,
+            type_code="CHL_PHR",
+        )
+
+    async def _create_challenge_voice(self):
+        phrases = []
+        phrases += nonelist([
+            await Phrase.choose_fair(self.row.n_prev_success, exclude_phrases=phrases)
+        ])
+        phrases += nonelist([
+            await Phrase.choose_easy(exclude_phrases=phrases)
+        ])
+        phrases += nonelist([
+            await Phrase.choose_random(exclude_phrases=phrases)
+        ])
+
+        logger.debug("Phrases for voice challenge [%r]", phrases)
+
+        if phrases:
             challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
@@ -60,30 +102,25 @@ class Person(ModelBase):
                 type_code="CHL_VOC",
                 phrases=[p.row.id for p in phrases],
             )
-            await self.update(n_voices=self.row.n_voices + 1)
+        else:
+            challenge = None
+        return challenge
 
-        elif challenge_type == ChallengeTypeCode.CHL_TRS:
-            voices = []
-            voices += nonelist([
-                await Voice.choose_fair(self.row.n_prev_success, exclude_voices=voices)
-            ])
-            voices += nonelist([
-                await Voice.choose_easy(exclude_voices=voices)
-            ])
-            voices += nonelist([
-                await Voice.choose_random(exclude_voices=voices)
-            ])
+    async def _create_challenge_transcription(self):
+        voices = []
+        voices += nonelist([
+            await Voice.choose_fair(self.row.n_prev_success, exclude_voices=voices)
+        ])
+        voices += nonelist([
+            await Voice.choose_easy(exclude_voices=voices)
+        ])
+        voices += nonelist([
+            await Voice.choose_random(exclude_voices=voices)
+        ])
 
-            # assert voices
+        logger.debug("Voices for transcription challenge [%r]", voices)
 
-
-            #
-            #
-            import logging
-            logging.debug("  >>>>>>>>>>   voices = %r", voices)
-            #
-            #
-
+        if voices:
             challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
@@ -91,16 +128,6 @@ class Person(ModelBase):
                 type_code="CHL_TRS",
                 voices=[v.row.id for v in voices],
             )
-            await self.update(n_transcriptions=self.row.n_transcriptions + 1)
-
         else:
             challenge = None
-
         return challenge
-
-        # TODO: pick N- challenges from the type:
-        # - xp relevant
-        # - simple
-        # - random
-
-        pass  # ?

@@ -9,18 +9,7 @@ async def get_items(request):
     return list(ChallengeTypeCode)
 
 
-async def check_enough_xp(request, item):
-    rv = 1.0
-    if item == ChallengeTypeCode.CHL_PHR:
-        if request["person_xp"] < config.CMPDBOT_CHALLENGE_MIN_XP_PHRASE:
-            rv = 0.0
-    elif item == ChallengeTypeCode.CHL_VOC:
-        if request["person_xp"] < config.CMPDBOT_CHALLENGE_MIN_XP_VOICE:
-            rv = 0.0
-    return rv
-
-
-async def check_exists_source(request, item):
+async def ensure_exists_source(request, item):
     from botcommon.models.phrase import Phrase
     from botcommon.models.voice import Voice
 
@@ -34,20 +23,17 @@ async def check_exists_source(request, item):
     return rv
 
 
-async def check_probability(request, item):
-    rv = 0.5
-    if request["n_challenges"] > 0:
-        if item == ChallengeTypeCode.CHL_PHR:
-            ratio_diff = config.RATIO_PHRASE - request["n_phrases"] / request["n_challenges"]
-        elif item == ChallengeTypeCode.CHL_VOC:
-            ratio_diff = config.RATIO_VOICE - request["n_voices"] / request["n_challenges"]
-        elif item == ChallengeTypeCode.CHL_TRS:
-            ratio_diff = config.RATIO_TRANSCRIPTION - request["n_transcriptions"] / request["n_challenges"]
-        rv += ratio_diff / 2
-    return rv
+async def ensure_probability(request, item):
+    if item == ChallengeTypeCode.CHL_PHR:
+        ratio_diff = config.RATIO_PHRASE - request["ratio_phrase"]
+    elif item == ChallengeTypeCode.CHL_VOC:
+        ratio_diff = config.RATIO_VOICE - request["ratio_voice"]
+    elif item == ChallengeTypeCode.CHL_TRS:
+        ratio_diff = config.RATIO_TRANSCRIPTION - request["ratio_transcription"]
+    return 0.5 + ratio_diff / 3
 
 
-async def check_various(request, item):
+async def ensure_various(request, item):
     from botcommon.models.challenge import Challenge
 
     rv = 1.0
@@ -82,9 +68,8 @@ async def check_various(request, item):
 challenge_type_chooser = GoodEnough(
     get_items=get_items,
     rules=[
-        #check_enough_xp,
-        #check_exists_source,
-        check_probability,
-        #check_various,
+        #ensure_exists_source,
+        ensure_probability,
+        #ensure_various,
     ],
 )
