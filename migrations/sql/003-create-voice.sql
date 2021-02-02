@@ -6,8 +6,8 @@ CREATE TABLE voice (
     id serial PRIMARY KEY,
     is_active boolean NOT NULL,
     created_ts timestamptz NOT NULL,
-    person_id integer REFERENCES person(id) NOT NULL,
-    phrase_id integer REFERENCES phrase(id) NOT NULL,
+    person_id integer REFERENCES person(id),
+    phrase_id integer REFERENCES phrase(id),
     length integer NOT NULL
 );
 

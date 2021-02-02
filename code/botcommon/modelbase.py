@@ -9,6 +9,22 @@ class ModelBase:
         return cls.table_name or cls.__name__.lower()
 
     @classmethod
+    def sql_where(cls, keys):
+        return " ".join(f"AND {k} = %({k})s" for k in keys)
+
+    @classmethod
+    def sql_columns(cls, keys):
+        return ", ".join(keys)
+
+    @classmethod
+    def sql_values(cls, keys):
+        return ", ".join(f"%({k})s" for k in keys)
+
+    @classmethod
+    def sql_set(cls, keys):
+        return ", ".join(f"{k} = %({k})s" for k in keys)
+
+    @classmethod
     async def select_one(cls, **kwargs):
         row = await cls._select("fetchone", **kwargs)
         if row:
@@ -21,11 +37,6 @@ class ModelBase:
 
     @classmethod
     async def _select(cls, fetch_method, **kwargs):
-        sql_where = " ".join(
-            f"AND {k} = %({k})s"
-            for k
-            in kwargs
-        )
         async with get_pg_cursor() as cur:
             await cur.execute(
                 f"""
@@ -34,7 +45,7 @@ class ModelBase:
                     FROM
                         {cls.get_table_name()}
                     WHERE
-                        1 = 1 {sql_where}
+                        1 = 1 {cls.sql_where(kwargs)}
                     ;
                 """,
                 kwargs,
@@ -42,12 +53,24 @@ class ModelBase:
             return await (getattr(cur, fetch_method))()
 
     @classmethod
+    async def select_sql_one(cls, sql, **kwargs):
+        row = await cls._select_sql("fetchone", sql, **kwargs)
+        if row:
+            return cls(row)
+
+    @classmethod
+    async def select_sql_all(cls, sql, **kwargs):
+        rows = await cls._select_sql("fetchall", sql, **kwargs)
+        return [cls(r) for r in rows]
+
+    @classmethod
+    async def _select_sql(cls, fetch_method, sql, **kwargs):
+        async with get_pg_cursor() as cur:
+            await cur.execute(sql, kwargs)
+            return await (getattr(cur, fetch_method))()
+
+    @classmethod
     async def count(cls, **kwargs):
-        sql_where = " ".join(
-            f"AND {k} = %({k})s"
-            for k
-            in kwargs
-        )
         async with get_pg_cursor() as cur:
             await cur.execute(
                 f"""
@@ -56,7 +79,7 @@ class ModelBase:
                     FROM
                         {cls.get_table_name()}
                     WHERE
-                        1 = 1 {sql_where}
+                        1 = 1 {cls.sql_where(kwargs)}
                     ;
                 """,
                 kwargs,
@@ -65,21 +88,37 @@ class ModelBase:
             return row.nrows
 
     @classmethod
-    async def insert(cls, **kwargs):
-        sql_columns = ", ".join(kwargs)
-        sql_values = ", ".join(
-            f"%({k})s"
-            for k
-            in kwargs
+    async def select_random(cls, limit, /, **kwargs):
+        percent = min(
+            limit / (await cls.count(**kwargs) or 1) * 100,
+            100,
         )
         async with get_pg_cursor() as cur:
             await cur.execute(
                 f"""
+                    SELECT
+                        *
+                    FROM
+                        {cls.get_table_name()} TABLESAMPLE BERNOULLI ({percent})
+                    WHERE
+                        1 = 1 {cls.sql_where(kwargs)}
+                    ;
+                """,
+                kwargs,
+            )
+            rows = await cur.fetchall()
+        return [cls(r) for r in rows]
+
+    @classmethod
+    async def insert(cls, **kwargs):
+        async with get_pg_cursor() as cur:
+            await cur.execute(
+                f"""
                     INSERT INTO {cls.get_table_name()}(
-                        {sql_columns}
+                        {cls.sql_columns(kwargs)}
                     )
                     VALUES(
-                        {sql_values}
+                        {cls.sql_values(kwargs)}
                     )
                     RETURNING *;
                 """,
@@ -94,21 +133,16 @@ class ModelBase:
     async def update(self, **kwargs):
         assert kwargs
         assert "id" not in kwargs
-        sql_set = ", ".join(
-            f"{k} = %({k})s"
-            for k
-            in kwargs
-        )
         async with get_pg_cursor() as cur:
             await cur.execute(
                 f"""
                     UPDATE {self.get_table_name()}
                     SET
-                        {sql_set}
+                        {self.sql_set(kwargs)}
                     WHERE
                         id = %(id)s
                     RETURNING *;
                 """,
-                {**kwargs, id=self.row.id},
+                {**kwargs, "id": self.row.id},
             )
             self.row = await cur.fetchone()

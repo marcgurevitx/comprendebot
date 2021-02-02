@@ -2,10 +2,12 @@ import datetime
 
 from nonelib import nonelist
 
+from botcommon.bottypes import ChallengeTypeCode
 from botcommon.choosers.challengetype import challenge_type_chooser
 from botcommon.modelbase import ModelBase
 from botcommon.models.challenge import Challenge
 from botcommon.models.phrase import Phrase
+from botcommon.models.voice import Voice
 
 
 class Person(ModelBase):
@@ -21,18 +23,15 @@ class Person(ModelBase):
         })
 
         if challenge_type == ChallengeTypeCode.CHL_PHR:
-
             challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
                 person_id=self.row.id,
                 type_code="CHL_PHR",
             )
-
             await self.update(n_phrases=self.row.n_phrases + 1)
 
         elif challenge_type == ChallengeTypeCode.CHL_VOC:
-
             phrases = []
             phrases += nonelist([
                 await Phrase.choose_fair(self.row.n_prev_success, exclude_phrases=phrases)
@@ -43,16 +42,17 @@ class Person(ModelBase):
             phrases += nonelist([
                 await Phrase.choose_random(exclude_phrases=phrases)
             ])
-            assert phrases
 
-            
+            # assert phrases
+
+
             #
             #
             import logging
             logging.debug("  >>>>>>>>>>   phrases = %r", phrases)
             #
             #
-            
+
             challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
@@ -60,20 +60,37 @@ class Person(ModelBase):
                 type_code="CHL_VOC",
                 phrases=[p.row.id for p in phrases],
             )
-
             await self.update(n_voices=self.row.n_voices + 1)
 
         elif challenge_type == ChallengeTypeCode.CHL_TRS:
+            voices = []
+            voices += nonelist([
+                await Voice.choose_fair(self.row.n_prev_success, exclude_voices=voices)
+            ])
+            voices += nonelist([
+                await Voice.choose_easy(exclude_voices=voices)
+            ])
+            voices += nonelist([
+                await Voice.choose_random(exclude_voices=voices)
+            ])
 
-            voice_1 = ?
-            voice_2 = ?
-            voice_3 = ?
-            
-            
-            
-            
-            ?
+            # assert voices
 
+
+            #
+            #
+            import logging
+            logging.debug("  >>>>>>>>>>   voices = %r", voices)
+            #
+            #
+
+            challenge = await Challenge.insert(
+                is_active=True,
+                created_ts=datetime.datetime.now(),
+                person_id=self.row.id,
+                type_code="CHL_TRS",
+                voices=[v.row.id for v in voices],
+            )
             await self.update(n_transcriptions=self.row.n_transcriptions + 1)
 
         else:

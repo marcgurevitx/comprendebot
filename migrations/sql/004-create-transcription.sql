@@ -6,8 +6,8 @@ CREATE TABLE transcription (
     id serial PRIMARY KEY,
     is_active boolean NOT NULL,
     created_ts timestamptz NOT NULL,
-    person_id integer REFERENCES person(id) NOT NULL,
-    voice_id integer REFERENCES voice(id) NOT NULL
+    person_id integer REFERENCES person(id),
+    voice_id integer REFERENCES voice(id)
 );
 
 COMMIT;

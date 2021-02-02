@@ -2,9 +2,7 @@ from goodenough import GoodEnough
 
 from botcommon.bottypes import ChallengeTypeCode
 from botcommon.config import config
-from botcommon.models.challenge import Challenge
-from botcommon.models.phrase import Phrase
-from botcommon.models.voice import Voice
+from botcommon.db import get_pg_cursor
 
 
 async def get_items(request):
@@ -23,6 +21,9 @@ async def check_enough_xp(request, item):
 
 
 async def check_exists_source(request, item):
+    from botcommon.models.phrase import Phrase
+    from botcommon.models.voice import Voice
+
     rv = 1.0
     if item == ChallengeTypeCode.CHL_VOC:
         if await Phrase.count(is_active=True) == 0:
@@ -34,30 +35,48 @@ async def check_exists_source(request, item):
 
 
 async def check_probability(request, item):
-    rv = 1.0
+    rv = 0.5
     if request["n_challenges"] > 0:
-
         if item == ChallengeTypeCode.CHL_PHR:
-            cfg_ratio = config.CMPDBOT_CHALLENGE_CHANCE_PHRASE / config.CMPDBOT_CHALLENGE_CHANCE_TOTAL
-            person_ratio = request["n_phrases"] / request["n_challenges"]
+            ratio_diff = config.RATIO_PHRASE - request["n_phrases"] / request["n_challenges"]
         elif item == ChallengeTypeCode.CHL_VOC:
-            cfg_ratio = config.CMPDBOT_CHALLENGE_CHANCE_VOICE / config.CMPDBOT_CHALLENGE_CHANCE_TOTAL
-            person_ratio = request["n_voices"] / request["n_challenges"]
+            ratio_diff = config.RATIO_VOICE - request["n_voices"] / request["n_challenges"]
         elif item == ChallengeTypeCode.CHL_TRS:
-            cfg_ratio = config.CMPDBOT_CHALLENGE_CHANCE_TRANSCRIPTION / config.CMPDBOT_CHALLENGE_CHANCE_TOTAL
-            person_ratio = request["n_transcriptions"] / request["n_challenges"]
-
-        if person_ratio > cfg_ratio:
-            rv = 0.5
-
+            ratio_diff = config.RATIO_TRANSCRIPTION - request["n_transcriptions"] / request["n_challenges"]
+        rv += ratio_diff / 2
     return rv
 
 
 async def check_various(request, item):
-    
-    
-    
-    return 1.0#?
+    from botcommon.models.challenge import Challenge
+
+    rv = 1.0
+    challenge = await Challenge.select_sql_one(
+        f"""
+            SELECT
+                *
+            FROM
+                {Challenge.get_table_name()}
+            WHERE
+                person_id = %(person_id)s
+            ORDER BY
+                created_ts DESC
+            LIMIT 1
+            ;
+        """,
+        person_id=request["person_id"],
+    )
+    if challenge is not None:
+        if item == ChallengeTypeCode.CHL_PHR:
+            if challenge.type_code == 'CHL_PHR':
+                rv = 0.5
+        elif item == ChallengeTypeCode.CHL_VOC:
+            if challenge.type_code == 'CHL_VOC':
+                rv = 0.5
+        elif item == ChallengeTypeCode.CHL_TRS:
+            if challenge.type_code == 'CHL_TRS':
+                rv = 0.5
+    return rv
 
 
 challenge_type_chooser = GoodEnough(

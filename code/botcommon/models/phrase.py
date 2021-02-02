@@ -25,7 +25,7 @@ class Phrase(ModelBase):
         })
 
     @classmethod
-    async def choose_random(cls):
+    async def choose_random(cls, exclude_phrases):
         return await random_phrase_chooser.async_pick({
             "exclude_phrases": [p.row.id for p in exclude_phrases],
         })
