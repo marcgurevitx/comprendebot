@@ -41,22 +41,35 @@ async def get_items(request):
     return [Voice(r) for r in rows]
 
 
+async def check_dummy(request, voice):
+    if voice.row.length == 0:
+        return 0.0
+    return 1.0
+
+
+
+
 
 # TODO: rules
-#!!!! rule out dummy rows
 
 
 
 
 fair_voice_chooser = GoodEnough(
     get_items=get_items,
-    #?
+    rules={
+        check_dummy: 1.0,
+    },
 )
 easy_voice_chooser = GoodEnough(
     get_items=get_items,
-    #?
+    rules={
+        check_dummy: 1.0,
+    },
 )
 random_voice_chooser = GoodEnough(
     get_items=get_items,
-    #?
+    rules={
+        check_dummy: 1.0,
+    },
 )

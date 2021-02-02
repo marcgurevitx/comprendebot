@@ -41,27 +41,38 @@ async def get_items(request):
     return [Phrase(r) for r in rows]
 
 
+async def check_dummy(request, phrase):
+    if phrase.row.original_text == "":
+        return 0.0
+    return 1.0
+
+
 
 
 # TODO: rules...
 
 # slightly demote same author
-#!!!! rule out dummy rows
 
 
 
 
 fair_phrase_chooser = GoodEnough(
     get_items=get_items,
-    #?
+    rules={
+        check_dummy: 1.0,
+    },
 )
 
 easy_phrase_chooser = GoodEnough(
     get_items=get_items,
-    #?
+    rules={
+        check_dummy: 1.0,
+    },
 )
 
 random_phrase_chooser = GoodEnough(
     get_items=get_items,
-    #?
+    rules={
+        check_dummy: 1.0,
+    },
 )
