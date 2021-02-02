@@ -5,6 +5,8 @@ from goodenough import GoodEnough
 from botcommon.config import config
 from botcommon.db import get_pg_cursor
 
+logger = logging.getLogger(__name__)
+
 
 async def get_items(request):
     from botcommon.models.phrase import Phrase
@@ -14,7 +16,7 @@ async def get_items(request):
         100,
     )
 
-    logging.debug("Sample percent [%r]", percent)
+    logger.debug("Sample percent [%r]", percent)
 
     sql_exclude = " ".join(
         f", {p}"
@@ -36,7 +38,7 @@ async def get_items(request):
         )
         rows = await cur.fetchall()
 
-    logging.debug("Sample size [%r]", len(rows))
+    logger.debug("Sample size [%r]", len(rows))
 
     return [Phrase(r) for r in rows]
 
