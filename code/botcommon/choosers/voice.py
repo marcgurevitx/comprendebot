@@ -15,12 +15,12 @@ REALLY_LONG_PHRASE = 1000
 async def get_items(request):
     from botcommon.models.voice import Voice
 
-    percent = min(
+    percentage = min(
         config.CMPDBOT_CHALLENGE_SAMPLE_VOICE / (await Voice.count(is_active=True) or 1) * 100,
         100,
     )
 
-    logger.debug("Sample percent [%r]", percent)
+    logger.debug("Sample percentage [%r]", percentage)
 
     sql_exclude = " ".join(
         f", {v}"
@@ -33,7 +33,7 @@ async def get_items(request):
                 SELECT
                     *
                 FROM
-                    {Voice.get_table_name()} TABLESAMPLE BERNOULLI ({percent})
+                    {Voice.get_table_name()} TABLESAMPLE BERNOULLI ({percentage})
                 WHERE
                     is_active = true
                     AND id NOT IN (0 {sql_exclude})
@@ -78,29 +78,40 @@ async def ensure_same_author_rare(request, voice):
     return 1.0
 
 
+async def ensure_repetition_rare(request, voice):
+    from botcommon.models.transcription import Transcription
+
+    if await Transcription.select_one(person_id=request["person_id"], voice_id=voice.row.id):
+        return 0.1
+    return 1.0
+
+
+_common_rules = {
+    ensure_not_dummy: 1.0,
+    ensure_same_author_rare: 1.0,
+    ensure_repetition_rare: 1.0,
+}
+
 fair_voice_chooser = GoodEnough(
     get_items=get_items,
     rules={
-        ensure_not_dummy: 1.0,
+        **_common_rules,
         ensure_person_level: 1.0,
-        ensure_same_author_rare: 1.0,
     },
 )
 
 easy_voice_chooser = GoodEnough(
     get_items=get_items,
     rules={
-        ensure_not_dummy: 1.0,
+        **_common_rules,
         ensure_shortest: 1.0,
-        ensure_same_author_rare: 1.0,
     },
 )
 
 random_voice_chooser = GoodEnough(
     get_items=get_items,
     rules={
-        ensure_not_dummy: 1.0,
+        **_common_rules,
         ensure_random: 1.0,
-        ensure_same_author_rare: 1.0,
     },
 )
