@@ -83,13 +83,13 @@ class Person(ModelBase):
     async def _create_challenge_voice(self):
         phrases = []
         phrases += nonelist([
-            await Phrase.choose_fair(self.row.n_prev_success, exclude_phrases=phrases)
+            await Phrase.choose_fair(self, exclude_phrases=phrases)
         ])
         phrases += nonelist([
-            await Phrase.choose_easy(exclude_phrases=phrases)
+            await Phrase.choose_easy(self, exclude_phrases=phrases)
         ])
         phrases += nonelist([
-            await Phrase.choose_random(exclude_phrases=phrases)
+            await Phrase.choose_random(self, exclude_phrases=phrases)
         ])
 
         logger.debug("Phrases for voice challenge [%r]", phrases)
@@ -109,13 +109,13 @@ class Person(ModelBase):
     async def _create_challenge_transcription(self):
         voices = []
         voices += nonelist([
-            await Voice.choose_fair(self.row.n_prev_success, exclude_voices=voices)
+            await Voice.choose_fair(self, exclude_voices=voices)
         ])
         voices += nonelist([
-            await Voice.choose_easy(exclude_voices=voices)
+            await Voice.choose_easy(self, exclude_voices=voices)
         ])
         voices += nonelist([
-            await Voice.choose_random(exclude_voices=voices)
+            await Voice.choose_random(self, exclude_voices=voices)
         ])
 
         logger.debug("Voices for transcription challenge [%r]", voices)

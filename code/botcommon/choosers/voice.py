@@ -1,4 +1,5 @@
 import logging
+import random
 
 from goodenough import GoodEnough
 
@@ -6,6 +7,8 @@ from botcommon.config import config
 from botcommon.db import get_pg_cursor
 
 logger = logging.getLogger(__name__)
+
+REALLY_LONG_PHRASE = 1000
 
 
 async def get_items(request):
@@ -43,35 +46,60 @@ async def get_items(request):
     return [Voice(r) for r in rows]
 
 
-async def check_dummy(request, voice):
+async def ensure_not_dummy(request, voice):
     if voice.row.length == 0:
         return 0.0
     return 1.0
 
 
+async def ensure_person_level(request, voice):
+    success = request["person_n_prev_success"] + config.CMPDBOT_CHALLENGE_SUCCESS_BOOST
+    length_diff = abs(success - voice.row.length)
+    length_log = math.log10(length_diff + 1)
+    return 1 - length_log
 
 
+async def ensure_shortest(request, voice):
+    length_log = math.log(
+        voice.row.length,
+        REALLY_LONG_PHRASE,
+    )
+    return 1 - length_log
 
-# TODO: rules
+
+async def ensure_random(request, voice):
+    return random.random()
 
 
+async def ensure_same_author_rare(request, voice):
+    if request["person_id"] == voice.person_id:
+        return 0.8
+    return 1.0
 
 
 fair_voice_chooser = GoodEnough(
     get_items=get_items,
     rules={
-        check_dummy: 1.0,
+        ensure_not_dummy: 1.0,
+        ensure_person_level: 1.0,
+        ensure_same_author_rare: 1.0,
     },
 )
+
 easy_voice_chooser = GoodEnough(
     get_items=get_items,
     rules={
-        check_dummy: 1.0,
+        ensure_not_dummy: 1.0,
+        ensure_shortest: 1.0,
+        ensure_same_author_rare: 1.0,
     },
 )
+
 random_voice_chooser = GoodEnough(
     get_items=get_items,
     rules={
-        check_dummy: 1.0,
+        ensure_not_dummy: 1.0,
+        ensure_random: 1.0,
+        ensure_same_author_rare: 1.0,
     },
 )

@@ -9,20 +9,23 @@ from botcommon.modelbase import ModelBase
 class Voice(ModelBase):
 
     @classmethod
-    async def choose_fair(cls, person_n_prev_success, exclude_voices):
+    async def choose_fair(cls, person, exclude_voices):
         return await fair_voice_chooser.async_pick({
-            "person_n_prev_success": person_n_prev_success,
+            "person_id": person.row.id,
+            "person_n_prev_success": person.row.n_prev_success,
             "exclude_voices": [v.row.id for v in exclude_voices],
         })
 
     @classmethod
-    async def choose_easy(cls, exclude_voices):
+    async def choose_easy(cls, person, exclude_voices):
         return await easy_voice_chooser.async_pick({
+            "person_id": person.row.id,
             "exclude_voices": [v.row.id for v in exclude_voices],
         })
 
     @classmethod
-    async def choose_random(cls, exclude_voices):
+    async def choose_random(cls, person, exclude_voices):
         return await random_voice_chooser.async_pick({
+            "person_id": person.row.id,
             "exclude_voices": [v.row.id for v in exclude_voices],
         })
