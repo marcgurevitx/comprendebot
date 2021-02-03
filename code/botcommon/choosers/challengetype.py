@@ -2,7 +2,6 @@ from goodenough import GoodEnough
 
 from botcommon.bottypes import ChallengeTypeCode
 from botcommon.config import config
-from botcommon.db import get_pg_cursor
 
 
 async def get_items(request):

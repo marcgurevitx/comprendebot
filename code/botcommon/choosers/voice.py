@@ -1,4 +1,5 @@
 import logging
+import math
 import random
 
 from goodenough import GoodEnough
