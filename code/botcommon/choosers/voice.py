@@ -72,7 +72,7 @@ async def ensure_random(request, voice):
 
 
 async def ensure_same_author_rare(request, voice):
-    if request["person_id"] == voice.person_id:
+    if request["person_id"] == voice.row.person_id:
         return 0.8
     return 1.0
 

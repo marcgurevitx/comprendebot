@@ -1,4 +1,7 @@
+import collections
 import enum
+
+SimilarPhrase = collections.namedtuple("SimilarPhrase", "phrase, similarity")
 
 
 class ChallengeTypeCode(enum.Enum):

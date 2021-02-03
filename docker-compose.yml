@@ -38,6 +38,8 @@ services:
     links:
       - pg:$POSTGRES_HOST
       - s3:$S3_HOST
+    volumes:
+      - $CMPDBOT_EXCHANGE_DIR_LOCAL:$CMPDBOT_EXCHANGE_DIR_CONTAINER
 
   bot:
     build:

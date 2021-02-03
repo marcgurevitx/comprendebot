@@ -15,10 +15,10 @@ async def ensure_exists_source(request, item):
 
     rv = 1.0
     if item == ChallengeTypeCode.CHL_VOC:
-        if await Phrase.count(is_active=True) == 0:
+        if await Phrase.count(is_active=True) < 2:
             rv = 0.0
     elif item == ChallengeTypeCode.CHL_TRS:
-        if await Voice.count(is_active=True) == 0:
+        if await Voice.count(is_active=True) < 2:
             rv = 0.0
     return rv
 
@@ -54,13 +54,13 @@ async def ensure_various(request, item):
     )
     if challenge is not None:
         if item == ChallengeTypeCode.CHL_PHR:
-            if challenge.type_code == 'CHL_PHR':
+            if challenge.row.type_code == 'CHL_PHR':
                 rv = 0.5
         elif item == ChallengeTypeCode.CHL_VOC:
-            if challenge.type_code == 'CHL_VOC':
+            if challenge.row.type_code == 'CHL_VOC':
                 rv = 0.5
         elif item == ChallengeTypeCode.CHL_TRS:
-            if challenge.type_code == 'CHL_TRS':
+            if challenge.row.type_code == 'CHL_TRS':
                 rv = 0.5
     return rv
 
@@ -68,7 +68,7 @@ async def ensure_various(request, item):
 challenge_type_chooser = GoodEnough(
     get_items=get_items,
     rules=[
-        #ensure_exists_source,
+        ensure_exists_source,
         ensure_probability,
         ensure_various,
     ],

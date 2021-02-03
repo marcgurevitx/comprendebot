@@ -5,7 +5,7 @@ setup(
     packages=["manage"],
     entry_points={
         "console_scripts": [
-            "botaddphrase = manage.botaddphrase:botaddphrase",
+            "botaddphrases = manage.botaddphrases:botaddphrases",
         ],
     },
 )

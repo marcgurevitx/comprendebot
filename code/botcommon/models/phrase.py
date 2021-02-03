@@ -1,11 +1,15 @@
+import datetime
+
 from Levenshtein import ratio
 
-from botcommon.config import config
+from botcommon.bottypes import SimilarPhrase
 from botcommon.choosers.phrase import (
     fair_phrase_chooser,
     easy_phrase_chooser,
     random_phrase_chooser,
 )
+from botcommon.config import config
+from botcommon.language import Language
 from botcommon.modelbase import ModelBase
 
 
@@ -33,47 +37,23 @@ class Phrase(ModelBase):
             "exclude_phrases": [p.row.id for p in exclude_phrases],
         })
 
-
-
+    @classmethod
+    async def find_similar(cls, text):
+        language = Language.get_instance()
+        normalized_text = language.normalize_text(text)
+        rv = []
+        for phrase in await cls.select_all():
+            if phrase.row.normalized_text is not None:
+                similarity = ratio(normalized_text, phrase.row.normalized_text)
+                if similarity >= config.CMPDBOT_SIMILARITY_RATIO:
+                    rv.append(SimilarPhrase(phrase=phrase, similarity=similarity))
+        return rv, normalized_text
 
     @classmethod
-    async def xxxxx_find_similar(cls, conn, normalized_text):
-        similar = []
-
-        async with conn.cursor() as cur:
-            await cur.execute(
-                """
-                    SELECT
-                        *
-                    FROM
-                        phrase
-                    ;
-                """,
-            )
-            async for row in cur:
-                rat = ratio(normalized_text, row.normalized_text)
-                if rat >= config.CMPDBOT_SIMILARITY_RATIO:
-                    similar.append([rat, row])
-
-        return similar
-
-    @classmethod
-    async def xxxxx_insert(cls, conn, *, is_active, original_text, normalized_text=None):
-        async with conn.cursor() as cur:
-            await cur.execute(
-                """
-                    INSERT INTO phrase (
-                        is_active,
-                        original_text,
-                        normalized_text
-                    )
-                    VALUES
-                        (
-                            %(is_active)s,
-                            %(original_text)s,
-                            %(normalized_text)s
-                        )
-                    ;
-                """,
-                locals()
-            )
+    async def add_from_cli(cls, text, normalized_text):
+        await cls.insert(
+            is_active=True,
+            created_ts=datetime.datetime.now(),
+            original_text=text,
+            normalized_text=normalized_text,
+        )
