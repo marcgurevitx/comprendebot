@@ -6,10 +6,6 @@ from botcommon.choosers.voice import (
 from botcommon.modelbase import ModelBase
 
 
-def get_voice_class():
-    return Voice
-
-
 class Voice(ModelBase):
 
     @classmethod

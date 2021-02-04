@@ -2,7 +2,7 @@ import asyncio
 
 import click
 
-from botcommon.models import get_phrase_class
+from botcommon.models import Phrase
 
 
 @click.command()
@@ -13,7 +13,6 @@ def botaddphrases(phrases_file):
 
 
 async def async_add_phrases(phrases_file):
-    Phrase = get_phrase_class()
     n_added = 0
     n_rejected = 0
     for line in phrases_file:

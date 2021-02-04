@@ -8,17 +8,23 @@ from botcommon.bottypes import ChallengeTypeCode
 from botcommon.choosers.challengetype import challenge_type_chooser
 from botcommon.config import config, calc_ratios
 from botcommon.modelbase import ModelBase
-from botcommon.models import (
-    get_challenge_class,
-    get_phrase_class,
-    get_voice_class,
-)
 
 logger = logging.getLogger(__name__)
 
 
-def get_person_class():
-    return Person
+def get_challenge_class():
+    from botcommon.models import Challenge
+    return Challenge
+
+
+def get_phrase_class():
+    from botcommon.models import Phrase
+    return Phrase
+
+
+def get_voice_class():
+    from botcommon.models import Voice
+    return Voice
 
 
 class Person(ModelBase):

@@ -6,10 +6,19 @@ from goodenough import GoodEnough
 
 from botcommon.config import config
 from botcommon.db import get_pg_cursor
-from botcommon.models import get_transcription_class, get_voice_class
 
 REALLY_LONG_PHRASE = 1000
 logger = logging.getLogger(__name__)
+
+
+def get_transcription_class():
+    from botcommon.models import Transcription
+    return Transcription
+
+
+def get_voice_class():
+    from botcommon.models import Voice
+    return Voice
 
 
 async def get_items(request):
