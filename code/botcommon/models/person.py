@@ -8,11 +8,15 @@ from botcommon.bottypes import ChallengeTypeCode
 from botcommon.choosers.challengetype import challenge_type_chooser
 from botcommon.config import config, calc_ratios
 from botcommon.modelbase import ModelBase
-from botcommon.models.challenge import Challenge
-from botcommon.models.phrase import Phrase
-from botcommon.models.voice import Voice
+from botcommon.models.challenge import get_challenge_class
+from botcommon.models.phrase import get_phrase_class
+from botcommon.models.voice import get_voice_class
 
 logger = logging.getLogger(__name__)
+
+
+def get_person_class():
+    return Person
 
 
 class Person(ModelBase):
@@ -73,6 +77,7 @@ class Person(ModelBase):
         return chltype
 
     async def _create_challenge_phrase(self):
+        Challenge = get_challenge_class()
         return await Challenge.insert(
             is_active=True,
             created_ts=datetime.datetime.now(),
@@ -81,6 +86,7 @@ class Person(ModelBase):
         )
 
     async def _create_challenge_voice(self):
+        Phrase = get_phrase_class()
         phrases = []
         phrases += nonelist([
             await Phrase.choose_fair(self, exclude_phrases=phrases)
@@ -95,6 +101,7 @@ class Person(ModelBase):
         logger.debug("Phrases for voice challenge [%r]", phrases)
 
         if phrases:
+            Challenge = get_challenge_class()
             challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),
@@ -107,6 +114,7 @@ class Person(ModelBase):
         return challenge
 
     async def _create_challenge_transcription(self):
+        Voice = get_voice_class()
         voices = []
         voices += nonelist([
             await Voice.choose_fair(self, exclude_voices=voices)
@@ -121,6 +129,7 @@ class Person(ModelBase):
         logger.debug("Voices for transcription challenge [%r]", voices)
 
         if voices:
+            Challenge = get_challenge_class()
             challenge = await Challenge.insert(
                 is_active=True,
                 created_ts=datetime.datetime.now(),

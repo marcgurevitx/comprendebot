@@ -1,9 +1,10 @@
 import datetime
 
-from botcommon.models.person import Person
+from botcommon.models.person import get_person_class
 
 
 async def on_start(message):
+    Person = get_person_class()
     person = await Person.select_one(telegram_uid=message.from_user.id)
     if person is None:
         person = await Person.insert(

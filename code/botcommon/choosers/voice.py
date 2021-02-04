@@ -6,14 +6,15 @@ from goodenough import GoodEnough
 
 from botcommon.config import config
 from botcommon.db import get_pg_cursor
-
-logger = logging.getLogger(__name__)
+from botcommon.models.transcription import get_transcription_class
+from botcommon.models.voice import get_voice_class
 
 REALLY_LONG_PHRASE = 1000
+logger = logging.getLogger(__name__)
 
 
 async def get_items(request):
-    from botcommon.models.voice import Voice
+    Voice = get_voice_class()
 
     percentage = min(
         config.CMPDBOT_CHALLENGE_SAMPLE_VOICE / (await Voice.count(is_active=True) or 1) * 100,
@@ -79,8 +80,7 @@ async def ensure_same_author_rare(request, voice):
 
 
 async def ensure_repetition_rare(request, voice):
-    from botcommon.models.transcription import Transcription
-
+    Transcription = get_transcription_class()
     if await Transcription.select_one(person_id=request["person_id"], voice_id=voice.row.id):
         return 0.1
     return 1.0

@@ -2,6 +2,9 @@ from goodenough import GoodEnough
 
 from botcommon.bottypes import ChallengeTypeCode
 from botcommon.config import config
+from botcommon.models.challenge import get_challenge_class
+from botcommon.models.phrase import get_phrase_class
+from botcommon.models.voice import get_voice_class
 
 
 async def get_items(request):
@@ -9,14 +12,13 @@ async def get_items(request):
 
 
 async def ensure_exists_source(request, item):
-    from botcommon.models.phrase import Phrase
-    from botcommon.models.voice import Voice
-
     rv = 1.0
     if item == ChallengeTypeCode.CHL_VOC:
+        Phrase = get_phrase_class()
         if await Phrase.count(is_active=True) < 2:
             rv = 0.0
     elif item == ChallengeTypeCode.CHL_TRS:
+        Voice = get_voice_class()
         if await Voice.count(is_active=True) < 2:
             rv = 0.0
     return rv
@@ -33,9 +35,8 @@ async def ensure_probability(request, item):
 
 
 async def ensure_various(request, item):
-    from botcommon.models.challenge import Challenge
-
     rv = 1.0
+    Challenge = get_challenge_class()
     challenge = await Challenge.select_sql_one(
         f"""
             SELECT

@@ -13,6 +13,10 @@ from botcommon.language import Language
 from botcommon.modelbase import ModelBase
 
 
+def get_phrase_class():
+    return Phrase
+
+
 class Phrase(ModelBase):
 
     @classmethod
