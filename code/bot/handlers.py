@@ -1,18 +1,12 @@
-import datetime
-
-from botcommon.models.person import get_person_class
+from botcommon.models import get_person_class
 
 
 async def on_start(message):
     Person = get_person_class()
-    person = await Person.select_one(telegram_uid=message.from_user.id)
-    if person is None:
-        person = await Person.insert(
-            is_active=True,
-            created_ts=datetime.datetime.now(),
-            telegram_uid=message.from_user.id,
-            telegram_info=message.from_user.as_json(),
-        )
+    person = await Person.find_or_create(
+        telegram_uid=message.from_user.id,
+        telegram_info=message.from_user.as_json(),
+    )
     challenge = await person.get_new_challenge()
 
     # TODO: check challenge is None

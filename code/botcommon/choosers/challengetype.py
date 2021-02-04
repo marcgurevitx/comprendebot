@@ -2,9 +2,11 @@ from goodenough import GoodEnough
 
 from botcommon.bottypes import ChallengeTypeCode
 from botcommon.config import config
-from botcommon.models.challenge import get_challenge_class
-from botcommon.models.phrase import get_phrase_class
-from botcommon.models.voice import get_voice_class
+from botcommon.models import (
+    get_challenge_class,
+    get_phrase_class,
+    get_voice_class,
+)
 
 
 async def get_items(request):

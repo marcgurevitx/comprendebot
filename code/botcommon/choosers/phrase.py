@@ -6,8 +6,7 @@ from goodenough import GoodEnough
 
 from botcommon.config import config
 from botcommon.db import get_pg_cursor
-from botcommon.models.phrase import get_phrase_class
-from botcommon.models.voice import get_voice_class
+from botcommon.models import get_phrase_class, get_voice_class
 
 REALLY_LONG_PHRASE = 1000
 logger = logging.getLogger(__name__)

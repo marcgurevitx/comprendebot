@@ -8,9 +8,11 @@ from botcommon.bottypes import ChallengeTypeCode
 from botcommon.choosers.challengetype import challenge_type_chooser
 from botcommon.config import config, calc_ratios
 from botcommon.modelbase import ModelBase
-from botcommon.models.challenge import get_challenge_class
-from botcommon.models.phrase import get_phrase_class
-from botcommon.models.voice import get_voice_class
+from botcommon.models import (
+    get_challenge_class,
+    get_phrase_class,
+    get_voice_class,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +22,18 @@ def get_person_class():
 
 
 class Person(ModelBase):
+
+    @classmethod
+    async def find_or_create(cls, telegram_uid, telegram_info):
+        person = await cls.select_one(telegram_uid=telegram_uid)
+        if person is None:
+            person = await cls.insert(
+                is_active=True,
+                created_ts=datetime.datetime.now(),
+                telegram_uid=telegram_uid,
+                telegram_info=telegram_uid,
+            )
+        return person
 
     async def get_new_challenge(self):
         chltype = await self._choose_new_challenge_type()

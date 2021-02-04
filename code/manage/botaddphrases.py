@@ -2,7 +2,7 @@ import asyncio
 
 import click
 
-from botcommon.models.phrase import get_phrase_class
+from botcommon.models import get_phrase_class
 
 
 @click.command()
