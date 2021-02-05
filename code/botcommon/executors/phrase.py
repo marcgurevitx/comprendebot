@@ -1,9 +1,20 @@
-class PhraseChallenge:
+from botcommon.bottypes import PhraseStates
 
-    def __init__(self, challenge):
-        self.challenge = challenge
+from .baseexecutor import BaseExecutor
 
-    async def start(self):
-        
-        
-        pass#?
+
+class PhraseExecutor(BaseExecutor):
+    states = PhraseStates
+    initial = PhraseStates.PHR_CRE
+    transitions = [
+        dict(
+            trigger="start",
+            source=PhraseStates.PHR_CRE,
+            dest=PhraseStates.PHR_WRK,
+            after="explain_challenge",
+        ),
+    ]
+
+    async def explain_challenge(self):
+        sss = "[TTT] Send me phrase."
+        self.sendables.append(sss)

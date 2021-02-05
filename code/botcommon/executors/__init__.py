@@ -1,3 +1,3 @@
-from .phrase import PhraseChallenge
-from .voice import VoiceChallenge
-from .transcription import TranscriptionChallenge
+from .phrase import PhraseExecutor
+from .voice import VoiceExecutor
+from .transcription import TranscriptionExecutor

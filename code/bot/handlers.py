@@ -12,8 +12,11 @@ async def on_start(message):
     if challenge is None:
         await chat.send_text("[TTT] No challenge found. Please try later.")
     else:
-        sendable = await challenge.start()
-        await chat.send(sendable)
+        executor = challenge.get_executor()
+        await executor.start()
+        for sendable in executor.dump_sendables():
+            await chat.send(sendable)
+        await executor.save_state()
 
 
 async def on_text(message):

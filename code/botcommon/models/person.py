@@ -37,7 +37,7 @@ class Person(ModelBase):
                 is_active=True,
                 created_ts=datetime.datetime.now(),
                 telegram_uid=telegram_uid,
-                telegram_info=telegram_uid,
+                telegram_info=telegram_info,
             )
         return person
 

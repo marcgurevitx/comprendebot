@@ -3,3 +3,4 @@ goodenough
 lxml
 nonelib
 python-Levenshtein
+transitions

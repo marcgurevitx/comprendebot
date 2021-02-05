@@ -1,23 +1,19 @@
 from botcommon.executors import (
-    PhraseChallenge,
-    VoiceChallenge,
-    TranscriptionChallenge,
+    PhraseExecutor,
+    VoiceExecutor,
+    TranscriptionExecutor,
 )
 from botcommon.modelbase import ModelBase
 
 
 class Challenge(ModelBase):
 
-    def _get_executor(self):
+    def get_executor(self):
         if self.row.type_code == 'CHL_PHR':
-            challenge_executor = PhraseChallenge(self)
+            executor_class = PhraseExecutor
         elif self.row.type_code == 'CHL_VOC':
-            challenge_executor = VoiceChallenge(self)
+            executor_class = VoiceExecutor
         elif self.row.type_code == 'CHL_TRS':
-            challenge_executor = TranscriptionChallenge(self)
-        return challenge_executor
-
-    async def start(self):
-        challenge_executor = self._get_executor()
-        sendable = await challenge_executor.start()
-        return sendable
+            executor_class = TranscriptionExecutor
+        executor = executor_class(challenge=self)
+        return executor

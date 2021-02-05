@@ -1,9 +1,20 @@
-class VoiceChallenge:
+from botcommon.bottypes import VoiceStates
 
-    def __init__(self, challenge):
-        self.challenge = challenge
+from .baseexecutor import BaseExecutor
 
-    async def start(self):
-        
-        
-        pass#?
+
+class VoiceExecutor(BaseExecutor):
+    states = VoiceStates
+    initial = VoiceStates.VOC_CRE
+    transitions = [
+        dict(
+            trigger="start",
+            source=VoiceStates.VOC_CRE,
+            dest=VoiceStates.VOC_WRK,
+            after="explain_challenge",
+        ),
+    ]
+
+    async def explain_challenge(self):
+        sss = "[TTT] Choose one phrase..."  # + 3 buttons
+        self.sendables.append(sss)
