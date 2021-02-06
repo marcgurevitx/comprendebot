@@ -39,8 +39,7 @@ class Phrase(ModelBase):
 
     @classmethod
     async def find_similar(cls, text):
-        language = Language.get_instance()
-        normalized_text = language.normalize_text(text)
+        normalized_text = cls.normalize_text(text)
         rv = []
         for phrase in await cls.select_all():
             if phrase.row.normalized_text is not None:
@@ -50,10 +49,27 @@ class Phrase(ModelBase):
         return rv, normalized_text
 
     @classmethod
+    def normalize_text(cls, text):
+        language = Language.get_instance()
+        normalized_text = language.normalize_text(text)
+        return normalized_text
+
+    @classmethod
     async def add_from_cli(cls, text, normalized_text):
         await cls.insert(
             is_active=True,
             created_ts=datetime.datetime.now(),
             original_text=text,
             normalized_text=normalized_text,
+        )
+
+    @classmethod
+    async def add_from_challenge(cls, text, challenge):
+        await Phrase.insert(
+            is_active=True,
+            created_ts=datetime.datetime.now(),
+            person_id=challenge.row.person_id,
+            original_text=text,
+            normalized_text=cls.normalize_text(text),
+            challenge_id=challenge.row.id,
         )

@@ -7,6 +7,7 @@ from bot.handlers import (
     on_start,
     on_text,
     on_edit,
+    on_button_press,
 )
 from botcommon.config import config
 
@@ -18,6 +19,7 @@ dp = Dispatcher(bot)
 dp.register_message_handler(on_start, commands=["start"])
 dp.register_message_handler(on_text)
 dp.register_edited_message_handler(on_edit)
+dp.register_callback_query_handler(on_button_press)
 
 
 async def on_startup(dp):
