@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from bot.handlers import (
     on_start,
     on_text,
+    on_edit,
 )
 from botcommon.config import config
 
@@ -16,6 +17,7 @@ bot = Bot(token=config.CMPDBOT_TOKEN)
 dp = Dispatcher(bot)
 dp.register_message_handler(on_start, commands=["start"])
 dp.register_message_handler(on_text)
+dp.register_edited_message_handler(on_edit)
 
 
 async def on_startup(dp):

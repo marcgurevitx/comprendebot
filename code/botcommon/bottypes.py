@@ -1,6 +1,8 @@
 import collections
 import enum
 
+Button = collections.namedtuple("Button", "text, data")
+
 Sendable = collections.namedtuple("Sendable", "type, value, is_reply, buttons")
 
 SimilarPhrase = collections.namedtuple("SimilarPhrase", "phrase, similarity")
