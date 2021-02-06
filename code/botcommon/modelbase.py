@@ -127,6 +127,20 @@ class ModelBase:
             row = await cur.fetchone()
         return cls(row)
 
+    @classmethod
+    async def delete(cls, **kwargs):
+        async with get_pg_cursor() as cur:
+            await cur.execute(
+                f"""
+                    DELETE FROM
+                        {cls.get_table_name()}
+                    WHERE
+                        1 = 1 {cls.sql_where(kwargs)}
+                    ;
+                """,
+                kwargs,
+            )
+
     def __init__(self, row):
         self.row = row
 

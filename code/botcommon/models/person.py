@@ -29,29 +29,20 @@ def get_voice_class():
 
 class Person(ModelBase):
 
-    @classmethod
-    async def find_or_create(cls, telegram_uid, telegram_info):
-        person = await cls.select_one(telegram_uid=telegram_uid)
-        if person is None:
-            person = await cls.insert(
-                is_active=True,
-                created_ts=datetime.datetime.now(),
-                telegram_uid=telegram_uid,
-                telegram_info=telegram_info,
-            )
-        return person
-
     async def get_new_challenge(self):
-        chltype = await self._choose_new_challenge_type()
-        if chltype == ChallengeTypeCode.CHL_PHR:
-            challenge = await self._create_challenge_phrase()
-        elif chltype == ChallengeTypeCode.CHL_VOC:
-            challenge = await self._create_challenge_voice()
-        elif chltype == ChallengeTypeCode.CHL_TRS:
-            challenge = await self._create_challenge_transcription()
-        else:
-            challenge = None
+        await self._deactivate_existing_challenges()
+        challenge_type = await self._choose_new_challenge_type()
+        challenge = await self._create_challenge_by_type(challenge_type)
         return challenge
+
+    async def _deactivate_existing_challenges(self):
+        Challenge = get_challenge_class()
+        challenges = await Challenge.select_all(
+            is_active=True,
+            person_id=self.row.id,
+        )
+        for challenge in challenges:
+            await challenge.update(is_active=False)
 
     async def _choose_new_challenge_type(self):
         for _ in range(config.CMPDBOT_CHALLENGE_SEVRAL_TIMEZ):
@@ -95,6 +86,17 @@ class Person(ModelBase):
             chltype = None
 
         return chltype
+
+    async def _create_challenge_by_type(self, challenge_type):
+        if challenge_type == ChallengeTypeCode.CHL_PHR:
+            challenge = await self._create_challenge_phrase()
+        elif challenge_type == ChallengeTypeCode.CHL_VOC:
+            challenge = await self._create_challenge_voice()
+        elif challenge_type == ChallengeTypeCode.CHL_TRS:
+            challenge = await self._create_challenge_transcription()
+        else:
+            challenge = None
+        return challenge
 
     async def _create_challenge_phrase(self):
         Challenge = get_challenge_class()
@@ -160,3 +162,10 @@ class Person(ModelBase):
         else:
             challenge = None
         return challenge
+
+    async def get_existing_active_challenge(self):
+        Challenge = get_challenge_class()
+        return await Challenge.select_one(
+            is_active=True,
+            person_id=self.row.id,
+        )

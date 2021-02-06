@@ -25,10 +25,10 @@ class BaseExecutor:
         )
         return machine
 
-    def dump_sendables(self):
-        for sendable in self.sendables:
-            yield sendable
-        self.sendables = []
+    def pop_sendables(self):
+        rv = self.sendables[:]
+        self.sendables.clear()
+        return rv
 
     async def save_state(self):
         await self.challenge.update(

@@ -1,4 +1,4 @@
-from botcommon.bottypes import PhraseStates
+from botcommon.bottypes import PhraseStates, Sendable
 
 from .baseexecutor import BaseExecutor
 
@@ -16,5 +16,12 @@ class PhraseExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
-        sss = "[TTT] Send me phrase."
-        self.sendables.append(sss)
+
+        s = Sendable(
+            type="text",
+            value="[TTT] Send me phrase.",
+            is_reply=False,
+            buttons=[],
+        )
+
+        self.sendables.append(s)

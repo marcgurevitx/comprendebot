@@ -1,23 +1,22 @@
-from bot.chat import Chat
-from botcommon.models import Person
+from bot.decos import with_person_and_chat
+from bot.helpers import arrange_new_challenge
 
 
-async def on_start(message):
-    chat = Chat(message.bot, message.chat.id)
-    person = await Person.find_or_create(
-        telegram_uid=message.from_user.id,
-        telegram_info=message.from_user.as_json(),
-    )
-    challenge = await person.get_new_challenge()
+@with_person_and_chat
+async def on_start(message, *, person, chat, **kwargs):
+    await arrange_new_challenge(person, chat)
+
+
+@with_person_and_chat
+async def on_text(message, *, person, chat, **kwargs):
+    challenge = await person.get_existing_active_challenge()
     if challenge is None:
-        await chat.send_text("[TTT] No challenge found. Please try later.")
-    else:
-        executor = challenge.get_executor()
-        await executor.start()
-        for sendable in executor.dump_sendables():
-            await chat.send(sendable)
-        await executor.save_state()
 
+        await message.reply("[TTT] Send /comensa for new challenge. Send /aida for help.")
 
-async def on_text(message):
-    await message.reply("Hello i bot!")
+        pass#?
+
+    async with challenge.get_executor() as executor:
+        await executor.receive_text(message.text)
+        sendables = executor.pop_sendables()
+        await chat.send_list(sendables)
