@@ -1,5 +1,7 @@
 from botcommon.bottypes import VoiceStates
 
+from botcommon.bottypes import Sendable, Button, SendableTypeCode
+
 from .baseexecutor import BaseExecutor
 
 
@@ -16,5 +18,16 @@ class VoiceExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
-        sss = "[TTT] Choose one phrase..."  # + 3 buttons
-        self.sendables.append(sss)
+        phrases = await self.challenge.get_phrases()
+        buttons = [
+            Button(text=p.row.original_text, data=p.row.id)
+            for p
+            in phrases
+        ]
+        s = Sendable(
+            type=SendableTypeCode.SND_TXT,
+            value="[TTT] Choose phrase.",
+            is_reply=False,
+            buttons=buttons,
+        )
+        self.sendables.append(s)
