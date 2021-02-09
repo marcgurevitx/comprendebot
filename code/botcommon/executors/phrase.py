@@ -30,13 +30,7 @@ class PhraseExecutor(BaseExecutor):
             after="ask_submission",
         ),
         dict(
-            trigger="receive_edit",
-            source=PhraseStates.PHR_WRK,
-            dest=PhraseStates.PHR_WRK,
-            after="edit_variant",
-        ),
-        dict(
-            trigger="receive_button_press",
+            trigger="receive_button_press_on_text",
             source=PhraseStates.PHR_WRK,
             dest=PhraseStates.PHR_END,
             after="save_phrase",
@@ -53,11 +47,7 @@ class PhraseExecutor(BaseExecutor):
         self.sendables.append(s)
 
     async def ask_submission(self, text, message_id):
-        executor_data = self.challenge.row.executor_data
-        user_variants = executor_data.setdefault(DATA_ROOT_KEY, {})
-        user_variants[str(message_id)] = text
         submit_button = Button(text="[TTT] Submit", data=message_id)
-        await self.challenge.update(executor_data=Json(executor_data))
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="[TTT] Press 'Submit' to submit, or send another one.",
@@ -66,17 +56,7 @@ class PhraseExecutor(BaseExecutor):
         )
         self.sendables.append(s)
 
-    async def edit_variant(self, text, message_id):
-        executor_data = self.challenge.row.executor_data
-        user_variants = executor_data[DATA_ROOT_KEY]
-        user_variants[str(message_id)] = text
-        await self.challenge.update(executor_data=Json(executor_data))
-
-    async def save_phrase(self, message_id):
-        executor_data = self.challenge.row.executor_data
-        user_variants = executor_data[DATA_ROOT_KEY]
-        text = user_variants[str(message_id)]
-
+    async def save_phrase(self, text, message_id):
         Phrase = get_phrase_class()
         await Phrase.add_from_challenge(text, self.challenge)
 

@@ -65,7 +65,7 @@ class Phrase(ModelBase):
 
     @classmethod
     async def add_from_challenge(cls, text, challenge):
-        await Phrase.insert(
+        await cls.insert(
             is_active=True,
             created_ts=datetime.datetime.now(),
             person_id=challenge.row.person_id,

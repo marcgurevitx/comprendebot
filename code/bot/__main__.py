@@ -4,9 +4,8 @@ import os
 from aiogram import Bot, Dispatcher, executor, types
 
 from bot.handlers import (
-    on_start,
-    on_text,
-    on_edit,
+    on_cmd_start,
+    on_message,
     on_button_press,
 )
 from botcommon.config import config
@@ -16,9 +15,8 @@ logging.basicConfig(level=config.LOG_LEVEL)
 bot = Bot(token=config.CMPDBOT_TOKEN)
 
 dp = Dispatcher(bot)
-dp.register_message_handler(on_start, commands=["start"])
-dp.register_message_handler(on_text)
-dp.register_edited_message_handler(on_edit)
+dp.register_message_handler(on_cmd_start, commands=["start"])
+dp.register_message_handler(on_message, content_types=[types.ContentType.TEXT, types.ContentType.VOICE])
 dp.register_callback_query_handler(on_button_press)
 
 

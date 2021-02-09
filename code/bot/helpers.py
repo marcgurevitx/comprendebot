@@ -1,4 +1,5 @@
 import datetime
+import io
 
 from aiogram.types import CallbackQuery
 
@@ -36,3 +37,9 @@ async def arrange_new_challenge(person, chat):
             await executor.start()
             sendables = executor.pop_sendables()
             await chat.send_list(sendables)
+
+
+async def download_voice(voice):
+    voice_io = await voice.download(destination=io.BytesIO())
+    voice_bytes = voice_io.read()
+    return voice_bytes

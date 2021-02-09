@@ -8,7 +8,8 @@ CREATE TABLE voice (
     created_ts timestamptz NOT NULL,
     person_id integer REFERENCES person(id),
     phrase_id integer REFERENCES phrase(id),
-    length integer NOT NULL
+    length integer NOT NULL,
+    s3_key text
 );
 
 COMMIT;
