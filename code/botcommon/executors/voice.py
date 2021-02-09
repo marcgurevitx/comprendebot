@@ -85,7 +85,7 @@ class VoiceExecutor(BaseExecutor):
         submit_button = Button(text="[TTT] Submit", data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Press 'Submit' to submit, or record another one.",
+            value="[TTT] Press 'Submit' to submit, or record another variant of this so you could choose the better one.",
             is_reply=True,
             buttons=[submit_button],
         )
@@ -101,10 +101,6 @@ class VoiceExecutor(BaseExecutor):
         Voice = get_voice_class()
         await Voice.add_from_challenge(phrase_id, phrase_length, voice_key, self.challenge)
 
-        await self.challenge.update(
-            is_active=False,
-        )
-
         restart_button = Button(
             text="[TTT] Start new challenge",
             data=config.CMPDBOT_CONST_START,
@@ -116,3 +112,7 @@ class VoiceExecutor(BaseExecutor):
             buttons=[restart_button],
         )
         self.sendables.append(s)
+
+        await self.challenge.update(
+            is_active=False,
+        )

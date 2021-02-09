@@ -9,7 +9,7 @@ from botcommon.choosers.phrase import (
     random_phrase_chooser,
 )
 from botcommon.config import config
-from botcommon.language import Language
+from botcommon.helpers import normalize_text
 from botcommon.modelbase import ModelBase
 
 
@@ -39,7 +39,7 @@ class Phrase(ModelBase):
 
     @classmethod
     async def find_similar(cls, text):
-        normalized_text = cls.normalize_text(text)
+        normalized_text = normalize_text(text)
         rv = []
         for phrase in await cls.select_all():
             if phrase.row.normalized_text is not None:
@@ -47,12 +47,6 @@ class Phrase(ModelBase):
                 if similarity >= config.CMPDBOT_SIMILARITY_RATIO:
                     rv.append(SimilarPhrase(phrase=phrase, similarity=similarity))
         return rv, normalized_text
-
-    @classmethod
-    def normalize_text(cls, text):
-        language = Language.get_instance()
-        normalized_text = language.normalize_text(text)
-        return normalized_text
 
     @classmethod
     async def add_from_cli(cls, text, normalized_text):
@@ -70,6 +64,6 @@ class Phrase(ModelBase):
             created_ts=datetime.datetime.now(),
             person_id=challenge.row.person_id,
             original_text=text,
-            normalized_text=cls.normalize_text(text),
+            normalized_text=normalize_text(text),
             challenge_id=challenge.row.id,
         )

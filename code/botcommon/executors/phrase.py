@@ -50,7 +50,7 @@ class PhraseExecutor(BaseExecutor):
         submit_button = Button(text="[TTT] Submit", data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Press 'Submit' to submit, or send another one.",
+            value="[TTT] Press 'Submit' to submit, or send another one so you could choose the best of them.",
             is_reply=True,
             buttons=[submit_button],
         )
@@ -59,10 +59,6 @@ class PhraseExecutor(BaseExecutor):
     async def save_phrase(self, text, message_id):
         Phrase = get_phrase_class()
         await Phrase.add_from_challenge(text, self.challenge)
-
-        await self.challenge.update(
-            is_active=False,
-        )
 
         restart_button = Button(
             text="[TTT] Start new challenge",
@@ -75,3 +71,7 @@ class PhraseExecutor(BaseExecutor):
             buttons=[restart_button],
         )
         self.sendables.append(s)
+
+        await self.challenge.update(
+            is_active=False,
+        )

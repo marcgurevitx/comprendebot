@@ -10,9 +10,7 @@ SimilarPhrase = collections.namedtuple("SimilarPhrase", "phrase, similarity")
 
 class SendableTypeCode(enum.Enum):
     SND_TXT = "SND_TXT"
-    
-    
-    #?
+    SND_VOC = "SND_VOC"
 
 
 class ChallengeTypeCode(enum.Enum):

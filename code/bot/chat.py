@@ -24,6 +24,12 @@ class Chat:
                 text=sendable.value,
                 **send_params,
             )
+        elif sendable.type == SendableTypeCode.SND_VOC:
+            await self.bot.send_voice(
+                chat_id=self.chat_id,
+                voice=sendable.value,
+                **send_params,
+            )
         else:
             raise Exception(f"Sendable of unknown type [{sendable}]")
 

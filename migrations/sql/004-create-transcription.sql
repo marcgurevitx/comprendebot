@@ -7,7 +7,9 @@ CREATE TABLE transcription (
     is_active boolean NOT NULL,
     created_ts timestamptz NOT NULL,
     person_id integer REFERENCES person(id),
-    voice_id integer REFERENCES voice(id)
+    voice_id integer REFERENCES voice(id),
+    user_text text NOT NULL,
+    distance integer NOT NULL
 );
 
 COMMIT;

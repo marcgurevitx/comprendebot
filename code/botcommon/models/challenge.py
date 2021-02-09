@@ -13,6 +13,11 @@ def get_phrase_class():
     return Phrase
 
 
+def get_voice_class():
+    from botcommon.models import Voice
+    return Voice
+
+
 class Challenge(ModelBase):
 
     def _get_executor_class(self):
@@ -47,5 +52,24 @@ class Challenge(ModelBase):
                     ;
                 """,
                 phrase_ids=tuple(self.row.phrases),
+            )
+        return rv
+
+    async def get_voices(self):
+        if not self.row.voices:
+            rv = []
+        else:
+            Voice = get_voice_class()
+            rv = await Voice.select_sql_all(
+                f"""
+                    SELECT
+                        *
+                    FROM
+                        {Voice.get_table_name()}
+                    WHERE
+                        id in %(voice_ids)s
+                    ;
+                """,
+                voice_ids=tuple(self.row.voices),
             )
         return rv

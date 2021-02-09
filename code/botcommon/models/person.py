@@ -169,3 +169,26 @@ class Person(ModelBase):
             is_active=True,
             person_id=self.row.id,
         )
+
+    @classmethod
+    async def increase_xp(cls, xp, person_trs_id, person_voc_id, person_phr_id):
+        person_trs = await cls.select_one(id=person_trs_id)
+        await person_trs.update(
+            xp=person_trs.row.xp + xp,
+            n_prev_success=xp,
+        )
+
+        person_voc = await Person.select_one(id=person_voc_id)
+        await person_voc.update(
+            xp=person_voc.row.xp + xp,
+            generated_xp=person_voc.row.generated_xp + xp,
+        )
+
+        if person_phr_id:
+            person_phr = await Person.select_one(id=person_phr_id)
+            await person_phr.update(
+                xp=person_phr.row.xp + xp,
+                generated_xp=person_phr.row.generated_xp + xp,
+            )
+
+        return person_trs.row.xp

@@ -9,6 +9,7 @@ CREATE TABLE person (
     telegram_uid integer NOT NULL,
     telegram_info jsonb,
     xp integer DEFAULT 0,
+    generated_xp integer DEFAULT 0,
     challenges_history jsonb DEFAULT '{"CHL_PHR": 0, "CHL_VOC": 0, "CHL_TRS": 0}',
     n_prev_success integer DEFAULT 0
 );
