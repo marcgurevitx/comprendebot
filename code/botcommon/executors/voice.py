@@ -2,6 +2,7 @@ from psycopg2.extras import Json
 
 from botcommon.bottypes import VoiceStates, Sendable, Button, SendableTypeCode
 from botcommon.config import config
+from botcommon.helpers import get_start_button
 from botcommon.s3 import save_binary
 
 from .baseexecutor import BaseExecutor
@@ -101,15 +102,11 @@ class VoiceExecutor(BaseExecutor):
         Voice = get_voice_class()
         await Voice.add_from_challenge(phrase_id, phrase_length, voice_key, self.challenge)
 
-        restart_button = Button(
-            text="[TTT] Start new challenge",
-            data=config.CMPDBOT_CONST_START,
-        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="[TTT] Thank you. The voice is successfully saved.",
             is_reply=False,
-            buttons=[restart_button],
+            buttons=[get_start_button()],
         )
         self.sendables.append(s)
 

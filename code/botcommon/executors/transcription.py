@@ -2,7 +2,7 @@ from psycopg2.extras import Json
 
 from botcommon.bottypes import TranscriptionStates, Sendable, Button, SendableTypeCode
 from botcommon.config import config
-from botcommon.helpers import get_distance
+from botcommon.helpers import get_distance, get_start_button
 from botcommon.s3 import retrieve_binary
 
 from .baseexecutor import BaseExecutor
@@ -150,15 +150,11 @@ class TranscriptionExecutor(BaseExecutor):
         )
         lines.append(f"[TTT] Total score now = {total_xp}")
 
-        restart_button = Button(
-            text="[TTT] Start new challenge",
-            data=config.CMPDBOT_CONST_START,
-        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="\n".join(lines),
             is_reply=False,
-            buttons=[restart_button],
+            buttons=[get_start_button()],
         )
         self.sendables.append(s)
 

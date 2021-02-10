@@ -4,6 +4,8 @@ import io
 from aiogram.types import CallbackQuery
 
 from bot.chat import Chat
+from botcommon.bottypes import Sendable, SendableTypeCode, Button
+from botcommon.helpers import get_start_button
 from botcommon.models import Person
 
 
@@ -43,3 +45,13 @@ async def download_voice(voice):
     voice_io = await voice.download(destination=io.BytesIO())
     voice_bytes = voice_io.read()
     return voice_bytes
+
+
+async def welcome_new_user(person, chat):
+    s = Sendable(
+        type=SendableTypeCode.SND_TXT,
+        value="[TTT] Hello, I'm lfnescutabot, I train people in listening and speaking LFN. See <LINK> for more info. Press start button or send /comensa for your first challenge.",
+        is_reply=False,
+        buttons=[get_start_button()],
+    )
+    await chat.send(s)

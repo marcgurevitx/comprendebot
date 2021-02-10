@@ -3,6 +3,7 @@ from bot.helpers import (
     get_person,
     create_person,
     arrange_new_challenge,
+    welcome_new_user,
 )
 
 
@@ -14,7 +15,7 @@ def with_person_and_chat(handler):
 
         if person is None:
             person = await create_person(entity)
-            return await arrange_new_challenge(person, chat)
+            return await welcome_new_user(person, chat)
 
         await handler(entity, person=person, chat=chat, **kwargs)
 
