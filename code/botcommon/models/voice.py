@@ -5,10 +5,10 @@ from botcommon.choosers.voice import (
     easy_voice_chooser,
     random_voice_chooser,
 )
-from botcommon.modelbase import ModelBase
+from botcommon.models.basemodel import BaseModel
 
 
-class Voice(ModelBase):
+class Voice(BaseModel):
 
     @classmethod
     async def choose_fair(cls, person, exclude_voices):

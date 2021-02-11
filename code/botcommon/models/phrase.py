@@ -10,10 +10,10 @@ from botcommon.choosers.phrase import (
 )
 from botcommon.config import config
 from botcommon.helpers import normalize_text
-from botcommon.modelbase import ModelBase
+from botcommon.models.basemodel import BaseModel
 
 
-class Phrase(ModelBase):
+class Phrase(BaseModel):
 
     @classmethod
     async def choose_fair(cls, person, exclude_phrases):

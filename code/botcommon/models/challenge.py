@@ -5,7 +5,7 @@ from botcommon.executors import (
     VoiceExecutor,
     TranscriptionExecutor,
 )
-from botcommon.modelbase import ModelBase
+from botcommon.models.basemodel import BaseModel
 
 
 def get_phrase_class():
@@ -18,7 +18,7 @@ def get_voice_class():
     return Voice
 
 
-class Challenge(ModelBase):
+class Challenge(BaseModel):
 
     def _get_executor_class(self):
         if self.row.type_code == 'CHL_PHR':

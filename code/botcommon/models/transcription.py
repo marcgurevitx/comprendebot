@@ -1,9 +1,9 @@
 import datetime
 
-from botcommon.modelbase import ModelBase
+from botcommon.models.basemodel import BaseModel
 
 
-class Transcription(ModelBase):
+class Transcription(BaseModel):
 
     @classmethod
     async def add_from_challenge(cls, voice_id, text, distance, challenge):

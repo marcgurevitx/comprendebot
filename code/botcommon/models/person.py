@@ -7,7 +7,7 @@ from psycopg2.extras import Json
 from botcommon.bottypes import ChallengeTypeCode
 from botcommon.choosers.challengetype import challenge_type_chooser
 from botcommon.config import config, calc_ratios
-from botcommon.modelbase import ModelBase
+from botcommon.models.basemodel import BaseModel
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ def get_voice_class():
     return Voice
 
 
-class Person(ModelBase):
+class Person(BaseModel):
 
     async def get_new_challenge(self):
         await self._deactivate_existing_challenges()

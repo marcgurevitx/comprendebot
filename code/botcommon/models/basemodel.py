@@ -1,7 +1,7 @@
 from botcommon.db import get_pg_cursor
 
 
-class ModelBase:
+class BaseModel:
     table_name = None
 
     @classmethod
