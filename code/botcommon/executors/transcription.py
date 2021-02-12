@@ -1,7 +1,7 @@
 from psycopg2.extras import Json
 
-from botcommon.bottypes import TranscriptionStates, Sendable, Button, SendableTypeCode
-from botcommon.helpers import get_distance, get_start_button
+from botcommon.bottypes import TranscriptionStates, Sendable, Button, SendableTypeCode, Stickers
+from botcommon.helpers import get_distance, get_start_button, get_metal_sticker
 from botcommon.s3 import retrieve_binary
 
 from .baseexecutor import BaseExecutor
@@ -58,15 +58,23 @@ class TranscriptionExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.TRS,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
         voices = await self.challenge.get_voices()
         buttons = [
-            Button(text=f"*** (+ {v.row.length})", data=v.row.id)
+            Button(text=f"*** (+{v.row.length})", data=v.row.id)
             for v
             in voices
         ]
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Choose voice.",
+            value="[TTT] This challenge is about listening and trying to understand.\nPick phrase and <b>transcribe</b> it.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
             is_reply=False,
             buttons=buttons,
         )
@@ -87,7 +95,7 @@ class TranscriptionExecutor(BaseExecutor):
 
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Write transcription.",
+            value="[TTT] Now write transcription.\nYou can send many variants but only submit one.\nEditing message also works.\nChanged your mind? Pick another phrase, no problem.",
             is_reply=False,
             buttons=[],
         )
@@ -104,7 +112,7 @@ class TranscriptionExecutor(BaseExecutor):
         submit_button = Button(text="[TTT] Submit", data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Press 'Submit' to submit, or send another variant if you think you've made an error.",
+            value="↑",
             is_reply=True,
             buttons=[submit_button],
         )
@@ -127,6 +135,15 @@ class TranscriptionExecutor(BaseExecutor):
         ]
 
         distance = get_distance(text, phrase.row.normalized_text)
+        sticker = get_metal_sticker(length, distance)
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=sticker,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
         if distance > 0:
             xp = length - distance
             lines.append("[TTT] You transcribed it differently")

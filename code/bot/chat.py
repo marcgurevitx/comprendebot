@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from botcommon.bottypes import Sendable, SendableTypeCode
+from botcommon.bottypes import Sendable, SendableTypeCode, Stickers
+from botcommon.config import config
 
 
 class Chat:
@@ -28,6 +29,27 @@ class Chat:
             await self.bot.send_voice(
                 chat_id=self.chat_id,
                 voice=sendable.value,
+                **send_params,
+            )
+        elif sendable.type == SendableTypeCode.SND_STK:
+            if sendable.value == Stickers.PHR:
+                sticker = config.STICKER_PHR
+            elif sendable.value == Stickers.VOC:
+                sticker = config.STICKER_VOC
+            elif sendable.value == Stickers.TRS:
+                sticker = config.STICKER_TRS
+            elif sendable.value == Stickers.GOLD:
+                sticker = config.STICKER_GOLD
+            elif sendable.value == Stickers.SILVER:
+                sticker = config.STICKER_SILVER
+            elif sendable.value == Stickers.BRONZE:
+                sticker = config.STICKER_BRONZE
+            else:
+                raise Exception(f"Unknown sticker [{sendable}]")
+
+            await self.bot.send_sticker(
+                chat_id=self.chat_id,
+                sticker=sticker,
                 **send_params,
             )
         else:

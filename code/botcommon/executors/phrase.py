@@ -1,4 +1,4 @@
-from botcommon.bottypes import PhraseStates, Sendable, Button, SendableTypeCode
+from botcommon.bottypes import PhraseStates, Sendable, Button, SendableTypeCode, Stickers
 from botcommon.helpers import get_start_button
 
 from .baseexecutor import BaseExecutor
@@ -37,8 +37,15 @@ class PhraseExecutor(BaseExecutor):
 
     async def explain_challenge(self):
         s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.PHR,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+        s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Send me phrase.",
+            value="[TTT] Please, help me improve my database.\nSend me a new <b>phrase</b> in LANGUAGE.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
             is_reply=False,
             buttons=[],
         )
@@ -48,7 +55,7 @@ class PhraseExecutor(BaseExecutor):
         submit_button = Button(text="[TTT] Submit", data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Press 'Submit' to submit, or send another one so you could choose the best of them.",
+            value="↑",
             is_reply=True,
             buttons=[submit_button],
         )
@@ -60,7 +67,7 @@ class PhraseExecutor(BaseExecutor):
 
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Thank you. The phrase is successfully saved.",
+            value="[TTT] Thank you for your help! The phrase was successfully saved.",
             is_reply=False,
             buttons=[get_start_button()],
         )

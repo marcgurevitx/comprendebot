@@ -11,6 +11,7 @@ SimilarPhrase = collections.namedtuple("SimilarPhrase", "phrase, similarity")
 class SendableTypeCode(enum.Enum):
     SND_TXT = "SND_TXT"
     SND_VOC = "SND_VOC"
+    SND_STK = "SND_STK"
 
 
 class ChallengeTypeCode(enum.Enum):
@@ -35,3 +36,12 @@ class TranscriptionStates(enum.Enum):
     TRS_CRE = "TRS_CRE"
     TRS_WRK = "TRS_WRK"
     TRS_END = "TRS_END"
+
+
+class Stickers(enum.Enum):
+    PHR = "PHR"
+    VOC = "VOC"
+    TRS = "TRS"
+    GOLD = "GOLD"
+    SILVER = "SILVER"
+    BRONZE = "BRONZE"

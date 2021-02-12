@@ -12,7 +12,7 @@ from botcommon.config import config
 
 logging.basicConfig(level=config.LOG_LEVEL)
 
-bot = Bot(token=config.CMPDBOT_TOKEN)
+bot = Bot(token=config.CMPDBOT_TOKEN, parse_mode=types.ParseMode.HTML)
 
 dp = Dispatcher(bot)
 dp.register_message_handler(on_cmd_start, commands=["start"])

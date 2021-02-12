@@ -1,6 +1,6 @@
 from psycopg2.extras import Json
 
-from botcommon.bottypes import VoiceStates, Sendable, Button, SendableTypeCode
+from botcommon.bottypes import VoiceStates, Sendable, Button, SendableTypeCode, Stickers
 from botcommon.helpers import get_start_button
 from botcommon.s3 import save_binary
 
@@ -48,6 +48,14 @@ class VoiceExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.VOC,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
         phrases = await self.challenge.get_phrases()
         buttons = [
             Button(text=p.row.original_text, data=p.row.id)
@@ -56,7 +64,7 @@ class VoiceExecutor(BaseExecutor):
         ]
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Choose phrase.",
+            value="[TTT] This challenge is about reading out loud.\nIt will gain you points when others transcribe your recording.\nPick phrase and send me a <b>voice</b>.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
             is_reply=False,
             buttons=buttons,
         )
@@ -75,7 +83,7 @@ class VoiceExecutor(BaseExecutor):
 
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value=f"[TTT] Now send voice recording for {phrase.row.original_text!r}.",
+            value=f"[TTT] Now send voice recording for <b>{phrase.row.original_text!r}</b>.\nYou can send many variants but only submit one.\nIf you changed your mind, pick another phrase.",
             is_reply=False,
             buttons=[],
         )
@@ -85,7 +93,7 @@ class VoiceExecutor(BaseExecutor):
         submit_button = Button(text="[TTT] Submit", data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Press 'Submit' to submit, or record another variant of this so you could choose the better one.",
+            value="↑",
             is_reply=True,
             buttons=[submit_button],
         )
@@ -103,7 +111,7 @@ class VoiceExecutor(BaseExecutor):
 
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Thank you. The voice is successfully saved.",
+            value="[TTT] Thank you very much! The voice was successfully saved and soon will become available for others.",
             is_reply=False,
             buttons=[get_start_button()],
         )
