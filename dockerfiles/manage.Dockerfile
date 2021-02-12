@@ -4,6 +4,9 @@ ARG CMPDBOT_DIR
 
 WORKDIR $CMPDBOT_DIR
 
+RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /bin/mc && \
+    chmod +x /bin/mc
+
 COPY requirements requirements
 
 RUN pip install --upgrade pip && \

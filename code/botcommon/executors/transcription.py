@@ -61,7 +61,7 @@ class TranscriptionExecutor(BaseExecutor):
     async def explain_challenge(self):
         voices = await self.challenge.get_voices()
         buttons = [
-            Button(text=f"*** |{v.row.length}|", data=v.row.id)
+            Button(text=f"*** ({v.row.length})", data=v.row.id)
             for v
             in voices
         ]

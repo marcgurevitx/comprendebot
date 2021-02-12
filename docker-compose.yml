@@ -8,6 +8,8 @@ services:
       dockerfile: dockerfiles/pg.Dockerfile
     restart: always
     env_file: botvars/$DOTENV_FILE
+    volumes:
+      - $CMPDBOT_EXCHANGE_DIR_LOCAL:$CMPDBOT_EXCHANGE_DIR_CONTAINER
 
   migrations:
     build:
