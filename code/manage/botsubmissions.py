@@ -32,7 +32,7 @@ async def async_export_submissions(person_id, days, start):
 
     sql_where_list = []
     if person_id:
-        sql_where_list.append(f"AND person_id = %(person_id)s")
+        sql_where_list.append("AND person_id = %(person_id)s")
     sql_where = " ".join(sql_where_list)
 
     challenges = await Challenge.select_sql_all(

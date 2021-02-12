@@ -1,7 +1,6 @@
 from psycopg2.extras import Json
 
 from botcommon.bottypes import VoiceStates, Sendable, Button, SendableTypeCode
-from botcommon.config import config
 from botcommon.helpers import get_start_button
 from botcommon.s3 import save_binary
 

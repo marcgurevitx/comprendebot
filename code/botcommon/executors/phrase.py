@@ -1,7 +1,4 @@
-from psycopg2.extras import Json
-
 from botcommon.bottypes import PhraseStates, Sendable, Button, SendableTypeCode
-from botcommon.config import config
 from botcommon.helpers import get_start_button
 
 from .baseexecutor import BaseExecutor

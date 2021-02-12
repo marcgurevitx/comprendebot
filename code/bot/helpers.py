@@ -4,7 +4,7 @@ import io
 from aiogram.types import CallbackQuery
 
 from bot.chat import Chat
-from botcommon.bottypes import Sendable, SendableTypeCode, Button
+from botcommon.bottypes import Sendable, SendableTypeCode
 from botcommon.helpers import get_start_button
 from botcommon.models import Person
 

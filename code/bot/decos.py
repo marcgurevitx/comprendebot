@@ -2,7 +2,6 @@ from bot.helpers import (
     get_chat,
     get_person,
     create_person,
-    arrange_new_challenge,
     welcome_new_user,
 )
 

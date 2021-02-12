@@ -1,7 +1,6 @@
 from psycopg2.extras import Json
 
 from botcommon.bottypes import TranscriptionStates, Sendable, Button, SendableTypeCode
-from botcommon.config import config
 from botcommon.helpers import get_distance, get_start_button
 from botcommon.s3 import retrieve_binary
 

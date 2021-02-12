@@ -1,5 +1,3 @@
-import io
-
 from aiogram.types import ContentType
 
 from bot.decos import with_person_and_chat
