@@ -179,10 +179,11 @@ class Person(BaseModel):
         )
 
         person_voc = await Person.select_one(id=person_voc_id)
-        await person_voc.update(
-            xp=person_voc.row.xp + xp,
-            generated_xp=person_voc.row.generated_xp + xp,
-        )
+        if person_voc:
+            await person_voc.update(
+                xp=person_voc.row.xp + xp,
+                generated_xp=person_voc.row.generated_xp + xp,
+            )
 
         if person_phr_id:
             person_phr = await Person.select_one(id=person_phr_id)
