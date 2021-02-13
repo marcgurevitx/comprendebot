@@ -68,13 +68,13 @@ class TranscriptionExecutor(BaseExecutor):
 
         voices = await self.challenge.get_voices()
         buttons = [
-            Button(text=f"*** (+{v.row.length})", data=v.row.id)
+            Button(text=f"{v.row.length}", data=v.row.id)
             for v
             in voices
         ]
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] This challenge is about listening and trying to understand.\nPick phrase and <b>transcribe</b> it.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
+            value="[TTT] This challenge is about listening and trying to understand.\nPick phrase and <b>transcribe</b> it.\nYou can send many variants but only submit one.\nDon't worry too much about phrase length - counting human phrases lengths is not my strongest side and I might get it wrong.\n(Send /comensa if you want to skip.)",
             is_reply=False,
             buttons=buttons,
         )
@@ -95,7 +95,7 @@ class TranscriptionExecutor(BaseExecutor):
 
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Now write transcription.\nYou can send many variants but only submit one.\nEditing message also works.\nChanged your mind? Pick another phrase, no problem.",
+            value="[TTT] Now write transcription.\nYou can send many variants but only submit one.\nEditing message also works.\nIf you changed your mind, pick another phrase.",
             is_reply=False,
             buttons=[],
         )

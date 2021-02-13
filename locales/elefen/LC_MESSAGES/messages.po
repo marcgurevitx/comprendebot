@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2021-02-13 23:39+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: ./code/bot/__main__.py:26 ./code/bot/__main__.py:35
+#: ./code/bot/handlers.py:29 ./code/bot/helpers.py:66
+msgid "start  // command"
+msgstr "comensa"
+
+#: ./code/bot/__main__.py:32
+msgid "start a new challenge  // command description"
+msgstr "comensa un taxe nova"
+
+#: ./code/bot/handlers.py:28
+msgid "Send /%(cmd_start)s for new challenge.  // no active challenges"
+msgstr "Envia /%(cmd_start)s per un taxe nova."
+
+#: ./code/bot/handlers.py:38
+msgid "Processing...  // caption after button press"
+msgstr "Aora prosede..."
+
+#: ./code/bot/handlers.py:57
+msgid "Starting...  // caption after start press"
+msgstr "Aora comensa..."
+
+#: ./code/bot/helpers.py:37
+msgid "No challenge found. Please try later."
+msgstr "No taxe trovada. Per favore, atenta plu tarda."
+
+#: ./code/bot/helpers.py:55
+msgid "Hello, I'm %(botname)s. I help people test their ability to understand spoken language (the language is <a href=\"%(language_link)s\">%(language)s</a>). For more info see %(bot_info_link)s. Press start button or send /%(cmd_start)s for your first challenge."
+msgstr "Alo, me es %(botname)s. Me aida popla proba sua capasia de comprende lingua parlada (la lingua es <a href=\"%(language_link)s\">%(language)s</a>). Per plu informa vide %(bot_info_link)s. Presa boton de comensa o envia /%(cmd_start)s per tua taxe prima."
+

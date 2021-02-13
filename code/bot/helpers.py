@@ -5,6 +5,7 @@ from aiogram.types import CallbackQuery
 
 from bot.chat import Chat
 from botcommon.bottypes import Sendable, SendableTypeCode
+from botcommon.config import config
 from botcommon.helpers import get_start_button
 from botcommon.models import Person
 
@@ -33,7 +34,7 @@ async def create_person(entity):
 async def arrange_new_challenge(person, chat):
     challenge = await person.get_new_challenge()
     if challenge is None:
-        await chat.send_simple_text("[TTT] No challenge found. Please try later.")
+        await chat.send_simple_text(_("No challenge found. Please try later."))
     else:
         async with challenge.get_executor() as executor:
             await executor.start()
@@ -48,9 +49,22 @@ async def download_voice(voice):
 
 
 async def welcome_new_user(person, chat):
+    me = await chat.bot.get_me()
     s = Sendable(
         type=SendableTypeCode.SND_TXT,
-        value="[TTT] Hello, I'm lfnescutabot, I train people in listening and speaking LFN. See <LINK> for more info. Press start button or send /comensa for your first challenge.",
+        value=_(
+            "Hello, I'm %(botname)s."
+            " I help people test their ability to understand spoken language"
+            " (the language is <a href=\"%(language_link)s\">%(language)s</a>)."
+            " For more info see %(bot_info_link)s."
+            " Press start button or send /%(cmd_start)s for your first challenge."
+        ) % {
+            "botname": me.first_name,
+            "language": config.CMPDBOT_LANGUAGE_HUMANS,
+            "language_link": config.CMPDBOT_LANGUAGE_SITE,
+            "bot_info_link": config.CMPDBOT_LINK,
+            "cmd_start": _("start  // command"),
+        },
         is_reply=False,
         buttons=[get_start_button()],
     )

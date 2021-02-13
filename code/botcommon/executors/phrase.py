@@ -45,7 +45,7 @@ class PhraseExecutor(BaseExecutor):
         self.sendables.append(s)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Please, help me improve my database.\nSend me a new <b>phrase</b> in LANGUAGE.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
+            value="[TTT] Please, help me collect more phrases in my database.\nSend me a new <b>phrase</b> in LANGUAGE.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
             is_reply=False,
             buttons=[],
         )
