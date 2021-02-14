@@ -110,10 +110,11 @@ class VoiceExecutor(BaseExecutor):
         self.sendables.append(s)
 
     async def ask_submission(self, voice, message_id):
+        variant_num = await self.next_variant_num()
         submit_button = Button(text=_("Submit  // button"), data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="↑",
+            value=str(variant_num),
             is_reply=True,
             buttons=[submit_button],
         )

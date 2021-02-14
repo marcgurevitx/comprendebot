@@ -1,3 +1,4 @@
+from psycopg2.extras import Json
 from transitions.extensions.asyncio import AsyncMachine
 
 
@@ -35,3 +36,11 @@ class BaseExecutor:
             state_code=self.state.name,
             #executor_data=???, Json( )?
         )
+
+    async def next_variant_num(self):
+        executor_data = self.challenge.row.executor_data
+        nvariants = executor_data.get("nvariants", 0)
+        variant_num = nvariants + 1
+        executor_data["nvariants"] = nvariants + 1
+        await self.challenge.update(executor_data=Json(executor_data))
+        return variant_num

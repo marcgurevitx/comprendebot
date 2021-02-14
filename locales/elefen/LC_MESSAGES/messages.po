@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-14 23:38+0300\n"
+"POT-Creation-Date: 2021-02-15 00:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,13 +63,13 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "(Envia /$cmd_start si tu vole omete.)"
 
-#: ./code/botcommon/executors/phrase.py:67
+#: ./code/botcommon/executors/phrase.py:68
 #: ./code/botcommon/executors/transcription.py:133
 #: ./code/botcommon/executors/voice.py:113
 msgid "Submit  // button"
 msgstr "Fisa"
 
-#: ./code/botcommon/executors/phrase.py:80
+#: ./code/botcommon/executors/phrase.py:81
 msgid ""
 "Successfully saved. Thank you for help!\n"
 "You can do the next challenge now."
