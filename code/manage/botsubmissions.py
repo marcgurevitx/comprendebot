@@ -11,7 +11,7 @@ from botcommon.s3 import retrieve_binary
 
 @click.command()
 @click.option("-u", "--user", "person_id", type=int)
-@click.option("-d", "--days", default=2)
+@click.option("-d", "--days", type=int)
 @click.option("--start", "start", type=click.DateTime())
 def botsubmissions(person_id, days, start):
     loop = asyncio.get_event_loop()
@@ -19,11 +19,16 @@ def botsubmissions(person_id, days, start):
 
 
 async def async_export_submissions(person_id, days, start):
+    if days:
+        seconds = days * 24 * 60 * 60
+    else:
+        seconds = config.CMPDBOT_CHALLENGE_HOLD_SECONDS + 24 * 60 * 60
+
     if start:
-        end = start + datetime.timedelta(days=days)
+        end = start + datetime.timedelta(seconds=seconds)
     else:
         end = datetime.datetime.now()
-        start = end - datetime.timedelta(days=days)
+        start = end - datetime.timedelta(seconds=seconds)
 
     start_str = start.strftime("%Y-%m-%d_%H-%M-%S")
     end_str = end.strftime("%Y-%m-%d_%H-%M-%S")

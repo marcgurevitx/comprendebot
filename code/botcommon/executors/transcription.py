@@ -174,7 +174,7 @@ class TranscriptionExecutor(BaseExecutor):
             xp = length - distance
             tr = string.Template(_(
                 "You've transcribed it differently with the distance of $distance."
-                "\nGained XP = (Length - Distance) = ($length - $distance) = $xp."
+                "\nGained XP = (length - distance) = ($length - $distance) = $xp."
             ))
             tr = tr.substitute(
                 distance=distance,

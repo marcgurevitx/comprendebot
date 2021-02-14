@@ -1,3 +1,4 @@
+import datetime
 import logging
 import math
 import random
@@ -36,6 +37,7 @@ async def get_items(request):
         for p
         in request["exclude_phrases"]
     )
+    hold_dt = datetime.datetime.now() - datetime.timedelta(seconds=config.CMPDBOT_CHALLENGE_HOLD_SECONDS)
     async with get_pg_cursor() as cur:
         await cur.execute(
             f"""
@@ -45,9 +47,13 @@ async def get_items(request):
                     {Phrase.get_table_name()} TABLESAMPLE BERNOULLI ({percentage})
                 WHERE
                     is_active = true
+                    AND created_ts < %(hold_dt)s
                     AND id NOT IN (0 {sql_exclude})
                 ;
             """,
+            {
+                "hold_dt": hold_dt,
+            },
         )
         rows = await cur.fetchall()
 

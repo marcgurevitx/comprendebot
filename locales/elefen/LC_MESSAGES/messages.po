@@ -112,10 +112,10 @@ msgstr "La frase orijinal ia es <b>$original_text</b> con longia de $length."
 #: ./code/botcommon/executors/transcription.py:174
 msgid ""
 "You've transcribed it differently with the distance of $distance.\n"
-"Gained XP = (Length - Distance) = ($length - $distance) = $xp."
+"Gained XP = (length - distance) = ($length - $distance) = $xp."
 msgstr ""
 "Tu ia transcrive lo diferente con distantia de $distance.\n"
-"XP ganiada = (Longia - Distantia) = ($length - $distance) = $xp."
+"XP ganiada = (longia - distantia) = ($length - $distance) = $xp."
 
 #: ./code/botcommon/executors/transcription.py:186
 msgid ""
