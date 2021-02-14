@@ -1,3 +1,5 @@
+import string
+
 from psycopg2.extras import Json
 
 from botcommon.bottypes import VoiceStates, Sendable, Button, SendableTypeCode, Stickers
@@ -62,9 +64,19 @@ class VoiceExecutor(BaseExecutor):
             for p
             in phrases
         ]
+        text = string.Template(_(
+            "This challenge is about reading out loud."
+            "\nIt will gain you points when other users transcribe your recording."
+            "\nPick phrase and send me the <b>voice</b>."
+            "\nYou can send many variants but only submit one."
+            "\n(Send /$cmd_start if you want to skip.)"
+        ))
+        text = text.substitute(
+            cmd_start=_("start  // command"),
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] This challenge is about reading out loud.\nIt will gain you points when others transcribe your recording.\nPick phrase and send me a <b>voice</b>.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
+            value=text,
             is_reply=False,
             buttons=buttons,
         )
@@ -81,16 +93,24 @@ class VoiceExecutor(BaseExecutor):
         executor_data["phrase_length"] = len(phrase.row.normalized_text)
         await self.challenge.update(executor_data=Json(executor_data))
 
+        text = string.Template(_(
+            "Send voice recording for <b>$original_text</b>."
+            "\nYou can send many variants but only submit one."
+            "\nIf you changed your mind, pick another phrase."
+        ))
+        text = text.substitute(
+            original_text=phrase.row.original_text,
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value=f"[TTT] Now send voice recording for <b>{phrase.row.original_text!r}</b>.\nYou can send many variants but only submit one.\nIf you changed your mind, pick another phrase.",
+            value=text,
             is_reply=False,
             buttons=[],
         )
         self.sendables.append(s)
 
     async def ask_submission(self, voice, message_id):
-        submit_button = Button(text="[TTT] Submit", data=message_id)
+        submit_button = Button(text=_("Submit  // button"), data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="↑",
@@ -109,9 +129,13 @@ class VoiceExecutor(BaseExecutor):
         Voice = get_voice_class()
         await Voice.add_from_challenge(phrase_id, phrase_length, voice_key, self.challenge)
 
+        text = _(
+            "Successfully saved, and soon it will become available for all."
+            "\nMeanwhile, you can do the next challenge."
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Thank you very much! The voice was successfully saved and soon will become available for others.",
+            value=text,
             is_reply=False,
             buttons=[get_start_button()],
         )

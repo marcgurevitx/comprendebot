@@ -52,7 +52,7 @@ async def download_voice(voice):
 async def welcome_new_user(person, chat):
     text = string.Template(_(
         "Hello, I'm a bot who will test your ability to understand spoken <a href=\"$language_link\">$language</a>."
-        " Press start button or send /$cmd_start for your first challenge."
+        "\nPress start button or send /$cmd_start for your first challenge."
     ))
     text = text.substitute(
         language=config.CMPDBOT_LANGUAGE_HUMANS,

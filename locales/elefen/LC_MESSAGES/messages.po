@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-14 07:56+0300\n"
+"POT-Creation-Date: 2021-02-14 11:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 
 #: ./code/bot/__main__.py:26 ./code/bot/__main__.py:35
 #: ./code/bot/handlers.py:31 ./code/bot/helpers.py:60
+#: ./code/botcommon/executors/voice.py:75
 msgid "start  // command"
 msgstr "comensa"
 
@@ -41,6 +42,46 @@ msgid "No challenge found. Please try later."
 msgstr "No taxe trovada. Per favore, atenta plu tarda."
 
 #: ./code/bot/helpers.py:53
-msgid "Hello, I'm a bot who will test your ability to understand spoken <a href=\"$language_link\">$language</a>. Press start button or send /$cmd_start for your first challenge."
-msgstr "Alo, me es un robot ci va esamina tua capasia de comprende <a href=\"$language_link\">$language</a> parlada. Presa boton de comensa o envia /$cmd_start per tua taxe prima."
+msgid ""
+"Hello, I'm a bot who will test your ability to understand spoken <a href=\"$language_link\">$language</a>.\n"
+"Press start button or send /$cmd_start for your first challenge."
+msgstr ""
+"Alo, me es un robot ci va esamina tua capasia de comprende <a href=\"$language_link\">$language</a> parlada.\n"
+"Presa boton de comensa o envia /$cmd_start per tua taxe prima."
+
+#: ./code/botcommon/executors/voice.py:67
+msgid ""
+"This challenge is about reading out loud.\n"
+"It will gain you points when other users transcribe your recording.\n"
+"Pick phrase and send me the <b>voice</b>.\n"
+"You can send many variants but only submit one.\n"
+"(Send /$cmd_start if you want to skip.)"
+msgstr ""
+"Esta taxe es sur leje a vose.\n"
+"Lo va gania a tu puntos de esperia cuando otra usores transcrive tua rejistra.\n"
+"Eleje un frase e envia a me la <b>vose</b>.\n"
+"Tu pote envia multe varias ma fisa sola un.\n"
+"(Envia /$cmd_start si tu vole omete.)"
+
+#: ./code/botcommon/executors/voice.py:96
+msgid ""
+"Send voice recording for <b>$original_text</b>.\n"
+"You can send many variants but only submit one.\n"
+"If you changed your mind, pick another phrase."
+msgstr ""
+"Envia rejistra de vose per <b>$original_text</b>.\n"
+"Tu pote envia multe varias ma fisa sola un.\n"
+"Si tu cambia tua mente, eleje un otra frase."
+
+#: ./code/botcommon/executors/voice.py:113
+msgid "Submit  // button"
+msgstr "Fisa"
+
+#: ./code/botcommon/executors/voice.py:132
+msgid ""
+"Successfully saved, and soon it will become available for all.\n"
+"Meanwhile, you can do the next challenge."
+msgstr ""
+"Fisada susedosa, e pronto lo va deveni otenable par totas.\n"
+"Entertempo, tu pote fa la taxe seguente."
 

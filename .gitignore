@@ -1,6 +1,7 @@
 local-*
 *.env
 .DS_Store
+*.pot
 *.mo
 
 !example-*
