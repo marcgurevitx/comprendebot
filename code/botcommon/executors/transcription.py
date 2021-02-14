@@ -204,7 +204,7 @@ class TranscriptionExecutor(BaseExecutor):
             person_phr_id=phrase.row.person_id,
         )
         tr = string.Template(_(
-            "Total XP now is $xp."
+            "Total XP now is $total_xp."
         ))
         tr = tr.substitute(
             xp=xp,

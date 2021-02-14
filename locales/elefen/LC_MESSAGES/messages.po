@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-14 22:29+0300\n"
+"POT-Creation-Date: 2021-02-14 23:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,8 +126,8 @@ msgstr ""
 "XP ganiada = $xp."
 
 #: ./code/botcommon/executors/transcription.py:206
-msgid "Total XP now is $xp."
-msgstr "Tota XP es aora $xp."
+msgid "Total XP now is $total_xp."
+msgstr "Tota XP es aora $total_xp."
 
 #: ./code/botcommon/executors/voice.py:67
 msgid ""
