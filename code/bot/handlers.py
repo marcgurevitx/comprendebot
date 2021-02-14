@@ -1,3 +1,5 @@
+import string
+
 from aiogram.types import ContentType
 
 from bot.decos import with_person_and_chat
@@ -24,11 +26,11 @@ async def on_message(message, *, person, chat, **kwargs):
             sendables = executor.pop_sendables()
             await chat.send_list(sendables)
     else:
-        await message.reply(
-            _("Send /%(cmd_start)s for new challenge.  // no active challenges") % {
-                "cmd_start": _("start  // command"),
-            },
+        text = string.Template(_("Send /$cmd_start for new challenge.  // no active challenges"))
+        text = text.substitute(
+            cmd_start=_("start  // command"),
         )
+        await message.reply(text)
 
 
 @with_person_and_chat
@@ -50,7 +52,7 @@ async def on_button_press(callback_query, *, person, chat, **kwargs):
             elif message.content_type == ContentType.TEXT:
                 await executor.receive_button_press_on_text(message.text, callback_query.data)
             else:
-                pass#?
+                pass
             sendables = executor.pop_sendables()
             await chat.send_list(sendables)
     elif callback_query.data == config.CMPDBOT_CONST_START:

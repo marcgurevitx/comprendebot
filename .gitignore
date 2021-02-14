@@ -1,5 +1,6 @@
 local-*
 *.env
 .DS_Store
+*.mo
 
 !example-*

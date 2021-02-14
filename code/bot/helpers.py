@@ -1,5 +1,6 @@
 import datetime
 import io
+import string
 
 from aiogram.types import CallbackQuery
 
@@ -49,22 +50,18 @@ async def download_voice(voice):
 
 
 async def welcome_new_user(person, chat):
-    me = await chat.bot.get_me()
+    text = string.Template(_(
+        "Hello, I'm a bot who will test your ability to understand spoken <a href=\"$language_link\">$language</a>."
+        " Press start button or send /$cmd_start for your first challenge."
+    ))
+    text = text.substitute(
+        language=config.CMPDBOT_LANGUAGE_HUMANS,
+        language_link=config.CMPDBOT_LANGUAGE_SITE,
+        cmd_start=_("start  // command"),
+    )
     s = Sendable(
         type=SendableTypeCode.SND_TXT,
-        value=_(
-            "Hello, I'm %(botname)s."
-            " I help people test their ability to understand spoken language"
-            " (the language is <a href=\"%(language_link)s\">%(language)s</a>)."
-            " For more info see %(bot_info_link)s."
-            " Press start button or send /%(cmd_start)s for your first challenge."
-        ) % {
-            "botname": me.first_name,
-            "language": config.CMPDBOT_LANGUAGE_HUMANS,
-            "language_link": config.CMPDBOT_LANGUAGE_SITE,
-            "bot_info_link": config.CMPDBOT_LINK,
-            "cmd_start": _("start  // command"),
-        },
+        value=text,
         is_reply=False,
         buttons=[get_start_button()],
     )

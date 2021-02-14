@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-13 23:39+0300\n"
+"POT-Creation-Date: 2021-02-14 07:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 
 #: ./code/bot/__main__.py:26 ./code/bot/__main__.py:35
-#: ./code/bot/handlers.py:29 ./code/bot/helpers.py:66
+#: ./code/bot/handlers.py:31 ./code/bot/helpers.py:60
 msgid "start  // command"
 msgstr "comensa"
 
@@ -24,23 +24,23 @@ msgstr "comensa"
 msgid "start a new challenge  // command description"
 msgstr "comensa un taxe nova"
 
-#: ./code/bot/handlers.py:28
-msgid "Send /%(cmd_start)s for new challenge.  // no active challenges"
-msgstr "Envia /%(cmd_start)s per un taxe nova."
+#: ./code/bot/handlers.py:29
+msgid "Send /$cmd_start for new challenge.  // no active challenges"
+msgstr "Envia /$cmd_start per un taxe nova."
 
-#: ./code/bot/handlers.py:38
+#: ./code/bot/handlers.py:40
 msgid "Processing...  // caption after button press"
 msgstr "Aora prosede..."
 
-#: ./code/bot/handlers.py:57
+#: ./code/bot/handlers.py:59
 msgid "Starting...  // caption after start press"
 msgstr "Aora comensa..."
 
-#: ./code/bot/helpers.py:37
+#: ./code/bot/helpers.py:38
 msgid "No challenge found. Please try later."
 msgstr "No taxe trovada. Per favore, atenta plu tarda."
 
-#: ./code/bot/helpers.py:55
-msgid "Hello, I'm %(botname)s. I help people test their ability to understand spoken language (the language is <a href=\"%(language_link)s\">%(language)s</a>). For more info see %(bot_info_link)s. Press start button or send /%(cmd_start)s for your first challenge."
-msgstr "Alo, me es %(botname)s. Me aida popla proba sua capasia de comprende lingua parlada (la lingua es <a href=\"%(language_link)s\">%(language)s</a>). Per plu informa vide %(bot_info_link)s. Presa boton de comensa o envia /%(cmd_start)s per tua taxe prima."
+#: ./code/bot/helpers.py:53
+msgid "Hello, I'm a bot who will test your ability to understand spoken <a href=\"$language_link\">$language</a>. Press start button or send /$cmd_start for your first challenge."
+msgstr "Alo, me es un robot ci va esamina tua capasia de comprende <a href=\"$language_link\">$language</a> parlada. Presa boton de comensa o envia /$cmd_start per tua taxe prima."
 
