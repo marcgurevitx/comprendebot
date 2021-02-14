@@ -71,9 +71,9 @@ async def async_export_submissions(person_id, days, start):
     click.echo(f"Done, phrases [{n_phrases}], voices [{n_voices}], transcriptions [{n_transcriptions}]")
 
 
-def get_phrase_file_name(phrase):
+def get_phrase_file_name(phrase, challenge):
     return "%(dt)s__%(activity_tag)s__%(person_id)s__%(id)s__%(normalized_text)s.txt" % dict(
-        dt=phrase.row.created_ts.strftime("%Y-%m-%d_%H-%M-%S"),
+        dt=challenge.row.created_ts.strftime("%Y-%m-%d_%H-%M-%S"),
         id=phrase.row.id,
         person_id=phrase.row.person_id,
         activity_tag="V" if phrase.row.is_active else "X",
@@ -81,9 +81,9 @@ def get_phrase_file_name(phrase):
     )
 
 
-def get_voice_file_name(voice, phrase):
+def get_voice_file_name(voice, phrase, challenge):
     return "%(dt)s__%(activity_tag)s__%(person_id)s__%(id)s__%(normalized_text)s.ogg" % dict(
-        dt=voice.row.created_ts.strftime("%Y-%m-%d_%H-%M-%S"),
+        dt=challenge.row.created_ts.strftime("%Y-%m-%d_%H-%M-%S"),
         id=voice.row.id,
         person_id=voice.row.person_id,
         activity_tag="V" if voice.row.is_active else "X",
@@ -91,9 +91,9 @@ def get_voice_file_name(voice, phrase):
     )
 
 
-def get_transcription_file_name(transcription, phrase):
+def get_transcription_file_name(transcription, phrase, challenge):
     return "%(dt)s__%(activity_tag)s__%(person_id)s__t-%(id)s__%(normalized_text)s.txt" % dict(
-        dt=transcription.row.created_ts.strftime("%Y-%m-%d_%H-%M-%S"),
+        dt=challenge.row.created_ts.strftime("%Y-%m-%d_%H-%M-%S"),
         id=transcription.row.id,
         person_id=transcription.row.person_id,
         activity_tag="V" if transcription.row.is_active else "X",
@@ -104,7 +104,7 @@ def get_transcription_file_name(transcription, phrase):
 async def export_phrase(challenge, folder):
     phrase = await Phrase.select_one(challenge_id=challenge.row.id)
     if phrase:
-        file_name = get_phrase_file_name(phrase)
+        file_name = get_phrase_file_name(phrase, challenge)
         with open(folder / file_name, "w") as fp:
             fp.write(phrase.row.original_text)
 
@@ -114,7 +114,7 @@ async def export_voice(challenge, folder):
     if voice:
         voice_binary = await retrieve_binary(voice.row.s3_key)
         phrase = await Phrase.select_one(id=voice.row.phrase_id)
-        file_name = get_voice_file_name(voice, phrase)
+        file_name = get_voice_file_name(voice, phrase, challenge)
         with open(folder / file_name, "wb") as fp:
             fp.write(voice_binary)
 
@@ -124,6 +124,6 @@ async def export_transcription(challenge, folder):
     if transcription:
         voice = await Voice.select_one(id=transcription.row.voice_id)
         phrase = await Phrase.select_one(id=voice.row.phrase_id)
-        file_name = get_transcription_file_name(transcription, phrase)
+        file_name = get_transcription_file_name(transcription, phrase, challenge)
         with open(folder / file_name, "w") as fp:
             fp.write(transcription.row.user_text)
