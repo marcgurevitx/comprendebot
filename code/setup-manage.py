@@ -6,6 +6,7 @@ setup(
     entry_points={
         "console_scripts": [
             "botaddphrases      = manage.botaddphrases:botaddphrases",
+            "botblockperson     = manage.botblockperson:botblockperson",
             "botsubmissions     = manage.botsubmissions:botsubmissions",
         ],
     },

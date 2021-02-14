@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-14 13:52+0300\n"
+"POT-Creation-Date: 2021-02-14 22:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 "(Envia /$cmd_start si tu vole omete.)"
 
 #: ./code/botcommon/executors/phrase.py:67
-#: ./code/botcommon/executors/transcription.py:132
+#: ./code/botcommon/executors/transcription.py:133
 #: ./code/botcommon/executors/voice.py:113
 msgid "Submit  // button"
 msgstr "Fisa"
@@ -105,11 +105,11 @@ msgstr ""
 "Edita un varia va labora ance.\n"
 "Si tu cambia tua mente, eleje un otra frase."
 
-#: ./code/botcommon/executors/transcription.py:153
+#: ./code/botcommon/executors/transcription.py:154
 msgid "The original phrase was <b>$original_text</b> with length of $length."
 msgstr "La frase orijinal ia es <b>$original_text</b> con longia de $length."
 
-#: ./code/botcommon/executors/transcription.py:174
+#: ./code/botcommon/executors/transcription.py:175
 msgid ""
 "You've transcribed it differently with the distance of $distance.\n"
 "Gained XP = (length - distance) = ($length - $distance) = $xp."
@@ -117,7 +117,7 @@ msgstr ""
 "Tu ia transcrive lo diferente con distantia de $distance.\n"
 "XP ganiada = (longia - distantia) = ($length - $distance) = $xp."
 
-#: ./code/botcommon/executors/transcription.py:186
+#: ./code/botcommon/executors/transcription.py:187
 msgid ""
 "And you transcribed it right!\n"
 "Gained XP = $xp."
@@ -125,7 +125,7 @@ msgstr ""
 "E tu ia transcrive lo coreta!\n"
 "XP ganiada = $xp."
 
-#: ./code/botcommon/executors/transcription.py:205
+#: ./code/botcommon/executors/transcription.py:206
 msgid "Total XP now is $xp."
 msgstr "Tota XP es aora $xp."
 

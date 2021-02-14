@@ -13,6 +13,11 @@ from botcommon.helpers import normalize_text
 from botcommon.models.basemodel import BaseModel
 
 
+def get_person_class():
+    from botcommon.models import Person
+    return Person
+
+
 class Phrase(BaseModel):
 
     @classmethod
@@ -59,8 +64,11 @@ class Phrase(BaseModel):
 
     @classmethod
     async def add_from_challenge(cls, text, challenge):
+        Person = get_person_class()
+        person = await Person.select_one(id=challenge.row.person_id)
+
         await cls.insert(
-            is_active=True,
+            is_active=person.row.is_active,
             created_ts=datetime.datetime.now(),
             person_id=challenge.row.person_id,
             original_text=text,
