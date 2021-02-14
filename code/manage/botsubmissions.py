@@ -22,7 +22,7 @@ async def async_export_submissions(person_id, days, start):
     if days:
         seconds = days * 24 * 60 * 60
     else:
-        seconds = config.CMPDBOT_CHALLENGE_HOLD_SECONDS + 24 * 60 * 60
+        seconds = config.CHOOSE_HOLD_SECONDS + 24 * 60 * 60
 
     if start:
         end = start + datetime.timedelta(seconds=seconds)

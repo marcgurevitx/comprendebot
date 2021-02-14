@@ -45,7 +45,7 @@ class Person(BaseModel):
             await challenge.update(is_active=False)
 
     async def _choose_new_challenge_type(self):
-        for _ in range(config.CMPDBOT_CHALLENGE_SEVRAL_TIMEZ):
+        for _ in range(config.CHOOSE_SEVRAL_TIMEZ):
             challenges_history = self.row.challenges_history
             (
                 ratio_phrase,
@@ -74,10 +74,10 @@ class Person(BaseModel):
             await self.update(challenges_history=Json(challenges_history))
 
             if chltype == ChallengeTypeCode.CHL_PHR:
-                if self.row.xp < config.CMPDBOT_CHALLENGE_MIN_XP_PHRASE:
+                if self.row.xp < config.CHOOSE_MIN_XP_PHRASE:
                     continue
             elif chltype == ChallengeTypeCode.CHL_VOC:
-                if self.row.xp < config.CMPDBOT_CHALLENGE_MIN_XP_VOICE:
+                if self.row.xp < config.CHOOSE_MIN_XP_VOICE:
                     continue
 
             break

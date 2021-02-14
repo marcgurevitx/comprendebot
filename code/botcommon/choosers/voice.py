@@ -26,7 +26,7 @@ async def get_items(request):
     Voice = get_voice_class()
 
     percentage = min(
-        config.CMPDBOT_CHALLENGE_SAMPLE_VOICE / (await Voice.count(is_active=True) or 1) * 100,
+        config.CHOOSE_SAMPLE_VOICE / (await Voice.count(is_active=True) or 1) * 100,
         100,
     )
 
@@ -37,7 +37,7 @@ async def get_items(request):
         for v
         in request["exclude_voices"]
     )
-    hold_dt = datetime.datetime.now() - datetime.timedelta(seconds=config.CMPDBOT_CHALLENGE_HOLD_SECONDS)
+    hold_dt = datetime.datetime.now() - datetime.timedelta(seconds=config.CHOOSE_HOLD_SECONDS)
     async with get_pg_cursor() as cur:
         await cur.execute(
             f"""
@@ -75,7 +75,7 @@ async def ensure_person_level(request, voice):
     if voice is None:
         return 0.0
 
-    success = request["person_n_prev_success"] + config.CMPDBOT_CHALLENGE_SUCCESS_BOOST
+    success = request["person_n_prev_success"] + config.CHOOSE_SUCCESS_BOOST
     length_diff = abs(success - voice.row.length)
     length_log = math.log10(length_diff + 1)
     return 1 - length_log
