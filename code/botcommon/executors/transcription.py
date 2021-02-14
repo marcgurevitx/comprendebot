@@ -1,3 +1,5 @@
+import string
+
 from psycopg2.extras import Json
 
 from botcommon.bottypes import TranscriptionStates, Sendable, Button, SendableTypeCode, Stickers
@@ -72,9 +74,21 @@ class TranscriptionExecutor(BaseExecutor):
             for v
             in voices
         ]
+        tr = string.Template(_(
+            "This challenge is about listening and understanding."
+            "\nPick phrase and <b>transcribe</b> it."
+            "\nYou can send many variants but only submit one."
+            "\nDon't worry too much about phrase lengths - I probably got them slightly wrong."
+            "\nI'm not counting characters I don't recognize (e.g punctuation),"
+            " they don't matter when calculating points anyway."
+            "\n(Send /$cmd_start if you want to skip.)"
+        ))
+        tr = tr.substitute(
+            cmd_start=_("start  // command"),
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] This challenge is about listening and trying to understand.\nPick phrase and <b>transcribe</b> it.\nYou can send many variants but only submit one.\nDon't worry too much about phrase length - counting human phrases lengths is not my strongest side and I might get it wrong.\n(Send /comensa if you want to skip.)",
+            value=tr,
             is_reply=False,
             buttons=buttons,
         )
@@ -93,13 +107,20 @@ class TranscriptionExecutor(BaseExecutor):
 
         voice_binary = await retrieve_binary(voice.row.s3_key)
 
+        tr = _(
+            "Now write transcription."
+            "\nYou can send many variants but only submit one."
+            "\nEditing a variant also works."
+            "\nIf you changed your mind, pick another phrase."
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Now write transcription.\nYou can send many variants but only submit one.\nEditing message also works.\nIf you changed your mind, pick another phrase.",
+            value=tr,
             is_reply=False,
             buttons=[],
         )
         self.sendables.append(s)
+
         s = Sendable(
             type=SendableTypeCode.SND_VOC,
             value=voice_binary,
@@ -109,7 +130,7 @@ class TranscriptionExecutor(BaseExecutor):
         self.sendables.append(s)
 
     async def ask_submission(self, text, message_id):
-        submit_button = Button(text="[TTT] Submit", data=message_id)
+        submit_button = Button(text=_("Submit  // button"), data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="↑",
@@ -129,10 +150,15 @@ class TranscriptionExecutor(BaseExecutor):
         voice = await Voice.select_one(id=voice_id)
 
         length = voice.row.length
-        lines = [
-            f"[TTT] The original phrase was {phrase.row.original_text!r}",
-            f"[TTT] Effective length = {length}",
-        ]
+
+        tr = string.Template(_(
+            "The original phrase was <b>$original_text</b> with length of $length."
+        ))
+        tr = tr.substitute(
+            original_text=phrase.row.original_text,
+            length=length,
+        )
+        reply_fragments = [tr]
 
         distance = get_distance(text, phrase.row.normalized_text)
         sticker = get_metal_sticker(length, distance)
@@ -146,13 +172,26 @@ class TranscriptionExecutor(BaseExecutor):
 
         if distance > 0:
             xp = length - distance
-            lines.append("[TTT] You transcribed it differently")
-            lines.append(f"[TTT] Distance (penalty) = {distance}")
-            lines.append(f"[TTT] Score = {length} - {distance} = {xp}")
+            tr = string.Template(_(
+                "You've transcribed it differently with the distance of $distance."
+                "\nGained XP = (Length - Distance) = ($length - $distance) = $xp."
+            ))
+            tr = tr.substitute(
+                distance=distance,
+                length=length,
+                xp=xp,
+            )
+            reply_fragments.append(tr)
         else:
             xp = length
-            lines.append("[TTT] And you transcribed it right!")
-            lines.append(f"[TTT] Score = {xp}")
+            tr = string.Template(_(
+                "And you transcribed it right!"
+                "\nGained XP = $xp."
+            ))
+            tr = tr.substitute(
+                xp=xp,
+            )
+            reply_fragments.append(tr)
 
         Transcription = get_transcription_class()
         await Transcription.add_from_challenge(voice_id, text, distance, self.challenge)
@@ -164,11 +203,17 @@ class TranscriptionExecutor(BaseExecutor):
             person_voc_id=voice.row.person_id,
             person_phr_id=phrase.row.person_id,
         )
-        lines.append(f"[TTT] Total score now = {total_xp}")
+        tr = string.Template(_(
+            "Total XP now is $xp."
+        ))
+        tr = tr.substitute(
+            xp=xp,
+        )
+        reply_fragments.append(tr)
 
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="\n".join(lines),
+            value="\n".join(reply_fragments),
             is_reply=False,
             buttons=[get_start_button()],
         )

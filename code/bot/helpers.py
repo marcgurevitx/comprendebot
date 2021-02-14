@@ -50,18 +50,18 @@ async def download_voice(voice):
 
 
 async def welcome_new_user(person, chat):
-    text = string.Template(_(
+    tr = string.Template(_(
         "Hello, I'm a bot who will test your ability to understand spoken <a href=\"$language_link\">$language</a>."
         "\nPress start button or send /$cmd_start for your first challenge."
     ))
-    text = text.substitute(
+    tr = tr.substitute(
         language=config.CMPDBOT_LANGUAGE_HUMANS,
         language_link=config.CMPDBOT_LANGUAGE_SITE,
         cmd_start=_("start  // command"),
     )
     s = Sendable(
         type=SendableTypeCode.SND_TXT,
-        value=text,
+        value=tr,
         is_reply=False,
         buttons=[get_start_button()],
     )

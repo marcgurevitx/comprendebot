@@ -53,16 +53,22 @@ async def get_items(request):
 
     logger.debug("Sample size [%r]", len(rows))
 
-    return [Voice(r) for r in rows]
+    return [Voice(r) for r in rows] or [None]
 
 
 async def ensure_not_dummy(request, voice):
+    if voice is None:
+        return 0.0
+
     if voice.row.length == 0:
         return 0.0
     return 1.0
 
 
 async def ensure_person_level(request, voice):
+    if voice is None:
+        return 0.0
+
     success = request["person_n_prev_success"] + config.CMPDBOT_CHALLENGE_SUCCESS_BOOST
     length_diff = abs(success - voice.row.length)
     length_log = math.log10(length_diff + 1)
@@ -70,6 +76,9 @@ async def ensure_person_level(request, voice):
 
 
 async def ensure_shortest(request, voice):
+    if voice is None:
+        return 0.0
+
     length_log = math.log(
         voice.row.length,
         REALLY_LONG_PHRASE,
@@ -78,6 +87,9 @@ async def ensure_shortest(request, voice):
 
 
 async def ensure_random(request, voice):
+    if voice is None:
+        return 0.0
+
     return random.random()
 
 
@@ -88,6 +100,9 @@ async def ensure_same_author_rare(request, voice):
 
 
 async def ensure_repetition_rare(request, voice):
+    if voice is None:
+        return 0.0
+
     Transcription = get_transcription_class()
     if await Transcription.select_one(person_id=request["person_id"], voice_id=voice.row.id):
         return 0.1

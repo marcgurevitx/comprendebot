@@ -45,3 +45,4 @@ class Stickers(enum.Enum):
     GOLD = "GOLD"
     SILVER = "SILVER"
     BRONZE = "BRONZE"
+    PAPER = "PAPER"

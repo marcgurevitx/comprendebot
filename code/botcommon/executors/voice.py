@@ -64,19 +64,19 @@ class VoiceExecutor(BaseExecutor):
             for p
             in phrases
         ]
-        text = string.Template(_(
+        tr = string.Template(_(
             "This challenge is about reading out loud."
             "\nIt will gain you points when other users transcribe your recording."
             "\nPick phrase and send me the <b>voice</b>."
             "\nYou can send many variants but only submit one."
             "\n(Send /$cmd_start if you want to skip.)"
         ))
-        text = text.substitute(
+        tr = tr.substitute(
             cmd_start=_("start  // command"),
         )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value=text,
+            value=tr,
             is_reply=False,
             buttons=buttons,
         )
@@ -93,17 +93,17 @@ class VoiceExecutor(BaseExecutor):
         executor_data["phrase_length"] = len(phrase.row.normalized_text)
         await self.challenge.update(executor_data=Json(executor_data))
 
-        text = string.Template(_(
+        tr = string.Template(_(
             "Send voice recording for <b>$original_text</b>."
             "\nYou can send many variants but only submit one."
             "\nIf you changed your mind, pick another phrase."
         ))
-        text = text.substitute(
+        tr = tr.substitute(
             original_text=phrase.row.original_text,
         )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value=text,
+            value=tr,
             is_reply=False,
             buttons=[],
         )
@@ -129,13 +129,13 @@ class VoiceExecutor(BaseExecutor):
         Voice = get_voice_class()
         await Voice.add_from_challenge(phrase_id, phrase_length, voice_key, self.challenge)
 
-        text = _(
+        tr = _(
             "Successfully saved, and soon it will become available for all."
             "\nMeanwhile, you can do the next challenge."
         )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value=text,
+            value=tr,
             is_reply=False,
             buttons=[get_start_button()],
         )

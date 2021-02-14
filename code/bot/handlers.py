@@ -26,11 +26,11 @@ async def on_message(message, *, person, chat, **kwargs):
             sendables = executor.pop_sendables()
             await chat.send_list(sendables)
     else:
-        text = string.Template(_("Send /$cmd_start for new challenge.  // no active challenges"))
-        text = text.substitute(
+        tr = string.Template(_("Send /$cmd_start for new challenge.  // no active challenges"))
+        tr = tr.substitute(
             cmd_start=_("start  // command"),
         )
-        await message.reply(text)
+        await message.reply(tr)
 
 
 @with_person_and_chat

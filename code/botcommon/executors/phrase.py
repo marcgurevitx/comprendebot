@@ -1,9 +1,10 @@
+import string
+
 from botcommon.bottypes import PhraseStates, Sendable, Button, SendableTypeCode, Stickers
+from botcommon.config import config
 from botcommon.helpers import get_start_button
 
 from .baseexecutor import BaseExecutor
-
-DATA_ROOT_KEY = ""
 
 
 def get_phrase_class():
@@ -43,16 +44,27 @@ class PhraseExecutor(BaseExecutor):
             buttons=[],
         )
         self.sendables.append(s)
+
+        tr = string.Template(_(
+            "Please, help me collect more phrases in my database."
+            "\nSend me a new <b>phrase</b> in $language."
+            "\nYou can send many variants but only submit one."
+            "\n(Send /$cmd_start if you want to skip.)"
+        ))
+        tr = tr.substitute(
+            language=config.CMPDBOT_LANGUAGE_HUMANS,
+            cmd_start=_("start  // command"),
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Please, help me collect more phrases in my database.\nSend me a new <b>phrase</b> in LANGUAGE.\nYou can send many variants but only submit one.\n(Send /comensa if you want to skip.)",
+            value=tr,
             is_reply=False,
             buttons=[],
         )
         self.sendables.append(s)
 
     async def ask_submission(self, text, message_id):
-        submit_button = Button(text="[TTT] Submit", data=message_id)
+        submit_button = Button(text=_("Submit  // button"), data=message_id)
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="↑",
@@ -65,9 +77,13 @@ class PhraseExecutor(BaseExecutor):
         Phrase = get_phrase_class()
         await Phrase.add_from_challenge(text, self.challenge)
 
+        tr = _(
+            "Successfully saved. Thank you for help!"
+            "\nYou can do the next challenge now."
+        )
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
-            value="[TTT] Thank you for your help! The phrase was successfully saved.",
+            value=tr,
             is_reply=False,
             buttons=[get_start_button()],
         )
