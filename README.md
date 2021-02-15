@@ -78,6 +78,7 @@ The examples below are assuming you called it just `.env`.
 
 ```
 cp -n botvars/example-.env botvars/.env
+chmod 0600 botvars/.env
 ```
 
 Edit the variables inside it:
