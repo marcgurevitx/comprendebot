@@ -4,27 +4,29 @@ This is a Telegram bot that tests your ability to understand spoken language.
 
 Intended users are constructed languages enthusiasts who rarely have an opportunity to hear their conlangs spoken.
 
-The bot will sends you voice messages and await your transcription.
+The bot will send you voice messages and await your transcription.
 If the transcription is correct, the bot will give you experience points.
 
-Disclaimer: I'm not a software engineer, so there's probably massive antipatterns inside.
+Disclaimer: I'm not a software engineer, so there's probably massive antipatterns everywhere.
 
 
 ## Deployed instances I know
 
 | Bot | Language | Bot's site |
 | --- | -------- | ---------- |
-| https://t.me/lfnescutabot | [Elefen](https://www.elefen.org/) | |
+| [@lfnescutabot](https://t.me/lfnescutabot) | [Elefen](https://www.elefen.org/) | |
 
 
 ## Create new instance
 
-If one wants to create an instance of `comprendebot` for **Newspeak**, this is what should be done:
+Let's say you want to deploy an instance for [Newspeak](https://en.wikipedia.org/wiki/Newspeak).
+
+Do the following steps.
 
 
 ### Acquire Telegram token
 
-Talk to [BotFather](https://t.me/botfather) and make a new bot. Name is not important.
+Talk to [BotFather](https://t.me/botfather) and make a new bot. Bot's name can be anything and is not important, we really need the token.
 
 
 ### Download repository
@@ -58,7 +60,7 @@ pygettext3 -o newspeak.po code/
 Open it and write translations.
 See examples in `elefen.po`.
 
-After that, cnvert it to `.mo` format which the bot can find and read:
+After that, convert it to `.mo` format which the bot can find and read:
 
 ```
 mkdir -p locales/newspeak/LC_MESSAGES/
@@ -86,7 +88,7 @@ Edit the variables inside it:
 | `CMPDBOT_LANGUAGE` | **Type**: Locale name<br/>**Example**: `newspeak`<br/>Language locale folder as in `locales/newspeak/LC_MESSAGES/`. |
 | `CMPDBOT_LANGUAGE_SITE` | **Type**: URL<br/>**Example**: `https://en.wikipedia.org/wiki/Newspeak` |
 | `CMPDBOT_LANGUAGE_FILE` | **Type**: File name<br/>**Example**: `language-newspeak.xml`<br/>Name of language XML file inside `botvars/`. |
-| `CMPDBOT_SIMILARITY_RATIO` | **Type**: Float<br/>**Example**: `0.8`<br/>When one compares two phrases for similarity with [ratio()](https://rawgit.com/ztane/python-Levenshtein/master/docs/Levenshtein.html#Levenshtein-ratio) the result is a `float`, and if that float is greater than the value of `CMPDBOT_SIMILARITY_RATIO`, the two phrases are considered similar. Right now, the bot doesn't do much about it, but in the future versions it might use this value to manage phrases. |
+| `CMPDBOT_SIMILARITY_RATIO` | **Type**: Float<br/>**Example**: `0.8`<br/>When one compares two phrases for similarity with Levenshtein [ratio()](https://rawgit.com/ztane/python-Levenshtein/master/docs/Levenshtein.html#Levenshtein-ratio) the result is a `float`, and if that float is greater than the value of `CMPDBOT_SIMILARITY_RATIO`, the two phrases are considered "similar". Right now, the bot doesn't do much about it, but in the future versions it might use this value for better phrases management. |
 | `CMPDBOT_TOKEN` | **Type**: Telegram API token<br/>**Example**: `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`<br/>The secret that you've acquired from [BotFather](https://t.me/botfather). |
 | `CMPDBOT_LOCALE_DIR` | **Type**: Path to folder<br/>**Example**: `/cmpdbot/locales`<br/>Where bot will find its localization inside container. |
 | `CMPDBOT_LINK` | **Type**: URL<br/>**Example**: `https://newspeak.bot/`<br/>Official site of your bot if there is one. |
@@ -94,8 +96,8 @@ Edit the variables inside it:
 | `CMPDBOT_EXCHANGE_DIR_LOCAL` | **Type**: Path to folder<br/>**Example**: `/home/wsmith/newspeak-bot-volume`<br/>Folder that will serve as a Docker volume on **client machine**. |
 | `CMPDBOT_EXCHANGE_DIR_CONTAINER` | **Type**: Path to folder<br/>**Example**: `/cmpdbot/exchange`<br/>Folder that will serve as a Docker volume inside **container**. |
 | `CMPDBOT_CONST_START` | **Type**: String<br/>**Example**: `start`<br/>Callback data of a start button. (Technical value. Leave as is.) |
-| `CMPDBOT_MIN_SILVER` | **Type**: Float<br/>**Example**: `0.7`<br/>If transcription's similarity is higher than this value, send user "silver medal" sticker. |
-| `CMPDBOT_MIN_BRONZE` | **Type**: Float<br/>**Example**: `0.3`<br/>If transcription's similarity is higher than this value, send user "bronze medal" sticker. |
+| `CMPDBOT_MIN_SILVER` | **Type**: Float<br/>**Example**: `0.7`<br/>If the transcription's similarity to the original phrase is higher than this value, send user "silver medal" sticker. |
+| `CMPDBOT_MIN_BRONZE` | **Type**: Float<br/>**Example**: `0.3`<br/>If the transcription's similarity to the original phrase is higher than this value, send user "bronze medal" sticker. |
 | `CHOOSE_SEVRAL_TIMEZ` | **Type**: Integer<br/>**Example**: `5`<br/>Max amount of consecuitive challange lookups. (Technical value. Leave as is.) |
 | `CHOOSE_CHANCE_PHRASE` | **Type**: Integer<br/>**Example**: `1`<br/>How often should user be asked to add a new phrase to database. The greater the more often. |
 | `CHOOSE_CHANCE_VOICE` | **Type**: Integer<br/>**Example**: `3`<br/>How often should user be asked to submit a voice message. The greater the more often. |
@@ -167,9 +169,11 @@ It takes a file where each line contains one phrase and adds them all in one go.
 Create file `phrases.txt` inside the Docker volume folder (`CMPDBOT_EXCHANGE_DIR_LOCAL`):
 
 ```
+cat > phrases.txt <<1984
 War is peace.
 Freedom is slavery.
 Ignorance is strength.
+1984
 ```
 
 Now launch the `manage` container:
@@ -212,11 +216,17 @@ Or you can temporarily set `CHOOSE_MIN_XP_VOICE` to `0` and restart the bot:
 docker-compose restart
 ```
 
+
+### One last step (optional)
+
+Let me know about your instance so I could update my table of existing bots. Thank you.
+
+
 ## Roadmap
 
-Things that also should be added soon are
+Things that also should be added soon
 
-- Monitoring
+- Easy monitoring
 - Admin site
 - In-bot reporting
 - Show best XP
