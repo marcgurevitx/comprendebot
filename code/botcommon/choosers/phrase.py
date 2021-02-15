@@ -47,7 +47,7 @@ async def get_items(request):
                     {Phrase.get_table_name()} TABLESAMPLE BERNOULLI ({percentage})
                 WHERE
                     is_active = true
-                    AND created_ts < %(hold_dt)s
+                    AND (created_ts < %(hold_dt)s OR person_id IS NULL)
                     AND id NOT IN (0 {sql_exclude})
                 ;
             """,

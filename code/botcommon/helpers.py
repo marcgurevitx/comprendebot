@@ -24,9 +24,9 @@ def get_start_button():
 
 def get_metal_sticker(length, distance):
     similarity = 1.0 - distance / length
-    if similarity < config.CMPDBOT_BELOW_BRONZE:
+    if similarity < config.CMPDBOT_MIN_BRONZE:
         rv = Stickers.PAPER
-    elif similarity < config.CMPDBOT_BELOW_SILVER:
+    elif similarity < config.CMPDBOT_MIN_SILVER:
         rv = Stickers.BRONZE
     elif similarity < 1.0:
         rv = Stickers.SILVER
