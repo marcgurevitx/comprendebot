@@ -78,6 +78,14 @@ class PhraseExecutor(BaseExecutor):
         Phrase = get_phrase_class()
         await Phrase.add_from_challenge(text, self.challenge)
 
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.OK_PHR,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
         tr = _(
             "Successfully saved. Thank you for help!"
             "\nYou can do the next challenge now."

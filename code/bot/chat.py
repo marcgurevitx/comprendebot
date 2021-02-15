@@ -46,6 +46,10 @@ class Chat:
                 sticker = config.STICKER_BRONZE
             elif sendable.value == Stickers.PAPER:
                 sticker = config.STICKER_PAPER
+            elif sendable.value == Stickers.OK_PHR:
+                sticker = config.STICKER_OK_PHR
+            elif sendable.value == Stickers.OK_VOC:
+                sticker = config.STICKER_OK_VOC
             else:
                 raise Exception(f"Unknown sticker [{sendable}]")
 

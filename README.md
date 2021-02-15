@@ -143,6 +143,8 @@ Edit the variables inside `.env`:
 | `STICKER_SILVER` | String | `CAACAgIAAxkBAAIC5GAm4ahzqZMgrgL5hPMJ-FeNqoZEAAIPAANl7hQQ9HlkTNOaa0keBA` | Silver medal sticker. |
 | `STICKER_BRONZE` | String | `CAACAgIAAxkBAAIC5WAm4bseD86pXShQMhq3fiwBdAE1AAIOAANl7hQQ1yWkknXfGbEeBA` | Bronze medal sticker. |
 | `STICKER_PAPER` | String | `CAACAgIAAxkBAAIEBmApHZVRREqnPntKA3Pe54BZm8-uAAIUAANl7hQQlRYCZ1WIrj4eBA` | Toilet paper medal sticker. |
+| `STICKER_OK_PHR` | String | `CAACAgIAAxkBAAIEBmApHZVRREqnPntKA3Pe54BZm8-uAAIUAANl7hQQlRYCZ1WIrj4eBA` | Phrase saved sticker. |
+| `STICKER_OK_VOC` | String | `CAACAgIAAxkBAAIEBmApHZVRREqnPntKA3Pe54BZm8-uAAIUAANl7hQQlRYCZ1WIrj4eBA` | Voice saved sticker. |
 
 
 ### Launch
@@ -203,4 +205,9 @@ docker-compose restart
 
 ## Roadmap
 
-In future versions I'm planning to add admin site and in-bot reporting.
+Things better be soon added are
+
+- Monitoring
+- Admin site
+- In-bot reporting
+- Show best XP
