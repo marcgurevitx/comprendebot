@@ -12,7 +12,7 @@ from bot.handlers import (
 from botcommon.config import config
 
 lang = gettext.translation(
-    "messages",
+    config.CMPDBOT_L10N_DOMAIN,
     config.CMPDBOT_LOCALE_DIR,
     languages=[config.CMPDBOT_LANGUAGE],
 )

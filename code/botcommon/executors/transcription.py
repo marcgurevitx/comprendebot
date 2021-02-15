@@ -208,7 +208,7 @@ class TranscriptionExecutor(BaseExecutor):
             "Total XP now is $total_xp."
         ))
         tr = tr.substitute(
-            xp=xp,
+            total_xp=total_xp,
         )
         reply_fragments.append(tr)
 
