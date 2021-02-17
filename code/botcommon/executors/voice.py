@@ -50,14 +50,6 @@ class VoiceExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
-        s = Sendable(
-            type=SendableTypeCode.SND_STK,
-            value=Stickers.VOC,
-            is_reply=False,
-            buttons=[],
-        )
-        self.sendables.append(s)
-
         phrases = await self.challenge.get_phrases()
         buttons = [
             Button(text=p.row.original_text, data=p.row.id)
@@ -109,6 +101,14 @@ class VoiceExecutor(BaseExecutor):
         )
         self.sendables.append(s)
 
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.VOC,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
     async def ask_submission(self, voice, message_id):
         variant_num = await self.next_variant_num()
         submit_button = Button(text=_("Submit  // button"), data=message_id)
@@ -130,14 +130,6 @@ class VoiceExecutor(BaseExecutor):
         Voice = get_voice_class()
         await Voice.add_from_challenge(phrase_id, phrase_length, voice_key, self.challenge)
 
-        s = Sendable(
-            type=SendableTypeCode.SND_STK,
-            value=Stickers.OK_VOC,
-            is_reply=False,
-            buttons=[],
-        )
-        self.sendables.append(s)
-
         tr = _(
             "Successfully saved, and soon it will become available for all."
             "\nMeanwhile, you can do the next challenge."
@@ -145,6 +137,14 @@ class VoiceExecutor(BaseExecutor):
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value=tr,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.OK_VOC,
             is_reply=False,
             buttons=[get_start_button()],
         )

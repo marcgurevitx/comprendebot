@@ -60,13 +60,6 @@ class TranscriptionExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
-        s = Sendable(
-            type=SendableTypeCode.SND_STK,
-            value=Stickers.TRS,
-            is_reply=False,
-            buttons=[],
-        )
-        self.sendables.append(s)
 
         voices = await self.challenge.get_voices()
         buttons = [
@@ -122,6 +115,14 @@ class TranscriptionExecutor(BaseExecutor):
         self.sendables.append(s)
 
         s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.TRS,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+        s = Sendable(
             type=SendableTypeCode.SND_VOC,
             value=voice_binary,
             is_reply=False,
@@ -162,15 +163,6 @@ class TranscriptionExecutor(BaseExecutor):
         reply_fragments = [tr]
 
         distance = get_distance(text, phrase.row.normalized_text)
-        sticker = get_metal_sticker(length, distance)
-        s = Sendable(
-            type=SendableTypeCode.SND_STK,
-            value=sticker,
-            is_reply=False,
-            buttons=[],
-        )
-        self.sendables.append(s)
-
         if distance > 0:
             xp = max(length - distance, 0)
             tr = string.Template(_(
@@ -215,6 +207,15 @@ class TranscriptionExecutor(BaseExecutor):
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value="\n".join(reply_fragments),
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+        sticker = get_metal_sticker(length, distance)
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=sticker,
             is_reply=False,
             buttons=[get_start_button()],
         )

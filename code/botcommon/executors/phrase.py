@@ -37,14 +37,6 @@ class PhraseExecutor(BaseExecutor):
     ]
 
     async def explain_challenge(self):
-        s = Sendable(
-            type=SendableTypeCode.SND_STK,
-            value=Stickers.PHR,
-            is_reply=False,
-            buttons=[],
-        )
-        self.sendables.append(s)
-
         tr = string.Template(_(
             "Please, help me collect more phrases in my database."
             "\nSend me a new <b>phrase</b> in $language."
@@ -58,6 +50,14 @@ class PhraseExecutor(BaseExecutor):
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value=tr,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.PHR,
             is_reply=False,
             buttons=[],
         )
@@ -78,14 +78,6 @@ class PhraseExecutor(BaseExecutor):
         Phrase = get_phrase_class()
         await Phrase.add_from_challenge(text, self.challenge)
 
-        s = Sendable(
-            type=SendableTypeCode.SND_STK,
-            value=Stickers.OK_PHR,
-            is_reply=False,
-            buttons=[],
-        )
-        self.sendables.append(s)
-
         tr = _(
             "Successfully saved. Thank you for help!"
             "\nYou can do the next challenge now."
@@ -93,6 +85,14 @@ class PhraseExecutor(BaseExecutor):
         s = Sendable(
             type=SendableTypeCode.SND_TXT,
             value=tr,
+            is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+        s = Sendable(
+            type=SendableTypeCode.SND_STK,
+            value=Stickers.OK_PHR,
             is_reply=False,
             buttons=[get_start_button()],
         )

@@ -232,3 +232,4 @@ Things that also should be added soon
 - In-bot reporting
 - Show best XP
 - Async Sqlalchemy
+- In-bot submissions management (delete user data)

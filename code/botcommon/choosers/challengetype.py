@@ -67,13 +67,13 @@ async def ensure_various(request, item):
     if challenge is not None:
         if item == ChallengeTypeCode.CHL_PHR:
             if challenge.row.type_code == 'CHL_PHR':
-                rv = 0.85
+                rv = 0.8
         elif item == ChallengeTypeCode.CHL_VOC:
             if challenge.row.type_code == 'CHL_VOC':
-                rv = 0.85
+                rv = 0.8
         elif item == ChallengeTypeCode.CHL_TRS:
             if challenge.row.type_code == 'CHL_TRS':
-                rv = 0.85
+                rv = 0.8
     return rv
 
 
