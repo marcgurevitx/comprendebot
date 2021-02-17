@@ -16,7 +16,7 @@ SELECT
     CASE WHEN (u.telegram_info -> 'is_bot')::boolean THEN 'BOT' ELSE '' END as bot
 FROM
     person u
-    JOIN challenge c
+    LEFT JOIN challenge c
         ON c.person_id = u.id
 WHERE
     1 = 1
