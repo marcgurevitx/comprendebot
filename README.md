@@ -231,3 +231,4 @@ Things that also should be added soon
 - Admin site
 - In-bot reporting
 - Show best XP
+- Async Sqlalchemy
