@@ -172,10 +172,10 @@ class TranscriptionExecutor(BaseExecutor):
         self.sendables.append(s)
 
         if distance > 0:
-            xp = length - distance
+            xp = max(length - distance, 0)
             tr = string.Template(_(
                 "You've transcribed it differently with the distance of $distance."
-                "\nGained XP = (length - distance) = ($length - $distance) = $xp."
+                "\nGained XP = max(length - distance, 0) = max($length - $distance, 0) = $xp."
             ))
             tr = tr.substitute(
                 distance=distance,

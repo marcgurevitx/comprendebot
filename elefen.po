@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-15 11:42+0300\n"
+"POT-Creation-Date: 2021-02-17 16:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr ""
 msgid "Submit  // button"
 msgstr "Fisa"
 
-#: code/botcommon/executors/phrase.py:81
+#: code/botcommon/executors/phrase.py:89
 msgid ""
 "Successfully saved. Thank you for help!\n"
 "You can do the next challenge now."
@@ -111,10 +111,10 @@ msgstr "La frase orijinal ia es <b>$original_text</b> con longia de $length."
 #: code/botcommon/executors/transcription.py:176
 msgid ""
 "You've transcribed it differently with the distance of $distance.\n"
-"Gained XP = (length - distance) = ($length - $distance) = $xp."
+"Gained XP = max(length - distance, 0) = max($length - $distance, 0) = $xp."
 msgstr ""
 "Tu ia transcrive lo diferente con distantia de $distance.\n"
-"XP ganiada = (longia - distantia) = ($length - $distance) = $xp."
+"XP ganiada = max(longia - distantia, 0) = max($length - $distance, 0) = $xp."
 
 #: code/botcommon/executors/transcription.py:188
 msgid ""
@@ -152,7 +152,7 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "Si tu cambia tua mente, eleje un otra frase."
 
-#: code/botcommon/executors/voice.py:133
+#: code/botcommon/executors/voice.py:141
 msgid ""
 "Successfully saved, and soon it will become available for all.\n"
 "Meanwhile, you can do the next challenge."
