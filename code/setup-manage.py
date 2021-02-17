@@ -7,6 +7,7 @@ setup(
         "console_scripts": [
             "botaddphrases      = manage.botaddphrases:botaddphrases",
             "botblockperson     = manage.botblockperson:botblockperson",
+            "botexportvoice     = manage.botexportvoice:botexportvoice",
             "botsubmissions     = manage.botsubmissions:botsubmissions",
         ],
     },

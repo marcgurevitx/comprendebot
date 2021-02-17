@@ -27,11 +27,15 @@ async def async_block_person(person_id, unblock):
     await person.update(is_active=new_is_active)
 
     phrases = await Phrase.select_all(person_id=person_id)
+    n_far_voices = 0
     for phrase in phrases:
         await phrase.update(is_active=new_is_active)
+        for voice in await Voice.select_all(person_id=phrase.person_id):
+            n_far_voices += 1
+            await voice.update(is_active=new_is_active)
 
     voices = await Voice.select_all(person_id=person_id)
     for voice in voices:
         await voice.update(is_active=new_is_active)
 
-    click.echo(f"Done, phrases [{len(phrases)} {done_str}], voices [{len(voices)} {done_str}]")
+    click.echo(f"Done, phrases [{len(phrases)} {done_str}], voices [{len(voices) + n_far_voices} {done_str}]")
