@@ -4,7 +4,7 @@ import pathlib
 import click
 
 from botcommon.config import config
-from botcommon.models import Voice
+from botcommon.models import Voice, Phrase
 from botcommon.s3 import retrieve_binary
 
 DEFAULT_OUT_DIR_NAME = "outoggs/"
@@ -19,7 +19,9 @@ def botexportvoice(output_dir, voice_ids):
 
 
 async def async_export_voice(output_dir, voice_ids):
-    if not output_dir:
+    if output_dir:
+        output_dir = pathlib.Path(output_dir)
+    else:
         output_dir = pathlib.Path(config.CMPDBOT_EXCHANGE_DIR_CONTAINER, DEFAULT_OUT_DIR_NAME)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -39,7 +41,8 @@ async def async_export_voice(output_dir, voice_ids):
 
     for voice in voices:
         voice_binary = await retrieve_binary(voice.row.s3_key)
-        with open(output_dir / f"{voice.row.id}.ogg", "wb") as fp:
+        phrase = await Phrase.select_one(id=voice.row.phrase_id)
+        with open(output_dir / f"{voice.row.id}-{phrase.row.normalized_text.replace(' ', '-')}.ogg", "wb") as fp:
             fp.write(voice_binary)
 
     click.echo(f"Done, output_dir = [{output_dir}]")
