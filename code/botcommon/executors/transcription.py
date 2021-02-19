@@ -70,6 +70,7 @@ class TranscriptionExecutor(BaseExecutor):
         tr = string.Template(_(
             "This challenge is about listening and understanding."
             "\nPick phrase and <b>transcribe</b> it."
+            "\nSpell numbers as words: <i>two</i>, <i>three</i>..., not <i>2</i>, <i>3</i>..."
             "\nYou can send many variants but only submit one."
             "\nDon't worry too much about phrase lengths - I probably got them slightly wrong."
             "\nI'm not counting characters I don't recognize (e.g punctuation),"

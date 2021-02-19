@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-17 16:33+0300\n"
+"POT-Creation-Date: 2021-02-19 05:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,9 @@ msgstr ""
 
 
 #: code/bot/__main__.py:26 code/bot/__main__.py:35 code/bot/handlers.py:31
-#: code/bot/helpers.py:60 code/botcommon/executors/phrase.py:56
-#: code/botcommon/executors/transcription.py:87
-#: code/botcommon/executors/voice.py:75
+#: code/bot/helpers.py:60 code/botcommon/executors/phrase.py:49
+#: code/botcommon/executors/transcription.py:81
+#: code/botcommon/executors/voice.py:67
 msgid "start  // command"
 msgstr "comensa"
 
@@ -50,25 +50,27 @@ msgstr ""
 "Alo, me es un robot ci va esamina tua capasia de comprende <a href=\"$language_link\">$language</a> parlada.\n"
 "Presa boton de comensa o envia /$cmd_start per tua taxe prima."
 
-#: code/botcommon/executors/phrase.py:48
+#: code/botcommon/executors/phrase.py:40
 msgid ""
 "Please, help me collect more phrases in my database.\n"
 "Send me a new <b>phrase</b> in $language.\n"
+"Spell numbers as words: <i>two</i>, <i>three</i>..., not <i>2</i>, <i>3</i>...\n"
 "You can send many variants but only submit one.\n"
 "(Send /$cmd_start if you want to skip.)"
 msgstr ""
 "Per favore, aida me colie plu frases en mea banco de datos.\n"
 "Envia a me cualce <b>frase</b> en $language.\n"
+"Spele numeros como parolas: <i>du</i>, <i>tre</i>..., no <i>2</i>, <i>3</i>...\n"
 "Tu pote envia multe varias ma fisa sola un.\n"
 "(Envia /$cmd_start si tu vole omete.)"
 
-#: code/botcommon/executors/phrase.py:68
-#: code/botcommon/executors/transcription.py:134
+#: code/botcommon/executors/phrase.py:69
+#: code/botcommon/executors/transcription.py:136
 #: code/botcommon/executors/voice.py:114
 msgid "Submit  // button"
 msgstr "Fisa"
 
-#: code/botcommon/executors/phrase.py:89
+#: code/botcommon/executors/phrase.py:82
 msgid ""
 "Successfully saved. Thank you for help!\n"
 "You can do the next challenge now."
@@ -76,10 +78,11 @@ msgstr ""
 "Fisada susedosa. Grasias per aida!\n"
 "Tu pote fa la taxe seguente aora."
 
-#: code/botcommon/executors/transcription.py:77
+#: code/botcommon/executors/transcription.py:70
 msgid ""
 "This challenge is about listening and understanding.\n"
 "Pick phrase and <b>transcribe</b> it.\n"
+"Spell numbers as words: <i>two</i>, <i>three</i>..., not <i>2</i>, <i>3</i>...\n"
 "You can send many variants but only submit one.\n"
 "Don't worry too much about phrase lengths - I probably got them slightly wrong.\n"
 "I'm not counting characters I don't recognize (e.g punctuation), they don't matter when calculating points anyway.\n"
@@ -87,12 +90,13 @@ msgid ""
 msgstr ""
 "Esta taxe es sur oia e comprende.\n"
 "Eleje un frase e <b>transcrive</b> lo.\n"
+"Spele numeros como parolas: <i>du</i>, <i>tre</i>..., no <i>2</i>, <i>3</i>...\n"
 "Tu pote envia multe varias ma fisa sola un.\n"
 "No pensa tro multe sur longias de frases - me probable ia era pico.\n"
 "Me no conta sinias cual me no reconose (p.d puntua), los no importa en calcula de XP en cualce modo.\n"
 "(Envia /$cmd_start si tu vole omete.)"
 
-#: code/botcommon/executors/transcription.py:110
+#: code/botcommon/executors/transcription.py:104
 msgid ""
 "Now write transcription.\n"
 "You can send many variants but only submit one.\n"
@@ -104,11 +108,11 @@ msgstr ""
 "Edita un varia va labora ance.\n"
 "Si tu cambia tua mente, eleje un otra frase."
 
-#: code/botcommon/executors/transcription.py:155
+#: code/botcommon/executors/transcription.py:157
 msgid "The original phrase was <b>$original_text</b> with length of $length."
 msgstr "La frase orijinal ia es <b>$original_text</b> con longia de $length."
 
-#: code/botcommon/executors/transcription.py:176
+#: code/botcommon/executors/transcription.py:169
 msgid ""
 "You've transcribed it differently with the distance of $distance.\n"
 "Gained XP = max(length - distance, 0) = max($length - $distance, 0) = $xp."
@@ -116,7 +120,7 @@ msgstr ""
 "Tu ia transcrive lo diferente con distantia de $distance.\n"
 "XP ganiada = max(longia - distantia, 0) = max($length - $distance, 0) = $xp."
 
-#: code/botcommon/executors/transcription.py:188
+#: code/botcommon/executors/transcription.py:181
 msgid ""
 "And you transcribed it right!\n"
 "Gained XP = $xp."
@@ -124,11 +128,11 @@ msgstr ""
 "E tu ia transcrive lo coreta!\n"
 "XP ganiada = $xp."
 
-#: code/botcommon/executors/transcription.py:207
+#: code/botcommon/executors/transcription.py:200
 msgid "Total XP now is $total_xp."
 msgstr "Tota XP es aora $total_xp."
 
-#: code/botcommon/executors/voice.py:67
+#: code/botcommon/executors/voice.py:59
 msgid ""
 "This challenge is about reading out loud.\n"
 "It will gain you points when other users transcribe your recording.\n"
@@ -142,17 +146,17 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "(Envia /$cmd_start si tu vole omete.)"
 
-#: code/botcommon/executors/voice.py:96
+#: code/botcommon/executors/voice.py:88
 msgid ""
-"Send voice recording for <b>$original_text</b>.\n"
+"Send voice recording for <b>$original_text</b>\n"
 "You can send many variants but only submit one.\n"
 "If you changed your mind, pick another phrase."
 msgstr ""
-"Envia rejistra de vose per <b>$original_text</b>.\n"
+"Envia rejistra de vose per <b>$original_text</b>\n"
 "Tu pote envia multe varias ma fisa sola un.\n"
 "Si tu cambia tua mente, eleje un otra frase."
 
-#: code/botcommon/executors/voice.py:141
+#: code/botcommon/executors/voice.py:133
 msgid ""
 "Successfully saved, and soon it will become available for all.\n"
 "Meanwhile, you can do the next challenge."

@@ -86,7 +86,7 @@ class VoiceExecutor(BaseExecutor):
         await self.challenge.update(executor_data=Json(executor_data))
 
         tr = string.Template(_(
-            "Send voice recording for <b>$original_text</b>."
+            "Send voice recording for <b>$original_text</b>"
             "\nYou can send many variants but only submit one."
             "\nIf you changed your mind, pick another phrase."
         ))

@@ -223,6 +223,34 @@ docker-compose restart
 Let me know about your instance so I could update my table of existing bots. Thank you.
 
 
+## Data
+
+The bot operates with the following entities each stored in their own table in Postgres:
+
+| Pg table | Meaning |
+| -------- | ------- |
+| `person` | Telegram users. |
+| `phrase` | Catalog of phrases in textual form. |
+| `voice` | Submitted voice messages. (The binaries are stored in S3.) |
+| `transcription` | Submitted transcriptions of voices. |
+| `challenge` | Every task sent to users is abstracted with `challenge` entity. |
+
+To create data backups do `pg_dump` for Postgres and `mc mirror` for S3 voices bucket.
+
+The meaning of `is_active` column:
+
+| Pg table | `is_active` means... |
+| -------- | -------------------- |
+| `person` | `is_active` = false means that the user is shadow-banned. All their **new** submissions will be saved with `is_active=false` |
+| `phrase` | `is_active` = false means that the phrase will not be sent as a voice recording challenge to users. |
+| `voice` | `is_active` = false means that the voice will not be sent as a voice transcribing challenge to users. |
+| `transcription` | Not used. |
+| `challenge` | The user's current challenge has `is_active` = true. All past challenges (complete and skipped) have `is_active` = false. |
+
+Setting `is_active` = false for a user doesn't block already existing active phrases and voices.
+If desired, they should be blocked individually or by issuing a command `botblockuser <PERSON_ID>` inside `manage` container that blocks user's all existing content.
+
+
 ## Roadmap
 
 Things that also should be added soon
@@ -231,5 +259,7 @@ Things that also should be added soon
 - Admin site
 - In-bot reporting
 - Show best XP
+- Show generated XP
 - Async Sqlalchemy
 - In-bot submissions management (delete user data)
+- Delete old/blocked content

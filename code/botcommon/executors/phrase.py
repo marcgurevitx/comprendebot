@@ -40,6 +40,7 @@ class PhraseExecutor(BaseExecutor):
         tr = string.Template(_(
             "Please, help me collect more phrases in my database."
             "\nSend me a new <b>phrase</b> in $language."
+            "\nSpell numbers as words: <i>two</i>, <i>three</i>..., not <i>2</i>, <i>3</i>..."
             "\nYou can send many variants but only submit one."
             "\n(Send /$cmd_start if you want to skip.)"
         ))
