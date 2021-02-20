@@ -62,7 +62,7 @@ msgstr ""
 "Envia a me cualce <b>frase</b> en $language.\n"
 "Spele numeros como parolas: <i>du</i>, <i>tre</i>..., no <i>2</i>, <i>3</i>...\n"
 "Tu pote envia multe varias ma fisa sola un.\n"
-"(Envia /$cmd_start si tu vole omete esta taxe.)"
+"(Envia /$cmd_start si tu vole fa un otra taxe.)"
 
 #: code/botcommon/executors/phrase.py:69
 #: code/botcommon/executors/transcription.py:136
@@ -94,7 +94,7 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "No pensa tro multe sur longias de frases - me probable ia era pico.\n"
 "Me no conta sinias cual me no reconose (pd: puntua), los no importa en calcula XP an tal.\n"
-"(Envia /$cmd_start si tu vole omete esta taxe.)"
+"(Envia /$cmd_start si tu vole fa un otra taxe.)"
 
 #: code/botcommon/executors/transcription.py:104
 msgid ""
@@ -144,7 +144,7 @@ msgstr ""
 "Lo va gania a tu puntos de esperia cuando otra usores transcrive tua rejistra.\n"
 "Eleje un frase e envia a me la <b>vose</b>.\n"
 "Tu pote envia multe varias ma fisa sola un.\n"
-"(Envia /$cmd_start si tu vole omete esta taxe.)"
+"(Envia /$cmd_start si tu vole fa un otra taxe.)"
 
 #: code/botcommon/executors/voice.py:88
 msgid ""
