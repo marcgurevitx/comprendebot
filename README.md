@@ -255,6 +255,7 @@ If desired, they should be blocked individually or by issuing a command `botbloc
 
 Things that also should be added soon
 
+- Testing
 - Easy monitoring
 - Admin site
 - In-bot reporting
@@ -263,3 +264,4 @@ Things that also should be added soon
 - Async Sqlalchemy
 - In-bot submissions management (delete user data)
 - Delete old/blocked content
+- Sql indicies
