@@ -54,3 +54,5 @@ services:
     links:
       - pg:$POSTGRES_HOST
       - s3:$S3_HOST
+    tty: true
+    stdin_open: true
