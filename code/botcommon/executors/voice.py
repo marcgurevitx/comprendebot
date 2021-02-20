@@ -61,7 +61,7 @@ class VoiceExecutor(BaseExecutor):
             "\nIt will gain you points when other users transcribe your recording."
             "\nPick phrase and send me the <b>voice</b>."
             "\nYou can send many variants but only submit one."
-            "\n(Send /$cmd_start if you want to skip.)"
+            "\n(Send /$cmd_start if you want to skip this challenge.)"
         ))
         tr = tr.substitute(
             cmd_start=_("start  // command"),

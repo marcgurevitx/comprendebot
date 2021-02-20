@@ -42,7 +42,7 @@ class PhraseExecutor(BaseExecutor):
             "\nSend me a new <b>phrase</b> in $language."
             "\nSpell numbers as words: <i>two</i>, <i>three</i>..., not <i>2</i>, <i>3</i>..."
             "\nYou can send many variants but only submit one."
-            "\n(Send /$cmd_start if you want to skip.)"
+            "\n(Send /$cmd_start if you want to skip this challenge.)"
         ))
         tr = tr.substitute(
             language=config.CMPDBOT_LANGUAGE_HUMANS,
