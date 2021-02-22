@@ -35,6 +35,10 @@ async def on_message(message, *, person, chat, **kwargs):
 
 @with_person_and_chat
 async def on_button_press(callback_query, *, person, chat, **kwargs):
+    if callback_query.data == config.CMPDBOT_CONST_START:
+        await callback_query.answer(_("Starting...  // caption after start press"))
+        return await arrange_new_challenge(person, chat)
+
     challenge = await person.get_existing_active_challenge()
     if challenge:
         await callback_query.answer(_("Processing...  // caption after button press"))
@@ -55,8 +59,5 @@ async def on_button_press(callback_query, *, person, chat, **kwargs):
                 pass
             sendables = executor.pop_sendables()
             await chat.send_list(sendables)
-    elif callback_query.data == config.CMPDBOT_CONST_START:
-        await callback_query.answer(_("Starting...  // caption after start press"))
-        await arrange_new_challenge(person, chat)
     else:
         await callback_query.answer("?")
