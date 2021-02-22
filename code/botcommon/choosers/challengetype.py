@@ -82,6 +82,6 @@ challenge_type_chooser = GoodEnough(
     rules=[
         ensure_exists_source,
         ensure_probability,
-        ensure_various,
+        # ensure_various,
     ],
 )
