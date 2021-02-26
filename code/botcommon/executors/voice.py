@@ -39,6 +39,14 @@ class VoiceExecutor(BaseExecutor):
             trigger="receive_voice",
             source=VoiceStates.VOC_WRK,
             dest=VoiceStates.VOC_WRK,
+            conditions=["phrase_is_not_chosen"],
+            after="reject_variant",
+        ),
+        dict(
+            trigger="receive_voice",
+            source=VoiceStates.VOC_WRK,
+            dest=VoiceStates.VOC_WRK,
+            conditions=["phrase_is_chosen"],
             after="ask_submission",
         ),
         dict(
@@ -105,6 +113,21 @@ class VoiceExecutor(BaseExecutor):
             type=SendableTypeCode.SND_STK,
             value=Stickers.VOC,
             is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+    async def phrase_is_chosen(self, voice, message_id):
+        return "phrase_id" in self.challenge.row.executor_data
+
+    async def phrase_is_not_chosen(self, voice, message_id):
+        return not await self.phrase_is_chosen(voice, message_id)
+
+    async def reject_variant(self, voice, message_id):
+        s = Sendable(
+            type=SendableTypeCode.SND_TXT,
+            value=_("⚠ You need first to press one of the buttons."),
+            is_reply=True,
             buttons=[],
         )
         self.sendables.append(s)

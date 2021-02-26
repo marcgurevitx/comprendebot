@@ -49,6 +49,14 @@ class TranscriptionExecutor(BaseExecutor):
             trigger="receive_text",
             source=TranscriptionStates.TRS_WRK,
             dest=TranscriptionStates.TRS_WRK,
+            conditions=["voice_is_not_chosen"],
+            after="reject_variant",
+        ),
+        dict(
+            trigger="receive_text",
+            source=TranscriptionStates.TRS_WRK,
+            dest=TranscriptionStates.TRS_WRK,
+            conditions=["voice_is_chosen"],
             after="ask_submission",
         ),
         dict(
@@ -124,6 +132,21 @@ class TranscriptionExecutor(BaseExecutor):
             type=SendableTypeCode.SND_VOC,
             value=voice_binary,
             is_reply=False,
+            buttons=[],
+        )
+        self.sendables.append(s)
+
+    async def voice_is_chosen(self, text, message_id):
+        return "voice_id" in self.challenge.row.executor_data
+
+    async def voice_is_not_chosen(self, text, message_id):
+        return not await self.voice_is_chosen(text, message_id)
+
+    async def reject_variant(self, text, message_id):
+        s = Sendable(
+            type=SendableTypeCode.SND_TXT,
+            value=_("⚠ You need first to press one of the buttons."),
+            is_reply=True,
             buttons=[],
         )
         self.sendables.append(s)

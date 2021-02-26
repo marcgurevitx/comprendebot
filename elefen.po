@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-26 10:42+0300\n"
+"POT-Creation-Date: 2021-02-26 13:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 
 #: code/bot/__main__.py:26 code/bot/__main__.py:35 code/bot/handlers.py:31
 #: code/bot/helpers.py:60 code/botcommon/executors/phrase.py:49
-#: code/botcommon/executors/transcription.py:78
-#: code/botcommon/executors/voice.py:67
+#: code/botcommon/executors/transcription.py:86
+#: code/botcommon/executors/voice.py:75
 msgid "start  // command"
 msgstr "comensa"
 
@@ -65,8 +65,8 @@ msgstr ""
 "(Envia /$cmd_start si tu vole fa un otra taxe.)"
 
 #: code/botcommon/executors/phrase.py:69
-#: code/botcommon/executors/transcription.py:133
-#: code/botcommon/executors/voice.py:114
+#: code/botcommon/executors/transcription.py:156
+#: code/botcommon/executors/voice.py:137
 msgid "Submit  // button"
 msgstr "Fisa"
 
@@ -78,7 +78,7 @@ msgstr ""
 "Fisada con susede. Grasias per la aida!\n"
 "Tu pote fa la taxe seguente aora."
 
-#: code/botcommon/executors/transcription.py:70
+#: code/botcommon/executors/transcription.py:78
 msgid ""
 "This challenge is about listening and understanding.\n"
 "Pick phrase and <b>transcribe</b> it.\n"
@@ -92,7 +92,7 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "(Envia /$cmd_start si tu vole fa un otra taxe.)"
 
-#: code/botcommon/executors/transcription.py:101
+#: code/botcommon/executors/transcription.py:109
 msgid ""
 "Now write transcription.\n"
 "You can send many variants but only submit one.\n"
@@ -104,11 +104,16 @@ msgstr ""
 "Tu pote ance edita un varia.\n"
 "Si tu cambia tua opina, eleje un otra frase."
 
-#: code/botcommon/executors/transcription.py:154
+#: code/botcommon/executors/transcription.py:148
+#: code/botcommon/executors/voice.py:129
+msgid "⚠ You need first to press one of the buttons."
+msgstr "⚠ Tu debe presa prima un de la botones."
+
+#: code/botcommon/executors/transcription.py:177
 msgid "The original phrase was <b>$original_text</b> with length of $length."
 msgstr "La frase orijinal ia es <b>$original_text</b> con longia $length."
 
-#: code/botcommon/executors/transcription.py:166
+#: code/botcommon/executors/transcription.py:189
 msgid ""
 "You've transcribed it differently with the distance of $distance.\n"
 "Gained XP = max(length - distance, 0) = max($length - $distance, 0) = $xp."
@@ -116,7 +121,7 @@ msgstr ""
 "Tu ia transcrive lo en modo diferente con distantia de $distance.\n"
 "XP ganiada = max(longia - distantia, 0) = max($length - $distance, 0) = $xp."
 
-#: code/botcommon/executors/transcription.py:178
+#: code/botcommon/executors/transcription.py:201
 msgid ""
 "And you transcribed it right!\n"
 "Gained XP = $xp."
@@ -124,11 +129,11 @@ msgstr ""
 "E tu ia transcrive coreta lo!\n"
 "XP ganiada = $xp."
 
-#: code/botcommon/executors/transcription.py:197
+#: code/botcommon/executors/transcription.py:220
 msgid "Total XP now is $total_xp."
 msgstr "Tota XP es aora $total_xp."
 
-#: code/botcommon/executors/voice.py:59
+#: code/botcommon/executors/voice.py:67
 msgid ""
 "This challenge is about reading out loud.\n"
 "It will gain you points when other users transcribe your recording.\n"
@@ -142,7 +147,7 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "(Envia /$cmd_start si tu vole fa un otra taxe.)"
 
-#: code/botcommon/executors/voice.py:88
+#: code/botcommon/executors/voice.py:96
 msgid ""
 "Send voice recording for <b>$original_text</b>\n"
 "You can send many variants but only submit one.\n"
@@ -152,7 +157,7 @@ msgstr ""
 "Tu pote envia multe varias ma fisa sola un.\n"
 "Si tu cambia tua opina, eleje un otra frase."
 
-#: code/botcommon/executors/voice.py:133
+#: code/botcommon/executors/voice.py:156
 msgid ""
 "Successfully saved, and soon it will become available for all.\n"
 "Meanwhile, you can do the next challenge."
@@ -163,3 +168,4 @@ msgstr ""
 #: code/botcommon/helpers.py:20
 msgid "Start new challenge  // button"
 msgstr "Comensa un taxe nova"
+
