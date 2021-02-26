@@ -7,7 +7,7 @@ Intended users are constructed languages enthusiasts who rarely have an opportun
 The bot will send you voice messages and await your transcription.
 If the transcription is correct, the bot will give you experience points.
 
-Disclaimer: I'm not a software engineer, so there's probably massive antipatterns everywhere.
+Disclaimer: My second bot, there's probably massive antipatterns everywhere.
 
 
 ## Deployed instances I know
@@ -47,7 +47,7 @@ For Newspeak it will just contain latin.
 For Newspeak this section will be empty.
 
 
-### Translate strings in Python code
+### Translate strings from code
 
 Next step is to translate bot's messages from (my bad) English to Newspeak.
 
@@ -245,7 +245,7 @@ The meaning of `is_active` column:
 | `person` | `is_active` = false means that the user is shadow-banned. All their **new** submissions will be saved with `is_active=false` |
 | `phrase` | `is_active` = false means that the phrase will not be sent as a voice recording challenge to users. |
 | `voice` | `is_active` = false means that the voice will not be sent as a voice transcribing challenge to users. |
-| `transcription` | Not used. |
+| `transcription` | Not used for transcriptions. |
 | `challenge` | The user's current challenge has `is_active` = true. All past challenges (complete and skipped) have `is_active` = false. |
 
 Setting `is_active` = false for a user doesn't block already existing active phrases and voices.
@@ -266,3 +266,4 @@ Things that also should be added soon
 - In-bot submissions management (delete user data)
 - Delete old/blocked content
 - Sql indicies
+- In-bot management
