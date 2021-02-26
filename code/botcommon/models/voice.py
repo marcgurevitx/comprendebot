@@ -5,7 +5,13 @@ from botcommon.choosers.voice import (
     easy_voice_chooser,
     random_voice_chooser,
 )
+from botcommon.config import config
 from botcommon.models.basemodel import BaseModel
+
+
+def get_phrase_class():
+    from botcommon.models import Phrase
+    return Phrase
 
 
 def get_person_class():
@@ -51,3 +57,14 @@ class Voice(BaseModel):
             s3_key=voice_key,
             challenge_id=challenge.row.id,
         )
+
+    async def get_masked_text(self):
+        Phrase = get_phrase_class()
+        phrase = await Phrase.select_one(id=self.row.phrase_id)
+        words = phrase.row.normalized_text.split()
+        masked_words = [
+            config.CMPDBOT_MASK * len(w)
+            for w
+            in words
+        ]
+        return "\u2003".join(masked_words)

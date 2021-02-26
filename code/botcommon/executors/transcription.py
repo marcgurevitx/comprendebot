@@ -63,7 +63,7 @@ class TranscriptionExecutor(BaseExecutor):
 
         voices = await self.challenge.get_voices()
         buttons = [
-            Button(text=f"{v.row.length}", data=v.row.id)
+            Button(text=f"{await v.get_masked_text()}", data=v.row.id)
             for v
             in voices
         ]
@@ -72,9 +72,6 @@ class TranscriptionExecutor(BaseExecutor):
             "\nPick phrase and <b>transcribe</b> it."
             "\nSpell numbers as words: <i>two</i>, <i>three</i>..., not <i>2</i>, <i>3</i>..."
             "\nYou can send many variants but only submit one."
-            "\nDon't worry too much about phrase lengths - I probably got them slightly wrong."
-            "\nI'm not counting characters I don't recognize (e.g punctuation),"
-            " they don't matter when calculating points anyway."
             "\n(Send /$cmd_start if you want to skip this challenge.)"
         ))
         tr = tr.substitute(
