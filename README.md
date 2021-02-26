@@ -94,6 +94,7 @@ Edit the variables inside it:
 | `CMPDBOT_LOCALE_DIR` | **Type**: Path to folder<br/>**Example**: `/cmpdbot/locales`<br/>Where bot will find its localization inside container. |
 | `CMPDBOT_LINK` | **Type**: URL<br/>**Example**: `https://newspeak.bot/`<br/>Official site of your bot if there is one. |
 | `CMPDBOT_L10N_DOMAIN` | **Type**: Lacale domain<br/>**Example**: `cmpdbot`<br/>File name of `locales/newspeak/LC_MESSAGES/cmpdbot.mo` without `.mo` suffix. |
+| `CMPDBOT_MASK` | **Type**: String<br/>**Example**: `?`<br/>What symbol to use when masking phrases. |
 | `CMPDBOT_EXCHANGE_DIR_LOCAL` | **Type**: Path to folder<br/>**Example**: `/home/wsmith/newspeak-bot-volume`<br/>Folder that will serve as a Docker volume on **client machine**. |
 | `CMPDBOT_EXCHANGE_DIR_CONTAINER` | **Type**: Path to folder<br/>**Example**: `/cmpdbot/exchange`<br/>Folder that will serve as a Docker volume inside **container**. |
 | `CMPDBOT_CONST_START` | **Type**: String<br/>**Example**: `start`<br/>Callback data of a start button. (Technical value. Leave as is.) |
@@ -125,13 +126,13 @@ Edit the variables inside it:
 | `S3_VOICES_BUCKET` | **Type**: String<br/>**Example**: `newspeakbotvoices`<br/>Name of the S3 bucket where the voice binaries should be stored. |
 | `STICKER_PHR` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMDYCujE1oR-Zjt5IwdddnxkWQxPCIAAhMAA2XuFBAo2PGrWKbT_B4E`<br/>Phrase challenge sticker. |
 | `STICKER_VOC` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMEYCujRVhYHR18bF0j60fLGjuwLqAAAhIAA2XuFBD_h-TjUQABNUMeBA`<br/>Voice recording challenge sticker. |
-| `STICKER_TRS` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMFYCuja-pqNrFBdkDsM9WayDeI1twAAhEAA2XuFBBBkQ7Dv-7Ufh4E`<br/>Transcription challenge sticker. |
+| `STICKER_TRS` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAIKUWA4yrD4dH2G4UXKd0wgfgYFb0YeAAJfDAAC8XTJSfpu_cyvBjl3HgQ`<br/>Transcription challenge sticker. |
 | `STICKER_GOLD` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMGYCujn4-bfI6aGs6695L5Yc5fn3wAAhcAA2XuFBB3ge6WMuz0fx4E`<br/>Gold medal sticker. |
 | `STICKER_SILVER` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMHYCujxdhBazEQ4PPC2onSHXBPNnQAAhgAA2XuFBApYLlTBEVLlR4E`<br/>Silver medal sticker. |
 | `STICKER_BRONZE` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMIYCukAocAAXoPOcKVRUR7NC8Pe2u7AAIZAANl7hQQFV0zhLMubpkeBA`<br/>Bronze medal sticker. |
 | `STICKER_PAPER` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMJYCukLP7LfgTJsgWP-5UdwFs4_zIAAhoAA2XuFBD0kfJTn_og1x4E`<br/>Toilet paper medal sticker. |
-| `STICKER_OK_PHR` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMKYCukXpn-u1JeJ8hPGkKOs8EvnlgAAhUAA2XuFBAhgOshJBjTZx4E`<br/>Phrase saved sticker. |
-| `STICKER_OK_VOC` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAMLYCukhUOv1jZb-qPiTxBrh0dMWdkAAhYAA2XuFBCSPYJGjfEo4R4E`<br/>Voice saved sticker. |
+| `STICKER_OK_PHR` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAIKVGA4-iFDwkiwCLsdFti22lRi-gABngACRQoAAjZlwUnnv8Xv3hNHQB4E`<br/>Phrase saved sticker. |
+| `STICKER_OK_VOC` | **Type**: String<br/>**Example**: `CAACAgIAAxkBAAIKVWA4-j1LUUkNEolVUOgZ1CwnLsSbAAKHCgACZvXISdcVNZqQTrzoHgQ`<br/>Voice saved sticker. |
 
 
 ### Launch
